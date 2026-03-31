@@ -28,8 +28,11 @@ public class Player_Movement : MonoBehaviour
 
     [Header("Jump Variables")]
     public float JumpHeight = 7f;
+    public float jumpGravityScale = 2f;
     public float MaxJumpHeight = 7f;
     public float fallmultiplier = 2f;
+    [Range(0f, 1f)]
+    public float jumpSmoothing = 0.05f;
     private bool isHoldingJump;
     private bool isjumping;
     private float jumpTimeCounter;
@@ -57,7 +60,7 @@ public class Player_Movement : MonoBehaviour
     {
         ManageMovement();
         HandleMaxJump();
-        FallingGravity();
+        ApplyGravityLogic();
     }
     #endregion
 
@@ -134,18 +137,18 @@ public void OnJump(InputValue Value)
         isHoldingJump = Value.isPressed;
 
         // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump){
-            if (IsGrounded)
-                {
-                    isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
-                    jumpTimeCounter = maxJumpTime;
+        if (isHoldingJump && IsGrounded) {
 
-                    float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
-                    
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
+            isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
+            jumpTimeCounter = maxJumpTime;
+
+            float GravityMultiplier = Physics.gravity.y * jumpGravityScale;
+            float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * GravityMultiplier);
+
+            float smoothedY = Mathf.Lerp(rb.linearVelocity.y, jumpVelocity, 1f - jumpSmoothing);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, smoothedY, rb.linearVelocity.z);
 
 
-                }
         }
         else
             {
@@ -162,7 +165,8 @@ private void HandleMaxJump() // this will create the tiny jump effect by increas
         if (jumpTimeCounter > 0)
             {
                 //Debug.DrawRay(transform.position, Vector3.up * 2, Color.green);
-                rb.AddForce(Vector3.up * MaxJumpHeight, ForceMode.Acceleration);
+                float boostAmount = MaxJumpHeight * jumpGravityScale;
+                rb.AddForce(Vector3.up * boostAmount, ForceMode.Acceleration);
                 jumpTimeCounter -= Time.fixedDeltaTime; // Decrease the counter based on time passed
             }
             else
@@ -171,11 +175,19 @@ private void HandleMaxJump() // this will create the tiny jump effect by increas
             }
         }
     }
-private void FallingGravity()
+    private void ApplyGravityLogic()
     {
-        if (rb.linearVelocity.y < 0)
+        // 1. Upward Gravity (Fast Ascent)
+        if (rb.linearVelocity.y > 0 && isjumping)
         {
-            rb.AddForce(Vector3.up * Physics.gravity.y * (fallmultiplier - 1), ForceMode.Acceleration);
+            float extraUpGravity = Physics.gravity.y * (jumpGravityScale - 1);
+            rb.AddForce(Vector3.up * extraUpGravity, ForceMode.Acceleration);
+        }
+        // 2. Downward Gravity (Fast Fall)
+        else if (rb.linearVelocity.y < 0)
+        {
+            float extraDownGravity = Physics.gravity.y * (fallmultiplier - 1);
+            rb.AddForce(Vector3.up * extraDownGravity, ForceMode.Acceleration);
         }
     }
 

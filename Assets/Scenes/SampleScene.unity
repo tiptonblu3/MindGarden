@@ -650,7 +650,7 @@ Transform:
   m_GameObject: {fileID: 900500829}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.33, y: 3.89, z: 9.44}
+  m_LocalPosition: {x: 27.33, y: 2.52, z: 9.44}
   m_LocalScale: {x: 5.4876, y: 0.551412, z: 4.908}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -762,7 +762,7 @@ Transform:
   m_GameObject: {fileID: 1067248649}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 2.92, z: -0.13011}
+  m_LocalPosition: {x: 8.5, y: 1.55, z: -0.13011}
   m_LocalScale: {x: 5.4876, y: 0.551412, z: 4.908}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -987,7 +987,7 @@ Transform:
   m_GameObject: {fileID: 1299353450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.76, y: 3.89, z: -4.87}
+  m_LocalPosition: {x: 22.31, y: 2.52, z: -4.87}
   m_LocalScale: {x: 5.4876, y: 0.551412, z: 4.908}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1100,7 +1100,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.83, y: 1.97, z: -0.13011}
-  m_LocalScale: {x: 5.4876, y: 3.8442, z: 4.908}
+  m_LocalScale: {x: 0.9552869, y: 3.8442, z: 4.908}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDecollider
-  CameraRadius: 0.1
+  CameraRadius: 0.5
   Decollision:
     Enabled: 1
     ObstacleLayers:
@@ -1426,6 +1426,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 02545ccb29ed31843ad4f55cf7f1de45, type: 2}
     - target: {fileID: 3842790353178078990, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842790353178078990, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 25a247a556eb3864598d182a710eb1f7, type: 2}
@@ -1482,6 +1486,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 282906132939137879, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7800786135242349018}
+    - targetCorrespondingSourceObject: {fileID: 282906132939137879, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7800786135242349028}
   m_SourcePrefab: {fileID: 100100000, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
 --- !u!1 &7800786135242349017 stripped
 GameObject:
@@ -1526,7 +1533,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7800786135242349017}
   serializedVersion: 5
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1566,19 +1573,38 @@ MonoBehaviour:
   rotationSpeed: 320
   MaxStamina: 100
   CurrentStamina: 100
-  StaminaDrainRate: 10
-  StaminaRegenRate: 5
-  RegenThreshold: 30
-  SprintMultiplier: 1.5
   JumpHeight: 2
+  jumpGravityScale: 0.8
   MaxJumpHeight: 15
   fallmultiplier: 5
+  jumpSmoothing: 0.05
   maxJumpTime: 0.1
 --- !u!4 &7800786135242349024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7283088717842401466, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
   m_PrefabInstance: {fileID: 7800786135242349016}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &7800786135242349028
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7800786135242349017}
+  m_Material: {fileID: 13400000, guid: 25a247a556eb3864598d182a710eb1f7, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
