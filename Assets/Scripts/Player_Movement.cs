@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,15 +6,28 @@ public class Player_Movement : MonoBehaviour
     
     [Header("Reference")]
     public Rigidbody rb;
+    public Transform cameraTransform;
     public Vector2 MoveInputVector;
 
     [Header("Player Variables")]
     public float speed = 10f;
     public float Sens = 2f; //senstivity for camera movement
     public bool IsGrounded;
-    
+    public float rotationSpeed = 320f;
+
+    [Header("Sprint Variables")]
+    public float MaxStamina = 100f;
+    public float CurrentStamina = 100f;
+    private float StaminaDrainRate = 10f;
+    private float StaminaRegenRate = 5f;
+    private float RegenThreshold = 30f;
+    private float SprintMultiplier = 1.5f;
+    private bool isSprinting;
+    private bool isExhausted;
+    private float currentSpeedMultiplier;
+
     [Header("Jump Variables")]
-    public float JumpHeight = 4f;
+    public float JumpHeight = 7f;
     public float MaxJumpHeight = 7f;
     public float fallmultiplier = 2f;
     private bool isHoldingJump;
@@ -29,13 +41,14 @@ public class Player_Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
+        currentSpeedMultiplier = 1f;
 
     }
 
     private void Update()
     {
         IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
-
+        HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
 
     }
@@ -55,15 +68,65 @@ public class Player_Movement : MonoBehaviour
     {
         MoveInputVector = inputValue.Get<Vector2>();
     }
+    public void OnSprint(InputValue value)
+    {
+            isSprinting = value.isPressed;
+    }
 
 #endregion
 
 private void ManageMovement()
     {
-        //assign directional data based on input
-        Vector3 posChange = transform.right * MoveInputVector.x + transform.forward * MoveInputVector.y;
-        //move player object based on directional data and speed variable
-        rb.linearVelocity = new Vector3(posChange.x * speed, rb.linearVelocity.y, posChange.z * speed ); //Speed times time is to fix framerate changes causing speed disparities
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
+
+        float currentSpeed = speed * currentSpeedMultiplier;
+
+         Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
+         rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
+
+        if(moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+
+        }
+    }
+    private void HandleStamina()
+    {
+        // If stamina reaches zero, mark player as exhausted
+        if (CurrentStamina <= 0)
+        {
+            isExhausted = true;
+        }
+
+        // Recover from exhaustion once stamina reaches the threshold
+        if (isExhausted && CurrentStamina >= RegenThreshold)
+        {
+            isExhausted = false;
+        }
+
+        // Drain stamina if sprinting, moving, and not exhausted
+        if (isSprinting && MoveInputVector.magnitude > 0 && CurrentStamina > 0 && !isExhausted)
+        {
+            CurrentStamina -= StaminaDrainRate * Time.deltaTime;
+            currentSpeedMultiplier = SprintMultiplier;
+        }
+        else
+        {
+            // Regenerate stamina when not sprinting
+            CurrentStamina += StaminaRegenRate * Time.deltaTime;
+            currentSpeedMultiplier = 1f;
+        }
+
+        // Ensures stamina stays within valid bounds
+        CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
     }
 
 public void OnJump(InputValue Value)
