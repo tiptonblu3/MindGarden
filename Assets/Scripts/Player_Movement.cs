@@ -24,6 +24,13 @@ public class Player_Movement : MonoBehaviour
     public float maxJumpTime = 0.5f; // Maximum time the player can hold the jump button to achieve higher jumps
 
     #region Update, FixedUpdate, LateUpdate, and start
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        // The cursor is automatically invisible when locked
+        Cursor.visible = false;
+
+    }
 
     private void Update()
     {
