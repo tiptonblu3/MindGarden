@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class TestButton : MonoBehaviour, IInteractable
-{
+public class InteractableTutorial : MonoBehaviour, IInteractable
+{ // This is a script thats a very basic button that changes color when you interact with it. 
+// Feel free to use this as a base for your own interactable objects, or to expand on it with your own ideas!
     int check = 0;
     void Awake()
     {

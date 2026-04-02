@@ -10,8 +10,11 @@ public class Player_Movement : MonoBehaviour
     public Rigidbody rb;
     public Transform cameraTransform;
     public Vector2 MoveInputVector;
+    public PlayerInput playerInput;
     public CinemachineCamera playerCam;
     private Vector2 lookInput;
+    private CinemachineInputAxisController axisController;
+    private CinemachineOrbitalFollow orbitalFollow;
 
     [Header("Player Variables")]
     public float speed = 7f;
@@ -20,11 +23,18 @@ public class Player_Movement : MonoBehaviour
 
     [Header("Interaction")]
     public IInteractable currentInteractable;
-
+    
+    [Header("Master Settings")]
+    [Range(0.1f, 10f)] public float masterSens = 2f; //for customizable sensitivity within settings
     [Header("Camera Settings")]
-    public float Sens = 2f; //senstivity for camera movement
+    public float verticalMatchRatio = 0.02f; //to make vertical movement match horizontal movement.
+    public float mouseWeight = 15f;       // Base strength for mouse
+    public float controllerWeight = 65f; //multiplier specifically for controllers
+    public float verticalScale = 1f;
+    public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
     public float fovTransitionSpeed = 5f; 
+
 
     [Header("Sprint Variables")]
     public float MaxStamina = 100f;
@@ -47,6 +57,20 @@ public class Player_Movement : MonoBehaviour
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
 
     #region Update, FixedUpdate, LateUpdate, and start
+    private void Start()
+{
+    // Find the orbital follow component on your Cinemachine Camera
+    if (playerCam != null)
+    {
+        orbitalFollow = playerCam.GetComponent<CinemachineOrbitalFollow>();
+    }
+    
+    // Ensure the playerInput is assigned (either via Inspector or code)
+    if (playerInput == null)
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
+}
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,6 +86,7 @@ public class Player_Movement : MonoBehaviour
         HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
         HandleCameraFOV();
+        ApplySensitivity();
     }
     
     void FixedUpdate()
@@ -130,6 +155,10 @@ public void OnSprint(InputValue value)
         }
     }
 
+    public void OnLook(InputValue value)
+    {
+        lookInput = value.Get<Vector2>();
+    }
 
 #endregion
 
@@ -172,10 +201,10 @@ private void HandleCameraFOV()
         return;
     }
 
-    // Calculate target: if sprinting, multiply the base. If not, just use base.
+    // if sprinting, multiply the base. If not, just use base.
     float targetFOV = isSprinting ? (normalFOV * 1.3f) : normalFOV;
 
-    // Smoothly lerp towards the dynamic target
+    // Smoothly transition towards the dynamic target
     playerCam.Lens.FieldOfView = Mathf.Lerp(playerCam.Lens.FieldOfView, targetFOV, fovTransitionSpeed * Time.deltaTime);
 }
 
@@ -183,9 +212,45 @@ private void HandleCameraFOV()
 
 #endregion
 
+private void ApplySensitivity()
+{
+    if (orbitalFollow == null) return;
+    bool isGamepad = playerInput != null && playerInput.currentControlScheme == "Gamepad";// Determine device & what multiplier to apply
+    if (lookInput.sqrMagnitude > 0.01f) 
+    {
+        // Check if the current input is coming from a Mouse or a Gamepad 
+        if (Gamepad.current != null && Gamepad.current.rightStick.ReadValue().sqrMagnitude > 0.01f)
+            isGamepad = true;
+        else
+            isGamepad = false;
+    }
+    
+    
+    
+    // Apply weight to adjust overal sensitivity based on device type.
+    float finalSens = isGamepad ? (masterSens * controllerWeight) : (masterSens * mouseWeight);
 
+    // Setup horizontal movement seperate
+    var hAxis = orbitalFollow.HorizontalAxis;
+    hAxis.Value += lookInput.x * finalSens * Time.deltaTime;
+    orbitalFollow.HorizontalAxis = hAxis;
 
-    #region Setups For movement
+    // Setup vertical movement seperate)
+    var vAxis = orbitalFollow.VerticalAxis;
+    float yInput = invertY ? -lookInput.y : lookInput.y;
+
+    // Makes up and down camera movement closer to horizontal camera movement
+    float vMove = yInput * (finalSens * verticalScale * verticalMatchRatio) * Time.deltaTime;
+    
+    vAxis.Value += vMove;
+    
+    // Keep the camera from getting stuck at the very top or bottom
+    vAxis.Value = Mathf.Clamp01(vAxis.Value);
+    
+    orbitalFollow.VerticalAxis = vAxis;
+}
+
+#region Setups For movement
 
 
 private void HandleMaxJump() // this will create the tiny jump effect by increasing gravity for a moment.
