@@ -38,12 +38,9 @@ public class Player_Movement : MonoBehaviour
     private float currentSpeedMultiplier;
 
     [Header("Jump Variables")]
-    public float JumpHeight = 7f;
-    public float jumpGravityScale = 2f;
-    public float MaxJumpHeight = 7f;
-    public float fallmultiplier = 2f;
-    [Range(0f, 1f)]
-    public float jumpSmoothing = 0.05f;
+    public float JumpHeight = 2f;
+    public float MaxJumpHeight = 15f;
+    public float fallmultiplier = 5f;
     private bool isHoldingJump;
     private bool isjumping;
     private float jumpTimeCounter;
@@ -71,7 +68,7 @@ public class Player_Movement : MonoBehaviour
     {
         ManageMovement();
         HandleMaxJump();
-        ApplyGravityLogic();
+        FallingGravity();
     }
     #endregion
 
@@ -163,72 +160,56 @@ private void ExecuteInteraction()
         {
             currentInteractable.Interact();
         }
-        else
-        {
-            // Regenerate stamina when not sprinting
-            CurrentStamina += StaminaRegenRate * Time.deltaTime;
-            currentSpeedMultiplier = 1f;
-        }
+    else
+        {}
+}
 
-        // Ensures stamina stays within valid bounds
-        CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
+#region Camera Settings
+private void HandleCameraFOV()
+{
+    if (playerCam == null) {
+        Debug.LogWarning("Player Camera reference is missing!");
+        return;
     }
 
-public void OnJump(InputValue Value)
-    {
-        isHoldingJump = Value.isPressed;
+    // Calculate target: if sprinting, multiply the base. If not, just use base.
+    float targetFOV = isSprinting ? (normalFOV * 1.3f) : normalFOV;
 
-        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump){
-            if (IsGrounded)
-                {
-                    isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
-                    jumpTimeCounter = maxJumpTime;
-
-                    float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
-                    
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
+    // Smoothly lerp towards the dynamic target
+    playerCam.Lens.FieldOfView = Mathf.Lerp(playerCam.Lens.FieldOfView, targetFOV, fovTransitionSpeed * Time.deltaTime);
+}
 
 
-                }
-        }
-        else
-            {
-                isjumping = false; // Stop the boost immediately when button is released
-            }
-        
-    }
+
+#endregion
+
+
+
+    #region Setups For movement
+
 
 private void HandleMaxJump() // this will create the tiny jump effect by increasing gravity for a moment.
+{
+// handles falling to make it at a faster speed
+if (isHoldingJump && isjumping)
     {
-    // handles falling to make it at a faster speed
-    if (isHoldingJump && isjumping)
+    if (jumpTimeCounter > 0)
         {
-        if (jumpTimeCounter > 0)
-            {
-                //Debug.DrawRay(transform.position, Vector3.up * 2, Color.green);
-                rb.AddForce(Vector3.up * MaxJumpHeight, ForceMode.Acceleration);
-                jumpTimeCounter -= Time.fixedDeltaTime; // Decrease the counter based on time passed
-            }
-            else
-            {
-                isjumping = false; // Stop the boost when max jump time is reached
-            }
+            //Debug.DrawRay(transform.position, Vector3.up * 2, Color.green);
+            rb.AddForce(Vector3.up * MaxJumpHeight, ForceMode.Acceleration);
+            jumpTimeCounter -= Time.fixedDeltaTime; // Decrease the counter based on time passed
+        }
+        else
+        {
+            isjumping = false; // Stop the boost when max jump time is reached
         }
     }
+}
 private void FallingGravity()
     {
-        // 1. Upward Gravity (Fast Ascent)
-        if (rb.linearVelocity.y > 0 && isjumping)
+        if (rb.linearVelocity.y < 0)
         {
-            float extraUpGravity = Physics.gravity.y * (jumpGravityScale - 1);
-            rb.AddForce(Vector3.up * extraUpGravity, ForceMode.Acceleration);
-        }
-        // 2. Downward Gravity (Fast Fall)
-        else if (rb.linearVelocity.y < 0)
-        {
-            float extraDownGravity = Physics.gravity.y * (fallmultiplier - 1);
-            rb.AddForce(Vector3.up * extraDownGravity, ForceMode.Acceleration);
+            rb.AddForce(Vector3.up * Physics.gravity.y * (fallmultiplier - 1), ForceMode.Acceleration);
         }
     }
 
