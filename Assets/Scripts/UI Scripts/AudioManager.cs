@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
     public void SetMasterVolume(float value)
     {
         value = Mathf.Clamp(value, 0.0001f, 1f);
-        audioMixer.SetFloat("Master", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
     }
 
     public void SetBGMVolume(float value)
