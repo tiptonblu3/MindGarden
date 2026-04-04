@@ -1,15 +1,17 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioSettings : MonoBehaviour
 {
     private static readonly string MasterVolumePref = "MasterVolumePref";
     private static readonly string BGMVolumePref = "BGMVolumePref";
     private static readonly string SoundEffectsVolumePref = "SoundEffectsVolumePref";
+
     private float MasterVolume;
     private float BGMVolume;
     private float soundEffectsVolume;
-    public AudioSource BGMSource;
-    public AudioSource[] soundEffectsAudio;
+
+    public AudioMixer audioMixer;
 
     void Awake()
     {
@@ -19,25 +21,36 @@ public class AudioSettings : MonoBehaviour
 
     private void LoadSettings()
     {
-        // Will load the saved volume value.
         MasterVolume = PlayerPrefs.GetFloat(MasterVolumePref);
         BGMVolume = PlayerPrefs.GetFloat(BGMVolumePref);
         soundEffectsVolume = PlayerPrefs.GetFloat(SoundEffectsVolumePref);
-
     }
 
     private void ApplyVolume()
     {
-        // Apply master volume scaling to everything else
-        float finalBGM = MasterVolume * BGMVolume;
-        float finalSFX = MasterVolume * soundEffectsVolume;
+        SetMasterVolume(MasterVolume);
+        SetBGMVolume(BGMVolume);
+        SetSFXVolume(soundEffectsVolume);
+    }
 
-        // Apply new values
-        BGMSource.volume = finalBGM;
+    // AudioMixers will use int values for decibels insteas of just 0-100% values,
+    // so you have to convert the value so the mixer will read it correctly.
+    // (Same as AudioManager, but for saving the value)
+    private void SetMasterVolume(float value)
+    {
+        value = Mathf.Clamp(value, 0.0001f, 1f);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+    }
 
-        for (int i = 0; i < soundEffectsAudio.Length; i++)
-        {
-            soundEffectsAudio[i].volume = finalSFX;
-        }
+    private void SetBGMVolume(float value)
+    {
+        value = Mathf.Clamp(value, 0.0001f, 1f);
+        audioMixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+    }
+
+    private void SetSFXVolume(float value)
+    {
+        value = Mathf.Clamp(value, 0.0001f, 1f);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
     }
 }

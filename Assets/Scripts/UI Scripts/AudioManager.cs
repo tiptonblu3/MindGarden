@@ -31,11 +31,20 @@ public class AudioManager : MonoBehaviour
 
         if (firstPlayInt == 0)
         {
+            // default volume values on first play
             MasterVolume = .75f;
             BGMVolume = 0.25f;
             soundEffectsVolume = 0.75f;
+
+            // Set sliders
+            MasterVolumeSlider.value = MasterVolume;
             BGMVolumeSlider.value = BGMVolume;
             soundEffectsSlider.value = soundEffectsVolume;
+
+            // Apply to mixer (!!!!! took me forever)
+            SetMasterVolume(MasterVolume);
+            SetBGMVolume(BGMVolume);
+            SetSFXVolume(soundEffectsVolume);
 
             // Saves the volume and takes the user out of FirstPlay.
             PlayerPrefs.SetFloat("MasterVolumePref", MasterVolume);
@@ -75,6 +84,7 @@ public class AudioManager : MonoBehaviour
         SetMasterVolume(MasterVolumeSlider.value);
         SetBGMVolume(BGMVolumeSlider.value);
         SetSFXVolume(soundEffectsSlider.value);
+        SaveSoundSettings();
     }
 
     // AudioMixers will use int values for decibels insteas of just 0-100% values,
