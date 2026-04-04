@@ -39,7 +39,15 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     public void PreviousRecord()
     {
-        CurrentRecordIndex = (CurrentRecordIndex - 1) % records.Count; // Move to the Previous record, loop back to the end if at the start
+        if (CurrentRecordIndex == 0)
+        {
+            CurrentRecordIndex = records.Count - 1; // Move to the last record if currently at the first record
+        }
+        else
+        {
+            CurrentRecordIndex = (CurrentRecordIndex - 1) % records.Count; // Move to the Previous record, loop back to the end if at the start
+        }
+        
         Debug.Log("Selected Record: " + records[CurrentRecordIndex]); // Log the currently selected record
     }
 
