@@ -52,6 +52,7 @@ public class Player_Movement : MonoBehaviour
     public float JumpHeight = 2f;
     public float MaxJumpHeight = 15f;
     public float fallmultiplier = 5f;
+    public bool CanJump = true; //can be disabled so that the player can't jump in certain situations, such as being in the air or interacting with something.
     private bool isHoldingJump;
     private bool isjumping;
     private float jumpTimeCounter;
@@ -133,7 +134,7 @@ public void OnSprint(InputValue value)
     public void OnJump(InputValue Value)
     {
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump){
+        if (isHoldingJump && CanJump){
             if (IsGrounded)
                 {
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
