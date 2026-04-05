@@ -17,10 +17,7 @@ public class RythmGameSetup : MonoBehaviour
 
     public void MovePlayerToStart()
     {
-                if (currentPlatform != null)
-                {
-                    Destroy(currentPlatform);
-                }
+                RemoveOldPlatform();
                 // Move the Player to the start point
                 playerObject.transform.position = StartPosition;
                 Rigidbody rb = GetComponent<Rigidbody>();
@@ -32,12 +29,15 @@ public class RythmGameSetup : MonoBehaviour
             Vector3 platformSpawnPos = StartPosition;
             platformSpawnPos.y -= 3f; // Subtract from the Y value directly
             currentPlatform = Instantiate(Platform, platformSpawnPos, Quaternion.identity);
-
-
-
-                
     }
 
+    public void RemoveOldPlatform()
+    {
+        if (currentPlatform != null)
+                {
+                    Destroy(currentPlatform);
+                }
+    }
 
     public void Update()
     {
