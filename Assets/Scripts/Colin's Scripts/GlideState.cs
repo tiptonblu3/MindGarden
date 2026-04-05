@@ -22,7 +22,7 @@ public class GlideState : MonoBehaviour
     // For gliding stamina
     [Header("Glide Timer")]
     public float maxGlideTime = 10f;
-    private float currentGlideTime;
+    [SerializeField] private float currentGlideTime;
 
     #endregion
 
