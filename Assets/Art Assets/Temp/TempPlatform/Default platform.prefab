@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8561447595122940334
+--- !u!1001 &3559565958460971406
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.063612
+      value: -19.508753
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7617416
+      value: 12.117443
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.91638
+      value: 10.808375
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51,10 +51,10 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c76070f919a1f3241a6acf47f088bb81, type: 2}
+      objectReference: {fileID: 2100000, guid: d308c21358f9cc6409d41bb2ad88575d, type: 2}
     - target: {fileID: 919132149155446097, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       propertyPath: m_Name
-      value: BluePlatformModel
+      value: Default platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,23 +62,20 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4773235199390470752}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6109384936008338712}
+      addedObject: {fileID: 3402036800602314480}
   m_SourcePrefab: {fileID: 100100000, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
---- !u!1 &8795871933571917055 stripped
+--- !u!1 &4442651158857557215 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
-  m_PrefabInstance: {fileID: 8561447595122940334}
+  m_PrefabInstance: {fileID: 3559565958460971406}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &4773235199390470752
+--- !u!64 &3402036800602314480
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8795871933571917055}
+  m_GameObject: {fileID: 4442651158857557215}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -94,17 +91,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5076798556035486163, guid: 22231ef55361d8a419fc0d4136c2195c, type: 3}
---- !u!114 &6109384936008338712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8795871933571917055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd09ad0d03b71746a5e2b86b3f0b082, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DancePlatform
-  GameStart: 0
-  targetPos: {x: 0, y: 0, z: 0}

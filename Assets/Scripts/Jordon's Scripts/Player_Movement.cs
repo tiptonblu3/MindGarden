@@ -15,6 +15,7 @@ public class Player_Movement : MonoBehaviour
     private Vector2 lookInput;
     private CinemachineInputAxisController axisController;
     private CinemachineOrbitalFollow orbitalFollow;
+    
 
     [Header("Player Variables")]
     public float speed = 7f;
