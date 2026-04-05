@@ -312,9 +312,12 @@ private void HandleStamina()
     // Ensures stamina stays within valid bounds
     CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
 }
-#endregion
+    #endregion
 
-
-
+    // FOR GLIDE STATE - SORRY I HAD TO TOUCH THIS SCRIPT
+    public bool IsHoldingJump()
+    {
+        return isHoldingJump;
+    }
 }
 

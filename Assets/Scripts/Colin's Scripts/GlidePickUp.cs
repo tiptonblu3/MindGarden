@@ -1,27 +1,68 @@
 using UnityEngine;
 
-public class GlidePickUp : MonoBehaviour
+public class GlidePickUp : MonoBehaviour, IInteractable
 {
-    // References
+
+    // Variables
     #region
 
-    private GliderState playerInRange;
+    // Makes sure the power up can only be picked up once
+    public bool canBePickedUp = true;
+    public bool IsGlideUnlocked = false;
+
+    // Makes object intangable when picked up (Not destroyed so it can still be referenced)
+    private Collider objectCollider;
+    private Renderer objectRenderer;
 
     #endregion
 
-    // OnTriggerEnter
+    // Awake
     #region
 
-    // Detects if the player is touching the Glide
-    private void OnTriggerEnter(Collider other)
+    // Gets the components
+    private void Awake()
     {
-        if (other.TryGetComponent<GliderState>(out GliderState player))
-        {
-            playerInRange = player;
-        }
+        objectCollider = GetComponent<Collider>();
+        objectRenderer = GetComponent<Renderer>();
     }
 
     #endregion
 
-    //
+    // Interact
+    #region
+
+    // Checks if the player can pick up the glide
+    // If grabbed, disable
+    public void Interact()
+    {
+        if (!canBePickedUp)
+        {
+            Debug.Log("Cannot pick up");
+            return;
+        }
+
+        Debug.Log("Picked up!");
+
+        DisableObject();
+    }
+
+    #endregion
+
+    // DisableObject
+    #region
+
+    // Disables object visually when grabbed
+    private void DisableObject()
+    {
+        canBePickedUp = false;
+        IsGlideUnlocked = true;
+        
+        if (objectRenderer != null)
+            objectRenderer.enabled = false;
+
+        if (objectCollider != null)
+            objectCollider.enabled = false;
+    }
+
+    #endregion
 }
