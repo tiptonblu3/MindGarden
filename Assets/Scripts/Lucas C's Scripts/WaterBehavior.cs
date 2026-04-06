@@ -29,7 +29,7 @@ public class WaterBehavior : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //playerController.CanJump = true;
+            //playerController.CanJump = false;
             //playerController.speed = playerController.speed * underwaterSpeedMultiplier;
         }
     }
@@ -37,7 +37,7 @@ public class WaterBehavior : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //playerController.CanJump = false;
+            //playerController.CanJump = true;
             //playerController.speed = originalPlayerSpeed;
         }
     }
