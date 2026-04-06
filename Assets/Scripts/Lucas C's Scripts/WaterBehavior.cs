@@ -22,7 +22,23 @@ public class WaterBehavior : MonoBehaviour
 
     void Update()
     {
-        //if (playerController.isUnderwater){playerController.speed = playerController.speed * underwaterSpeedMultiplier;}
-        //else{playerController.speed = originalPlayerSpeed;}
+
+    }
+
+    OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            //playerController.CanJump = true;
+            //playerController.speed = playerController.speed * underwaterSpeedMultiplier;
+        }
+    }
+    OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            //playerController.CanJump = false;
+            //playerController.speed = originalPlayerSpeed;
+        }
     }
 }
