@@ -48,6 +48,7 @@ public class Player_Movement : MonoBehaviour
     private bool isExhausted;
     private float currentSpeedMultiplier;
 
+
     [Header("Jump Variables")]
     public float JumpHeight = 2f;
     public float MaxJumpHeight = 15f;
@@ -281,16 +282,16 @@ private void FallingGravity()
     }
 
 private void HandleStamina()
-{
-    //disables sprint if stopped moving or ran out of air
-    if ((isSprinting && MoveInputVector.magnitude < 0.1f) || CurrentStamina <= 0)
-        {
-            isSprinting = false;
-        }
+    { 
+        bool isTryingToSprint = Keyboard.current.leftShiftKey.isPressed && CurrentStamina > 0 && !isExhausted;
+        isSprinting = isTryingToSprint && MoveInputVector.magnitude > 0.0f;
+        //disables sprint if stopped moving or ran out of air
+        
     // If stamina reaches zero, mark player as exhausted
     if (CurrentStamina <= 0)
         {
             isExhausted = true;
+            isSprinting = false; // force stop if exhausted
         }
 
     // Recover from exhaustion once stamina reaches the threshold
@@ -300,7 +301,7 @@ private void HandleStamina()
         }
 
     // Drain stamina if sprinting, moving, and not exhausted
-    if (isSprinting && MoveInputVector.magnitude > 0 && CurrentStamina > 0 && !isExhausted)
+    if (isSprinting )
         {
             CurrentStamina -= StaminaDrainRate * Time.deltaTime;
             currentSpeedMultiplier = SprintMultiplier;
