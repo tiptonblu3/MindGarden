@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Scenes/Tutorial.unity
     guid: 6653e776a29a39e43a64ecc08494dcf2
+  - enabled: 1
+    path: Assets/Scenes/Testing Scenes/ArtTestPrototype.unity
+    guid: 2328eda3b6508424b9cc4852e65a5350
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
