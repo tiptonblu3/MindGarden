@@ -1459,6 +1459,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828dae4687f9ed4468dba26dcd29e951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecordPlayer
+--- !u!1 &1115709345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115709347}
+  - component: {fileID: 1115709346}
+  m_Layer: 0
+  m_Name: Saver Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1115709346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115709345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41b6231e8a585342abd7dd2d84c0f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FallSaver
+  playerTransform: {fileID: 1641259656}
+  fallThresholdY: -10
+  beamToHeightY: 10
+  beamSpeed: 10
+  pullSpeed: 15
+--- !u!4 &1115709347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115709345}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1140968094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2003,6 +2052,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e884528cc956c43ac8c8834d26bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_Movement
+--- !u!4 &1641259656 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7283088717842401466, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+  m_PrefabInstance: {fileID: 1162625604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1652758544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,6 +3425,7 @@ SceneRoots:
   - {fileID: 6883301451305844286}
   - {fileID: 1162625604}
   - {fileID: 707703622}
+  - {fileID: 1115709347}
   - {fileID: 1140968097}
   - {fileID: 868257225}
   - {fileID: 1324610362}
