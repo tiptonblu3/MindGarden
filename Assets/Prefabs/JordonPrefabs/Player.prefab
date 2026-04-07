@@ -65,6 +65,8 @@ MonoBehaviour:
   MoveInputVector: {x: 0, y: 0}
   playerInput: {fileID: 6025597851950286923}
   playerCam: {fileID: 2107859023092816168}
+  slipperyMat: {fileID: 13400000, guid: 25a247a556eb3864598d182a710eb1f7, type: 2}
+  NormalMat: {fileID: 13400000, guid: 437ac70cfc789984a8313683ecdf34df, type: 2}
   speed: 7
   IsGrounded: 0
   rotationSpeed: 320
@@ -307,8 +309,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6337336702202687944}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910755, y: -0, z: -0, w: 0.9819564}
-  m_LocalPosition: {x: -9.998, y: 2.2, z: -33.5}
+  m_LocalRotation: {x: 0.18910757, y: 0, z: 0, w: 0.9819564}
+  m_LocalPosition: {x: 0, y: 1.5386276, z: -3.846569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -347,7 +349,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 69
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -478,7 +480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6399379396314771916}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910755, y: -0, z: -0, w: 0.9819564}
+  m_LocalRotation: {x: 0.18910752, y: 0.000000003275586, z: 0.0000000030959781, w: 0.9819564}
   m_LocalPosition: {x: 0, y: 2.2, z: -5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
