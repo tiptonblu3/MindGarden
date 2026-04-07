@@ -1172,13 +1172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5166eee65aa567f4e8621c25ab8b5c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowcaseBucket
-  targetImage: {fileID: 1731917787}
-  state1: {fileID: 21300000, guid: 596228813cf01894eb14b36d223113f4, type: 3}
-  state2: {fileID: 21300000, guid: a199962786dbab14598aff932df0cfd3, type: 3}
-  statefull: {fileID: 21300000, guid: 2157805db38674049b1a23e6f51c7039, type: 3}
-  baseImage: {fileID: 21300000, guid: f35e4bded4a0f1c4a88b9312dbbbadf6, type: 3}
-  waterObject: {fileID: 1462291999}
-  fillLevel: 0
 --- !u!114 &859525937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,7 +1756,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5601639891598765506, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1781,34 +1775,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.5000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.4999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.49999994
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 450
-      objectReference: {fileID: 0}
-    - target: {fileID: 4532889207299139153, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
-      objectReference: {fileID: 0}
     - target: {fileID: 5976042078197157517, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.77
@@ -1849,10 +1815,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 270
       objectReference: {fileID: 0}
-    - target: {fileID: 7534149489198905508, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 57cb7073a475da2468d6408640cc5f2c, type: 2}
     - target: {fileID: 7721236369223368650, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
       propertyPath: m_Name
       value: TEMPSmallPipe
@@ -1860,47 +1822,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7721236369223368650, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1459803321}
-    - targetCorrespondingSourceObject: {fileID: 7721236369223368650, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1459803322}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
---- !u!1 &1459803315 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7721236369223368650, guid: 0340850386b86d340a8a2211541a05c9, type: 3}
-  m_PrefabInstance: {fileID: 1459803314}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1459803321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459803315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101ddf8f97d42094abfd38e5e4b5881d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PipeTurn2
-  pipeBehavior: {fileID: 1459803322}
---- !u!114 &1459803322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459803315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88b2d4a11d261f4d8853492ecff2798, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaterPipeBehavior
-  rotationGoal: 0
-  currentRotation: 0
-  PipeRotateTime: 1
 --- !u!1001 &1462291998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1909,18 +1832,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5842785263295375262, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8549640873131375168, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4.0781846
-      objectReference: {fileID: 0}
-    - target: {fileID: 8549640873131375168, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5.4801
-      objectReference: {fileID: 0}
     - target: {fileID: 8549640873131375168, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.88
@@ -1965,8 +1876,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: TEMPWaterForTesting
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5601639891598765506, guid: c0207ceee79037543a72b95f38b6da6d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
