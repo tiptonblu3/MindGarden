@@ -1,22 +1,30 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine;
 
-public class ValveBehavior : MonoBehaviour
+public class ValveTurn : MonoBehaviour, IInteractable
 {
+    
+    public void Interact()
+    {
+        Debug.Log("Valve Activated");
+        ToggleValve();
+
+    }
+
     public bool valveActive = false; //can be adjusted to whatever needed.
-    public float valveSwitchTime; // Time it takes to switch the valve state (1<X = faster, 0<X<1 = slower, 0 = instant)
+    public float valveSwitchTime = 1; // Time it takes to switch the valve state (1<X = faster, 0<X<1 = slower, 0 = instant)
     public GameObject waterObject; // used to show it's functionality, made to be removed as a referebce
 
     void Start()
     {
-        ToggleValve(); 
+        ToggleValve();
     }
     public void ToggleValve() // Toggle the valve state
     {
         valveActive = !valveActive;
-        StartCoroutine(AnimateValveToggle ());
+        StartCoroutine(AnimateValveToggle());
         Debug.Log("Valve is now " + (valveActive ? "active" : "inactive"));
     }
 
@@ -47,3 +55,5 @@ public class ValveBehavior : MonoBehaviour
         }
     }
 }
+
+

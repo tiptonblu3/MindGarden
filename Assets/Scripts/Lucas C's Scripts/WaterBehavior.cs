@@ -7,7 +7,7 @@ public class WaterBehavior : MonoBehaviour
 {
     public float waterOpacity = 0.5f; //can be adjusted to whatever needed.
     public float underwaterSpeedMultiplier = 0.5f; //can be adjusted to whatever needed.
-    private GameObject playerController;
+    private Player_Movement playerController;
     private float originalPlayerSpeed;
 
     void Start()
@@ -25,20 +25,20 @@ public class WaterBehavior : MonoBehaviour
 
     }
 
-    OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //playerController.CanJump = false;
-            //playerController.speed = playerController.speed * underwaterSpeedMultiplier;
+            playerController.CanJump = false;
+            playerController.speed = playerController.speed * underwaterSpeedMultiplier;
         }
     }
-    OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //playerController.CanJump = true;
-            //playerController.speed = originalPlayerSpeed;
+            playerController.CanJump = true;
+            playerController.speed = originalPlayerSpeed;
         }
     }
 }

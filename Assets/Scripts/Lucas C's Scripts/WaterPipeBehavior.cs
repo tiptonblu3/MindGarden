@@ -7,7 +7,7 @@ public class WaterPipeBehavior : MonoBehaviour
 {
     public float rotationGoal; // The target rotation angle for the pipe (can be either 0, 90, 180, or 270)
     public float currentRotation; // The current rotation angle of the pipe
-    public float PipeRotateTime; // Time it takes to rotate the pipe (1<X = faster, 0<X<1 = slower, 0 = instant)
+    public float PipeRotateTime = 1.0f; // Time it takes to rotate the pipe (1<X = faster, 0<X<1 = slower, 0 = instant)
     private Renderer pipeRenderer;
 
     void Start()
