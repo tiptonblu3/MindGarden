@@ -15,7 +15,10 @@ public class Player_Movement : MonoBehaviour
     private Vector2 lookInput;
     private CinemachineInputAxisController axisController;
     private CinemachineOrbitalFollow orbitalFollow;
-    
+    public PhysicsMaterial slipperyMat; 
+    public PhysicsMaterial NormalMat;
+    private Collider playerCollider;
+
 
     [Header("Player Variables")]
     public float speed = 7f;
@@ -76,6 +79,11 @@ public class Player_Movement : MonoBehaviour
 }
     private void Awake()
     {
+        #region Get Components
+        playerCollider = GetComponent<Collider>();
+        playerInput = GetComponent<PlayerInput>();
+        #endregion
+
         Cursor.lockState = CursorLockMode.Locked;
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
@@ -85,11 +93,12 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.3f);
         HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
         HandleCameraFOV();
         ApplySensitivity();
+        HandleFriction();
     }
     
     void FixedUpdate()
@@ -315,6 +324,23 @@ private void HandleStamina()
     // Ensures stamina stays within valid bounds
     CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
 }
+    private void HandleFriction()
+    {
+        if (playerCollider == null) return;
+
+        // If grounded and not moving
+        if (IsGrounded && MoveInputVector.magnitude < 0.01f)
+        {
+            // Apply high friction so we don't slide down bridges
+            playerCollider.material = NormalMat;
+            
+        }
+        else
+        {
+            // We are either moving or in the air: be slippery to avoid wall-clumping
+            playerCollider.material = slipperyMat;
+        }
+    }
     #endregion
 
     // FOR GLIDE STATE - SORRY I HAD TO TOUCH THIS SCRIPT
