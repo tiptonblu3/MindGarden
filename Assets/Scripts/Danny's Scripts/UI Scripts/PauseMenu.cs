@@ -23,8 +23,10 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void Pause()
-    {
+    { 
+        if (Record != null){
         Record.CloseRecordSelect(); // Ensure the record selection menu is closed when pausing
+        }
         isPaused = true;
         Time.timeScale = 0f;
         // Stop player movement.
