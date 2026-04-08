@@ -4,7 +4,9 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public RecordPlayer Record;
     public GameObject SettingsMenu;
+    
     [SerializeField] private Player_Movement PlayerMovement;
 
     private bool isPaused;
@@ -22,6 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Pause()
     {
+        Record.CloseRecordSelect(); // Ensure the record selection menu is closed when pausing
         isPaused = true;
         Time.timeScale = 0f;
         // Stop player movement.

@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Final Scenes/Tutorial.unity
     guid: 6653e776a29a39e43a64ecc08494dcf2
   - enabled: 1
+    path: Assets/Scenes/Final Scenes/GameplayTestScene.unity
+    guid: addd796cafbe9a24a9e8b47f2628d959
+  - enabled: 1
     path: Assets/Scenes/Final Scenes/ArtTestPrototype.unity
     guid: 2328eda3b6508424b9cc4852e65a5350
   m_configObjects:

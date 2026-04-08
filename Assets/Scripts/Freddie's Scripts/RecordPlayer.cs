@@ -5,7 +5,7 @@ using TMPro;
 public class RecordPlayer : MonoBehaviour, IInteractable
 {
     public GameObject RecordSelect;
-    
+    public PauseMenu Pause;
 
     public void Interact()
     {
@@ -62,6 +62,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         GameObject RecordID = records[CurrentRecordIndex]; // Find the GameObject with the name of the Record
         RecordID.SetActive(true); // Activate the GameObject to play the record
         OldRecordID = RecordID; // Set the currently played record as the old record for the next time a record is played
+        CloseRecordSelect(); // Close the record selection menu
     }
     
     
