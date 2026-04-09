@@ -3230,8 +3230,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager Var
       objectReference: {fileID: 0}
+    - target: {fileID: 1580560642648742803, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
+      propertyPath: m_Name
+      value: PauseMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927137696167126605, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
+      propertyPath: BGMVolumeSlider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927137696167126605, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
+      propertyPath: MasterVolumeSlider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927137696167126605, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
+      propertyPath: soundEffectsSlider
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2897845763174852183, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e69a25309b411746b5f0c830f770630, type: 3}
