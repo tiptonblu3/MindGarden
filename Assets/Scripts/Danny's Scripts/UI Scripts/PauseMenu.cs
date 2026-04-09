@@ -61,9 +61,10 @@ public class PauseMenu : MonoBehaviour
 
         if (playerMovement != null)
             playerMovement.enabled = true;
-
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+        if (settingsMenu != null)
+            settingsMenu.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
