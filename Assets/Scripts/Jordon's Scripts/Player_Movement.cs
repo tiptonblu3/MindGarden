@@ -24,6 +24,7 @@ public class Player_Movement : MonoBehaviour
     public float speed = 7f;
     public bool IsGrounded;
     public float rotationSpeed = 320f;
+    public bool isDead = false;
 
     [Header("Interaction")]
     public IInteractable currentInteractable;

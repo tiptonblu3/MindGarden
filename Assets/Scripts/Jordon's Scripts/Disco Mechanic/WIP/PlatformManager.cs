@@ -24,7 +24,15 @@ public class PlatformManager : MonoBehaviour
 
     private float lastSpawnTime;
 
-public void StartDiscoSequence()
+    void Update()
+    {
+        // If the disco is active, keep trying to generate steps
+        //if (sequenceActive)
+        //{
+        //    GenerateNextStep();
+        //}
+    }
+    public void StartDiscoSequence()
     {
                 // Move the Player to the start point
                 playerObject.transform.position = StartPosition;
@@ -43,9 +51,11 @@ public void StartDiscoSequence()
             Vector3 platformSpawnPos = new Vector3(StartPosition.x, StartPosition.y - verticalDrop, StartPosition.z);
             
             StartPlatform.transform.position = platformSpawnPos;
-            
-            GenerateNextStep();
-    }
+
+
+        //sequenceActive = true;
+        GenerateNextStep();
+}
 
 public void GenerateNextStep()
     {
