@@ -3,13 +3,25 @@ using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenu;
-    public RecordPlayer Record;
-    public GameObject SettingsMenu;
-    
-    [SerializeField] private Player_Movement PlayerMovement;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject settingsMenu;
 
+    private RecordPlayer record;
+    private Player_Movement playerMovement;
     private bool isPaused;
+
+    void Awake()
+    {
+        record = FindAnyObjectByType<RecordPlayer>();
+        playerMovement = FindAnyObjectByType<Player_Movement>();
+
+        if (playerMovement == null)
+            Debug.LogWarning("PauseMenu: Player_Movement not found in scene!");
+        if (pauseMenu == null)
+            Debug.LogWarning("PauseMenu: pauseMenu reference not assigned!");
+        if (settingsMenu == null)
+            Debug.LogWarning("PauseMenu: settingsMenu reference not assigned!");
+    }
 
     void Update()
     {
@@ -23,17 +35,21 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void Pause()
-    { 
-        if (Record != null){
-        Record.CloseRecordSelect(); // Ensure the record selection menu is closed when pausing
+    {
+        if (record != null)
+        {
+            // Closes the Record Select screen if it's open when the player tries to pause.
+            record.CloseRecordSelect();     
         }
+
         isPaused = true;
         Time.timeScale = 0f;
-        // Stop player movement.
-        if (PlayerMovement != null)
-            PlayerMovement.enabled = false;
+
+        if (playerMovement != null)
+            playerMovement.enabled = false;
 
         pauseMenu.SetActive(true);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -43,11 +59,13 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
-        if (PlayerMovement != null)
-            PlayerMovement.enabled = true;
+        if (playerMovement != null)
+            playerMovement.enabled = true;
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+        if (settingsMenu != null)
+            settingsMenu.SetActive(false);
 
-        pauseMenu.SetActive(false);
-        SettingsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
