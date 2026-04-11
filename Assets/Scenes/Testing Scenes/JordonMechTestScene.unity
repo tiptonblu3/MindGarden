@@ -185,17 +185,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3901101972639849504, guid: 83a50a50ec956e441957a9c2c5ff6afc, type: 3}
   m_PrefabInstance: {fileID: 145372176}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &145372182 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1184888744259280047, guid: 83a50a50ec956e441957a9c2c5ff6afc, type: 3}
-  m_PrefabInstance: {fileID: 145372176}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145372177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c16fd36933f794181b64587d9c79bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PathStart
 --- !u!1 &282631350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,19 +3362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e9579811597ef40bf0c18fae7ad888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndLevel
-  LevelPieces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  platmanscript: {fileID: 7969308115055720165}
 --- !u!4 &3886007723387904058
 Transform:
   m_ObjectHideFlags: 0
@@ -4610,14 +4587,14 @@ MonoBehaviour:
   - {fileID: 482368669}
   playerTransform: {fileID: 1282834100}
   targetGoal: {fileID: 3228500751963037804}
-  PathBehaviorScript: {fileID: 1913767646}
-  PathStartScript: {fileID: 145372182}
   playerObject: {fileID: 1282834086}
   StartPlatform: {fileID: 145372177}
   StartPosition: {x: -30.71, y: 13.034, z: 12.50099}
   canSpawn: 1
-  sequenceActive: 1
-  cooldownTime: 1.5
+  spawnDirection: {x: -1, y: 0, z: 0}
+  sideDirection: {x: 0, y: 0, z: 1}
+  sequenceActive: 0
+  cooldownTime: 3
   forwardOffset: 8
   sideSpacing: 6
   stopDistance: 10

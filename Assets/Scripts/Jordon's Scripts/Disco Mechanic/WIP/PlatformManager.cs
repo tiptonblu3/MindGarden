@@ -7,33 +7,44 @@ public class PlatformManager : MonoBehaviour
     public List<PathBehavior> platforms; // List of all platforms in the scene to be able to pull from
     public Transform playerTransform; //to spawn the stuff in relation to the player
     public Transform targetGoal; //where to move to which would change based on the players position
-    public PathBehavior PathBehaviorScript;
-    public PathStart PathStartScript;
     public GameObject playerObject; // to move the player to the start position
     public GameObject StartPlatform; // start platform
     public Vector3 StartPosition = new Vector3(0, 0, 0);
     public bool canSpawn = true;
+
+    [Header("Direction Settings")]
+    // Set this in the inspector (e.g., X = 1, Y = 0, Z = 0 for the X-axis)
+    public Vector3 spawnDirection = new Vector3(1, 0, 0); 
+    public Vector3 sideDirection = new Vector3(0, 0, 1); // Used for the 3-wide spacing
     
     
     [Header("Platform Spawn Settings")]
-    public bool sequenceActive = true;
-    public float cooldownTime = 1.5f;
-    public float forwardOffset = 5f;
-    public float sideSpacing = 2.5f;
+    public bool sequenceActive = false;
+    public float cooldownTime = 2.5f;
+    public float forwardOffset = 8f;
+    public float sideSpacing = 6f;
     public float stopDistance = 10f; // Distance from goal to stop spawning
 
     private float lastSpawnTime;
+    private Vector3 lastSpawnAnchor;
+
+
+    private PathBehavior currentStandingPlatform;
 
     void Update()
     {
-        // If the disco is active, keep trying to generate steps
-        //if (sequenceActive)
-        //{
-        //    GenerateNextStep();
-        //}
+        //If the disco is active, keep trying to generate steps
+        if (sequenceActive)
+        {
+           GenerateNextStep();
+        }
     }
+
     public void StartDiscoSequence()
     {
+            currentStandingPlatform = null;
+            ResetAllPlatforms();
+
                 // Move the Player to the start point
                 playerObject.transform.position = StartPosition;
                 playerObject.transform.rotation = Quaternion.Euler(0, -90, 0);
@@ -43,28 +54,33 @@ public class PlatformManager : MonoBehaviour
                 if (rb != null) {
                     rb.linearVelocity = Vector3.zero; // Stop falling/moving
                     rb.angularVelocity = Vector3.zero; // Stops any spinning
-                    rb.position = StartPosition;    // Teleport the physics body
-                    rb.rotation = playerObject.transform.rotation;
+                    // rb.position = StartPosition;    // Teleport the physics body
+                    // rb.rotation = playerObject.transform.rotation;
                 }
 
-            float verticalDrop = 1.5f; 
-            Vector3 platformSpawnPos = new Vector3(StartPosition.x, StartPosition.y - verticalDrop, StartPosition.z);
-            
-            StartPlatform.transform.position = platformSpawnPos;
+        float verticalDrop = 1.5f; 
+        Vector3 platformSpawnPos = new Vector3(StartPosition.x, StartPosition.y - verticalDrop, StartPosition.z);
+        StartPlatform.transform.position = platformSpawnPos;
 
 
-        //sequenceActive = true;
-        GenerateNextStep();
+        lastSpawnAnchor = platformSpawnPos;
+        sequenceActive = true;
+        lastSpawnTime = Time.time;
 }
 
 public void GenerateNextStep()
     {
-        Debug.Log("Generating next step...");
+        // Debug.Log("Generating next step...");
         // Check if the player reaches the end of the level area
         if (!sequenceActive) return;
+        if (Time.time < lastSpawnTime + cooldownTime) return;        // Checks for the cooldown
 
-        // Checks for the cooldown
-        if (Time.time < lastSpawnTime + cooldownTime) return;
+        if (currentStandingPlatform != null)
+        {
+            currentStandingPlatform.HideArrow();
+        }
+
+
 
         // Checks if player has passed the finish line in order to stop spawning platforms
         float distanceToGoal = Vector3.Distance(playerTransform.position, targetGoal.position);
@@ -77,48 +93,54 @@ public void GenerateNextStep()
 
         // Set last spawn time based on current input
         lastSpawnTime = Time.time;
+        lastSpawnAnchor += spawnDirection.normalized * forwardOffset;
 
-        // Shuffle and pick 3 platforms
-        List<PathBehavior> pool = new List<PathBehavior>(platforms);
-        for (int i = 0; i < pool.Count; i++) {
-            PathBehavior temp = pool[i];
-            int randomIndex = Random.Range(i, pool.Count);
-            pool[i] = pool[randomIndex];
-            pool[randomIndex] = temp;
+        // Only pick from the not used list
+        List<PathBehavior> availablePool = new List<PathBehavior>(); 
+        foreach (var plat in platforms)
+        {
+            if (plat != currentStandingPlatform)
+            {
+                availablePool.Add(plat);
+            }
         }
+
+        
+
+
+        //shuffle from available options and not from used options
+        for (int i = 0; i < availablePool.Count; i++) { 
+            PathBehavior temp = availablePool[i];
+            int randomIndex = Random.Range(i, availablePool.Count);
+            availablePool[i] = availablePool[randomIndex];
+            availablePool[randomIndex] = temp;
+        }
+
 
         int correctIndex = Random.Range(0, 3);
 
+        //spawn next row
         for (int i = 0; i < 3; i++)
         {
-            // Reset the platforms that were NOT chosen back to home
-            if (i == 0) ResetAllUnused(pool);
             bool isRightOption = (i == correctIndex);
-
-            Vector3 spawnPos = playerTransform.position + (playerTransform.forward * forwardOffset);
-            spawnPos += playerTransform.right * ((i - 1) * sideSpacing);
-            spawnPos.y = playerTransform.position.y;
-            
-
-            pool[i].transform.position = spawnPos;
-            pool[i].SetPlatform(isRightOption); //transfers the bool to the platform to set the collider 
+            Vector3 spawnpos = lastSpawnAnchor + (sideDirection.normalized* ((i - 1) * sideSpacing));
+            spawnpos.y = lastSpawnAnchor.y;
 
 
-        }
-    }
+            availablePool[i].transform.position = spawnpos;
+            availablePool[i].SetPlatform(isRightOption);
 
-    private void ResetAllUnused(List<PathBehavior> activePool)
-    {
-        
-        // This ensures the 4th platform (not picked) goes home
-        foreach (var plat in platforms)
-        {
-            if (!activePool.GetRange(0, 3).Contains(plat))
+
+            // position platform relative to the achor point
+            if (isRightOption)
             {
-                plat.ResetPlatform();
+                currentStandingPlatform = availablePool[i];
             }
         }
+
     }
+
+
     public void ResetAllPlatforms()
     {
         foreach (var plat in platforms)

@@ -38,4 +38,11 @@ public class PathBehavior : MonoBehaviour
             MyDirectionalArrow.SetActive(false);
         }
     }
+
+    public void HideArrow()
+    {
+        if (MyDirectionalArrow != null) MyDirectionalArrow.SetActive(false);
+    }
+
+
 }
