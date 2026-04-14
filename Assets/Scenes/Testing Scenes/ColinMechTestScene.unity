@@ -1224,6 +1224,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 52.68
       objectReference: {fileID: 0}
+    - target: {fileID: 4831424970237164966, guid: 227797f5c78633c4282511d627fa4dd9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530547214962692249, guid: 227797f5c78633c4282511d627fa4dd9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8347621205139647823, guid: 227797f5c78633c4282511d627fa4dd9, type: 3}
       propertyPath: m_Name
       value: TestFanPlatformDiag
