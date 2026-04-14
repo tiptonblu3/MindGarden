@@ -9,8 +9,8 @@ public class Fans : MonoBehaviour
     public float pushForce = 15f;
     public float maxPushSpeed = 10f;
 
-    // Boolean that determines if the fan is facing upwards
-    public bool isFacingUpwards = true;
+    // To fix the diagonal fans
+    public bool isDiagonal = false;
 
     // For controlling the color of the trigger.
     public Color triggerColorSolid = Color.green;
@@ -30,35 +30,43 @@ public class Fans : MonoBehaviour
 
             if (rb != null)
             {
-                Collider col = GetComponent<Collider>();
                 Vector3 velocity = rb.linearVelocity;
 
-                float topY = col.bounds.max.y;
-                float playerY = other.transform.position.y;
+                // Direction of fan
+                Vector3 fanDirection = transform.up.normalized;
 
-                // Stop upward motion at top of fan
-                if (playerY >= topY && isFacingUpwards)
+                // Turn off gravity
+                if (isDiagonal)
                 {
-                    velocity.y = 0f;
-                    rb.linearVelocity = velocity;
-                    return;
-                }
-
-                // Cancel downward velocity
-                if (velocity.y < 0 && isFacingUpwards)
-                {
-                    velocity.y = 0f;
-                    rb.linearVelocity = velocity;
-                }
-
-                // Apply upward force
-                if (velocity.y < maxPushSpeed)
-                {
-                    rb.AddForce(transform.up * pushForce, ForceMode.Acceleration);
+                    rb.AddForce(-Physics.gravity, ForceMode.Acceleration);
                 }
                 else
                 {
-                    velocity.y = maxPushSpeed;
+                    Vector3 gravity = Physics.gravity;
+                    float gravityAlongFan = Vector3.Dot(gravity, fanDirection);
+                    rb.AddForce(-fanDirection * gravityAlongFan, ForceMode.Acceleration);
+                }
+
+                // Gets velocity along the fan direction
+                float velocityAlongFan = Vector3.Dot(velocity, fanDirection);
+
+                // Cancels any movement in the opposite direction
+                if (velocityAlongFan < 0)
+                {
+                    velocity -= fanDirection * velocityAlongFan;
+                    rb.linearVelocity = velocity;
+                    velocityAlongFan = 0;
+                }
+
+                // Clamps maximum speed along fan direction
+                if (velocityAlongFan < maxPushSpeed)
+                {
+                    rb.AddForce(fanDirection * pushForce, ForceMode.Acceleration);
+                }
+                else
+                {
+                    float excess = velocityAlongFan - maxPushSpeed;
+                    velocity -= fanDirection * excess;
                     rb.linearVelocity = velocity;
                 }
             }

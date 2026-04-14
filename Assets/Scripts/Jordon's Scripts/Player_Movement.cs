@@ -34,7 +34,10 @@ public class Player_Movement : MonoBehaviour
     public float verticalScale = 1f;
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
-    public float fovTransitionSpeed = 5f; 
+    public float fovTransitionSpeed = 5f;
+    public bool externalVelocityLock; // For Colin's Fucked Up Fix
+    public float externalLockTimer;
+    public bool isInFan;
 
 
     [Header("Sprint Variables")]
@@ -162,8 +165,9 @@ public void OnSprint(InputValue value)
         lookInput = value.Get<Vector2>();
     }
 
-#endregion
+    #endregion
 
+    /*
 private void ManageMovement()
     {
         Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
@@ -183,9 +187,48 @@ private void ManageMovement()
 
             }
     }
+    */
 
-    
-private void ExecuteInteraction()
+    // Colin's ManageMovement (Sorry Fred & Jordan)
+    private void ManageMovement()
+    {
+        if (isInFan)
+            return;
+
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+        float currentSpeed = speed * currentSpeedMultiplier;
+
+        Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;
+
+        rb.linearVelocity = new Vector3(
+            moveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            moveDirection.z * currentSpeed
+        );
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+
+            rb.MoveRotation(
+                Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.fixedDeltaTime
+                )
+            );
+        }
+    }
+
+    private void ExecuteInteraction()
 {
     if (currentInteractable != null)
         {
