@@ -35,9 +35,7 @@ public class Player_Movement : MonoBehaviour
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
     public float fovTransitionSpeed = 5f;
-    public bool externalVelocityLock; // For Colin's Fucked Up Fix
-    public float externalLockTimer;
-    public bool isInFan;
+    public bool isInFan; // For Colin's Fucked Up Fix
 
 
     [Header("Sprint Variables")]
