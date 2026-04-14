@@ -51,6 +51,8 @@ public class Player_Movement : MonoBehaviour
     private bool isSprinting;
     private bool isExhausted;
     private float currentSpeedMultiplier;
+    private float rayRadius = 0.3f; // Roughly the width of your player
+    private float rayDistance = 1.1f; // Adjust based on your player height
 
 
     [Header("Jump Variables")]
@@ -94,8 +96,8 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.3f);
-        HandleStamina();
+
+        IsGrounded = Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit hit, rayDistance); HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
         HandleCameraFOV();
         ApplySensitivity();
@@ -187,7 +189,32 @@ private void ManageMovement()
         float currentSpeed = speed * currentSpeedMultiplier;
          Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
          rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-            if(moveDirection != Vector3.zero)
+        if (IsGrounded)
+        {
+            // Get the ground normal from the SphereCast we did in Update()
+            // We reuse the 'hit' variable you defined in Update
+            Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit slopeHit, rayDistance);
+
+            // Project the movement onto the slope plane this fixes the super jump when hitting an angle
+            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+
+            // Apply velocity using the slope-aligned direction
+            // We keep rb.linearVelocity.y slightly negative to keep the player "snapped" to the floor
+            rb.linearVelocity = new Vector3(slopeMoveDirection.x * currentSpeed, rb.linearVelocity.y, slopeMoveDirection.z * currentSpeed);
+
+            // Add a tiny extra downward force while moving on slopes to prevent "skipping"
+            if (moveDirection.magnitude > 0.1f)
+            {
+                rb.AddForce(Vector3.down * 15f, ForceMode.Force);
+            }
+        }
+        else
+        {
+            // Air movement 
+            rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
+        }
+
+        if (moveDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
@@ -203,7 +230,9 @@ private void ExecuteInteraction()
             currentInteractable.Interact();
         }
     else
-        {}
+        {
+
+        }
 }
 
 #region Camera Settings

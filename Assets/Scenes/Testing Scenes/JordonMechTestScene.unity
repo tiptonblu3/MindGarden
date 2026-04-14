@@ -4419,9 +4419,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 347054995}
     - target: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+      propertyPath: JumpHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 1282834095}
+    - target: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+      propertyPath: MaxJumpHeight
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
       propertyPath: cameraTransform
       value: 
