@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -43,10 +44,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         isPaused = true;
-        Time.timeScale = 0f;
+/*        Time.timeScale = 0f;
 
         if (playerMovement != null)
-            playerMovement.enabled = false;
+            playerMovement.enabled = false;*/
 
         pauseMenu.SetActive(true);
 
@@ -57,7 +58,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         isPaused = false;
-        Time.timeScale = 1f;
+        // Time.timeScale = 1f;
 
         if (playerMovement != null)
             playerMovement.enabled = true;

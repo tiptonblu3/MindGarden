@@ -173,9 +173,9 @@ public void OnSprint(InputValue value)
         lookInput = value.Get<Vector2>();
     }
 
-#endregion
+    #endregion
 
-private void ManageMovement()
+    private void ManageMovement()
     {
         Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
         Vector3 right = cameraTransform.right; //move left and right in relation to camera
@@ -207,7 +207,7 @@ private void ExecuteInteraction()
 }
 
 #region Camera Settings
-private void HandleCameraFOV()
+public void HandleCameraFOV()
 {
     if (playerCam == null) {
         Debug.LogWarning("Player Camera reference is missing!");
@@ -227,7 +227,7 @@ private void HandleCameraFOV()
 
 private void ApplySensitivity()
 {
-    if (orbitalFollow == null) return;
+    if (orbitalFollow == null || Cursor.lockState != CursorLockMode.Locked) return;
     bool isGamepad = playerInput != null && playerInput.currentControlScheme == "Gamepad";// Determine device & what multiplier to apply
     if (lookInput.sqrMagnitude > 0.01f) 
     {
