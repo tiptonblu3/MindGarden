@@ -65,4 +65,22 @@ public class GlidePickUp : MonoBehaviour, IInteractable
     }
 
     #endregion
+
+    // ReEnableObject
+    #region
+
+    // Re-enables the Glide PickUp if disabled
+    public void ReEnableObject()
+    {
+        canBePickedUp = true;
+        IsGlideUnlocked = false;
+
+        if (objectRenderer != null)
+            objectRenderer.enabled = true;
+
+        if (objectCollider != null)
+            objectCollider.enabled = true;
+    }
+
+    #endregion
 }
