@@ -40,7 +40,6 @@ public class Player_Movement : MonoBehaviour
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
     public float fovTransitionSpeed = 5f;
-    public bool isInFan; // For Colin's Fucked Up Fix
 
 
     [Header("Sprint Variables")]
@@ -192,7 +191,7 @@ public void OnSprint(InputValue value)
 
     #endregion
 
-    /*
+    
 private void ManageMovement()
     {
         if (isInFan)
@@ -252,46 +251,7 @@ private void ManageMovement()
             }
         
     }
-    */
-
-    // Colin's ManageMovement (Sorry Fred & Jordan)
-    private void ManageMovement()
-    {
-        if (isInFan)
-            return;
-
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
-
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
-
-        float currentSpeed = speed * currentSpeedMultiplier;
-
-        Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;
-
-        rb.linearVelocity = new Vector3(
-            moveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            moveDirection.z * currentSpeed
-        );
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-
-            rb.MoveRotation(
-                Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.fixedDeltaTime
-                )
-            );
-        }
-    }
+    
 
     private void ExecuteInteraction()
 {
