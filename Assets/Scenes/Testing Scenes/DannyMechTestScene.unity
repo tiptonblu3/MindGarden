@@ -760,10 +760,10 @@ MonoBehaviour:
   Targets:
   - Object: {fileID: 671967841973391714}
     Weight: 1
-    Radius: 0.8
+    Radius: 2
   - Object: {fileID: 257216347}
     Weight: 1
-    Radius: 1.5
+    Radius: 3
   m_LegacyTargets: []
 --- !u!4 &361627477
 Transform:
@@ -774,7 +774,7 @@ Transform:
   m_GameObject: {fileID: 361627475}
   serializedVersion: 2
   m_LocalRotation: {x: -0.094983205, y: -7.7137087e-25, z: -2.26311e-25, w: 0.9954789}
-  m_LocalPosition: {x: 7.54, y: 1.2458693, z: -15.17}
+  m_LocalPosition: {x: 7.5400004, y: 1.1781602, z: -15.169999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2225,7 +2225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1499824279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2521,7 +2521,7 @@ GameObject:
   - component: {fileID: 1736856796}
   - component: {fileID: 1736856794}
   m_Layer: 0
-  m_Name: CinemachineCamera
+  m_Name: PauseMenuCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2580,7 +2580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotationComposer
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0, y: -0.11980167}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
@@ -2589,10 +2589,10 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0.33, y: 0.66, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
-    Enabled: 0
+    Enabled: 1
     Time: 0
     Smoothing: 0
     IgnoreY: 0
@@ -2647,8 +2647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736856793}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000027380091, y: -8.242307e-25, z: -2.755752e-17, w: 1}
-  m_LocalPosition: {x: 7.54, y: 1.7639533, z: -25.010176}
+  m_LocalRotation: {x: 0.03596965, y: 0.016690709, z: -0.0006008315, w: 0.99921334}
+  m_LocalPosition: {x: 7.559682, y: 1.5076206, z: -24.581017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3541,7 +3541,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 0.5
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
