@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject pauseMenuCam;
 
     private RecordPlayer record;
     private Player_Movement playerMovement;
@@ -50,6 +51,7 @@ public class PauseMenu : MonoBehaviour
             playerMovement.enabled = false;*/
 
         pauseMenu.SetActive(true);
+        pauseMenuCam.SetActive(true);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -59,6 +61,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
         // Time.timeScale = 1f;
+        pauseMenuCam.SetActive(false);
 
         if (playerMovement != null)
             playerMovement.enabled = true;
