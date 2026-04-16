@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuBubble1, pauseMenuBubble2;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject pauseMenuCam;
 
@@ -41,14 +43,16 @@ public class PauseMenu : MonoBehaviour
         if (record != null)
         {
             // Closes the Record Select screen if it's open when the player tries to pause.
-            record.CloseRecordSelect();     
+            record.CloseRecordSelect();
         }
 
         isPaused = true;
-/*        Time.timeScale = 0f;
+        /*        Time.timeScale = 0f;
 
-        if (playerMovement != null)
-            playerMovement.enabled = false;*/
+                if (playerMovement != null)
+                    playerMovement.enabled = false;*/
+
+        StartCoroutine(ShowUIAfterDelay(0.3f));
 
         pauseMenu.SetActive(true);
         pauseMenuCam.SetActive(true);
@@ -67,10 +71,20 @@ public class PauseMenu : MonoBehaviour
             playerMovement.enabled = true;
         if (pauseMenu != null)
             pauseMenu.SetActive(false);
+            pauseMenuBubble1.SetActive(true);
+            pauseMenuBubble2.SetActive(true);
         if (settingsMenu != null)
             settingsMenu.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    IEnumerator ShowUIAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        pauseMenu.SetActive(true);
+        pauseMenuBubble1.SetActive(true);
+        pauseMenuBubble2.SetActive(true);
     }
 }
