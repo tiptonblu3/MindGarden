@@ -67,6 +67,11 @@ public class Player_Movement : MonoBehaviour
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
     private float lastGroundedTime;
 
+    [Header("Fan Mechanics")]
+    public bool externalVelocityLock; // For Colin's Fix
+    public float externalLockTimer;
+    public bool isInFan;
+
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
 {
@@ -188,12 +193,17 @@ public void OnSprint(InputValue value)
 
 private void ManageMovement()
     {
+        if (isInFan)
+            return;
+
         Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
         Vector3 right = cameraTransform.right; //move left and right in relation to camera
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
+        
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
 
         float currentSpeed = speed * currentSpeedMultiplier;
          Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
