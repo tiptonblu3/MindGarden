@@ -160,15 +160,13 @@ public void OnSprint(InputValue value)
     public void OnJump(InputValue Value)
     {
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump && CanJump){
-            if (IsGrounded)
-                {
+        if (isHoldingJump && CanJump && IsGrounded){
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
                     jumpTimeCounter = maxJumpTime;
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
                         lastGroundedTime = 0;
-                }
+              
         }
         else
             {
@@ -191,15 +189,15 @@ public void OnSprint(InputValue value)
 
     #endregion
 
-    
-private void ManageMovement()
+
+    private void ManageMovement()
     {
         if (isInFan)
             return;
 
-        Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
-        Vector3 right = cameraTransform.right; //move left and right in relation to camera
-        
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
         forward.y = 0f;
         right.y = 0f;
 
@@ -207,51 +205,29 @@ private void ManageMovement()
         right.Normalize();
 
         float currentSpeed = speed * currentSpeedMultiplier;
-         Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
-         rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-        if (IsGrounded)
-        {
-            // Get the ground normal from the SphereCast we did in Update()
-            // We reuse the 'hit' variable you defined in Update
-            Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit slopeHit, rayDistance);
 
-            // Project the movement onto the slope plane this fixes the super jump when hitting an angle
-            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+        Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;
 
-            // Apply velocity using the slope-aligned direction
-            // We keep rb.linearVelocity.y slightly negative to keep the player "snapped" to the floor
-            rb.linearVelocity = new Vector3(slopeMoveDirection.x * currentSpeed, rb.linearVelocity.y, slopeMoveDirection.z * currentSpeed);
-
-            // Add a tiny extra downward force while moving on slopes to prevent "skipping"
-            if (moveDirection.magnitude > 0.1f)
-            {
-                rb.AddForce(Vector3.down * 15f, ForceMode.Force);
-            }
-        }
-        else
-        {
-            // Air movement 
-            rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-        }
+        rb.linearVelocity = new Vector3(
+            moveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            moveDirection.z * currentSpeed
+        );
 
         if (moveDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
 
-            }
-        bool wasRecentlyGrounded = (Time.time - lastGroundedTime) < 0.1f;
-
-        if (wasRecentlyGrounded && !isjumping && rb.linearVelocity.y > 1f)
-            {
-                if (rb.linearVelocity.y > MaxJumpHeight)
-                {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-                }
-            }
-        
+            rb.MoveRotation(
+                Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.fixedDeltaTime
+                )
+            );
+        }
     }
-    
+
 
     private void ExecuteInteraction()
 {
