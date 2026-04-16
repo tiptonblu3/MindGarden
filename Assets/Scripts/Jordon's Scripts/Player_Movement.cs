@@ -25,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     public bool IsGrounded;
     public float rotationSpeed = 320f;
     public bool isDead = false;
+    
 
     [Header("Interaction")]
     public IInteractable currentInteractable;
@@ -52,7 +53,7 @@ public class Player_Movement : MonoBehaviour
     private bool isExhausted;
     private float currentSpeedMultiplier;
     private float rayRadius = 0.3f; // Roughly the width of your player
-    private float rayDistance = 1.1f; // Adjust based on your player height
+    private float rayDistance = 1.3f; // Adjust based on your player height
 
 
     [Header("Jump Variables")]
@@ -64,6 +65,7 @@ public class Player_Movement : MonoBehaviour
     private bool isjumping;
     private float jumpTimeCounter;
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
+    private float lastGroundedTime;
 
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
@@ -109,6 +111,12 @@ public class Player_Movement : MonoBehaviour
         ManageMovement();
         HandleMaxJump();
         FallingGravity();
+        if (IsGrounded && !isjumping)
+            {
+                // High force (e.g., 40-50) effectively "glues" you to steep ramps
+                rb.AddForce(Vector3.down * 50f, ForceMode.Force);
+            }
+            if (IsGrounded) lastGroundedTime = Time.time;
     }
     #endregion
 
@@ -154,6 +162,7 @@ public void OnSprint(InputValue value)
                     jumpTimeCounter = maxJumpTime;
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
+                        lastGroundedTime = 0;
                 }
         }
         else
@@ -220,6 +229,16 @@ private void ManageMovement()
                 rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
             }
+        bool wasRecentlyGrounded = (Time.time - lastGroundedTime) < 0.1f;
+
+        if (wasRecentlyGrounded && !isjumping && rb.linearVelocity.y > 1f)
+            {
+                if (rb.linearVelocity.y > MaxJumpHeight)
+                {
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+                }
+            }
+        
     }
 
     
