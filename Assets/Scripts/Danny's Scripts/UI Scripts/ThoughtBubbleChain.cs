@@ -16,6 +16,8 @@ public class ThoughtBubbleChain : MonoBehaviour
     private Vector3[] _positions;
     private Vector3[] _velocities;
 
+    public float padding = 0.2f; // How close bubbles can get to anchors
+
     void Awake()
     {
         _positions = new Vector3[bubbles.Length];
@@ -55,6 +57,13 @@ public class ThoughtBubbleChain : MonoBehaviour
 
             _velocities[i] += accel * Time.deltaTime;
             _positions[i] += _velocities[i] * Time.deltaTime;
+
+            // Clamp with padding so bubbles never actually reach the anchors
+            Vector3 toAnchor = bubbleAnchor.position - headAnchor.position;
+            Vector3 toBubble = _positions[i] - headAnchor.position;
+            float projected = Vector3.Dot(toBubble, toAnchor.normalized);
+            projected = Mathf.Clamp(projected, padding, toAnchor.magnitude - padding);
+            _positions[i] = headAnchor.position + toAnchor.normalized * projected;
 
             bubbles[i].position = _positions[i];
         }
