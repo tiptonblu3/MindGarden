@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3118149756837890885
+--- !u!1 &4200618598243338880
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9206454276053229748}
-  - component: {fileID: 6441149321500829284}
-  - component: {fileID: 416080879075653014}
-  - component: {fileID: 2809415087861035934}
-  - component: {fileID: 494532232273601913}
+  - component: {fileID: 2002991487746295316}
+  - component: {fileID: 3841576429607255240}
+  - component: {fileID: 4289256170983784897}
+  - component: {fileID: 2551919384692728625}
+  - component: {fileID: 7852905647047118403}
   m_Layer: 0
-  m_Name: TestGlideItem
+  m_Name: TestShooterFanUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9206454276053229748
+--- !u!4 &2002991487746295316
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118149756837890885}
+  m_GameObject: {fileID: 4200618598243338880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.88, y: 1.65, z: -8.44}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 8.5, y: 0.17, z: -37.04}
+  m_LocalScale: {x: 5.4876, y: 0.551412, z: 4.908}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6441149321500829284
+--- !u!33 &3841576429607255240
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118149756837890885}
+  m_GameObject: {fileID: 4200618598243338880}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &416080879075653014
+--- !u!23 &4289256170983784897
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118149756837890885}
+  m_GameObject: {fileID: 4200618598243338880}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -92,13 +92,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2809415087861035934
+--- !u!65 &2551919384692728625
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118149756837890885}
+  m_GameObject: {fileID: 4200618598243338880}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,23 +107,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &494532232273601913
+  m_Size: {x: 1, y: 2.2789161, z: 1}
+  m_Center: {x: 0, y: 0.6394583, z: 0}
+--- !u!114 &7852905647047118403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3118149756837890885}
+  m_GameObject: {fileID: 4200618598243338880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c365407e5447a94da8bcf62fcbaa2c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f5b12c324ebe864e926668f0755b64a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GlidePickUp
-  canBePickedUp: 1
-  IsGlideUnlocked: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterFan
+  force: 20
+  triggerColorSolid: {r: 0, g: 1, b: 0, a: 1}
+  triggerColorOutline: {r: 0, g: 1, b: 0, a: 0.25}

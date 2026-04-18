@@ -25,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     public bool IsGrounded;
     public float rotationSpeed = 320f;
     public bool isDead = false;
+    
 
     [Header("Interaction")]
     public IInteractable currentInteractable;
@@ -38,7 +39,7 @@ public class Player_Movement : MonoBehaviour
     public float verticalScale = 1f;
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
-    public float fovTransitionSpeed = 5f; 
+    public float fovTransitionSpeed = 5f;
 
 
     [Header("Sprint Variables")]
@@ -51,6 +52,8 @@ public class Player_Movement : MonoBehaviour
     private bool isSprinting;
     private bool isExhausted;
     private float currentSpeedMultiplier;
+    private float rayRadius = 0.3f; // Roughly the width of your player
+    private float rayDistance = 1.3f; // Adjust based on your player height
 
 
     [Header("Jump Variables")]
@@ -62,6 +65,12 @@ public class Player_Movement : MonoBehaviour
     private bool isjumping;
     private float jumpTimeCounter;
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
+    private float lastGroundedTime;
+
+    [Header("Fan Mechanics")]
+    public bool externalVelocityLock; // For Colin's Fix
+    public float externalLockTimer;
+    public bool isInFan;
 
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
@@ -94,8 +103,8 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.3f);
-        HandleStamina();
+
+        IsGrounded = Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit hit, rayDistance); HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
         HandleCameraFOV();
         ApplySensitivity();
@@ -107,6 +116,12 @@ public class Player_Movement : MonoBehaviour
         ManageMovement();
         HandleMaxJump();
         FallingGravity();
+        if (IsGrounded && !isjumping)
+            {
+                // High force (e.g., 40-50) effectively "glues" you to steep ramps
+                rb.AddForce(Vector3.down * 50f, ForceMode.Force);
+            }
+            if (IsGrounded) lastGroundedTime = Time.time;
     }
     #endregion
 
@@ -145,14 +160,13 @@ public void OnSprint(InputValue value)
     public void OnJump(InputValue Value)
     {
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump && CanJump){
-            if (IsGrounded)
-                {
+        if (isHoldingJump && CanJump && IsGrounded){
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
                     jumpTimeCounter = maxJumpTime;
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
-                }
+                        lastGroundedTime = 0;
+              
         }
         else
             {
@@ -175,39 +189,60 @@ public void OnSprint(InputValue value)
 
     #endregion
 
+
     private void ManageMovement()
     {
-        Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
-        Vector3 right = cameraTransform.right; //move left and right in relation to camera
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
+        if (isInFan)
+            return;
+
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
 
         float currentSpeed = speed * currentSpeedMultiplier;
-         Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
-         rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-            if(moveDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
-            }
+        Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;
+
+        rb.linearVelocity = new Vector3(
+            moveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            moveDirection.z * currentSpeed
+        );
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+
+            rb.MoveRotation(
+                Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.fixedDeltaTime
+                )
+            );
+        }
     }
 
-    
-private void ExecuteInteraction()
+
+    private void ExecuteInteraction()
 {
     if (currentInteractable != null)
         {
             currentInteractable.Interact();
         }
     else
-        {}
+        {
+
+        }
 }
 
 #region Camera Settings
-public void HandleCameraFOV()
+private void HandleCameraFOV()
 {
     if (playerCam == null) {
         Debug.LogWarning("Player Camera reference is missing!");
@@ -227,7 +262,7 @@ public void HandleCameraFOV()
 
 private void ApplySensitivity()
 {
-    if (orbitalFollow == null || Cursor.lockState != CursorLockMode.Locked) return;
+    if (orbitalFollow == null) return;
     bool isGamepad = playerInput != null && playerInput.currentControlScheme == "Gamepad";// Determine device & what multiplier to apply
     if (lookInput.sqrMagnitude > 0.01f) 
     {
