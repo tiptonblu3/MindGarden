@@ -6,9 +6,10 @@ using System.Collections;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
-
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject pauseMenuCam;
+    [SerializeField] private ThoughtBubbleChain chain; 
+
 
     private RecordPlayer record;
     private Player_Movement playerMovement;
@@ -54,6 +55,7 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenu.SetActive(true);
         pauseMenuCam.SetActive(true);
+        chain.Activate();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
