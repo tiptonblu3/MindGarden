@@ -2,15 +2,45 @@ using UnityEngine;
 
 public class EyeKill : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Variables & References
+    #region
+
+    // Reference
+    public CheckPointReturner checkPoint;
+    public Transform PlayerTransform;
+    public GameObject RespawnRefCube;
+
+    #endregion
+
+    // OnTriggerEnter
+    #region
+
+    private void OnCollisionEnter(Collision other)
     {
-        
+        if (other.gameObject.CompareTag("Player"))
+        {
+            int currentCheckPoint = checkPoint.GetCurrentCheckpointIndex();
+
+            if (currentCheckPoint >= 0)
+            {
+                checkPoint.Respawn();
+            }
+            else
+            {
+                NoCheckRespawn();
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+
+    // NoCheckRespawn
+    #region
+
+    void NoCheckRespawn()
     {
-        
+        PlayerTransform.position = RespawnRefCube.transform.position;
     }
+
+    #endregion
 }

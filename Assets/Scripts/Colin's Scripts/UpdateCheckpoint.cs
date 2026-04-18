@@ -7,6 +7,7 @@ public class UpdateCheckpoint : MonoBehaviour
     #region
 
     public int checkpointIndex;
+    private bool hasTriggered = false;
     public CheckPointReturner checkPointReturner;
 
     #endregion
@@ -16,9 +17,12 @@ public class UpdateCheckpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!hasTriggered && other.CompareTag("Player"))
         {
             checkPointReturner.CurrentCheckPointIndex = checkpointIndex;
+            hasTriggered = true;
+
+            checkPointReturner.SetCheckpoint(checkpointIndex);
         }
     }
 
