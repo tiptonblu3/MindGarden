@@ -5,7 +5,7 @@ public class PipeTurn2 : MonoBehaviour, IInteractable
     public WaterPipeBehavior pipeBehavior;
     void Start()
     {
-        pipeBehavior = GameObject.Find("TEMPSmallPipe").GetComponent<WaterPipeBehavior>();
+        pipeBehavior = GameObject.Find("TEMPSmallPipe Variant").GetComponent<WaterPipeBehavior>();
     }
     public void Interact()
     {

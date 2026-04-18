@@ -4,8 +4,8 @@ public class KillZone : MonoBehaviour
 {
     // Drag your Respawn Point object into this slot in the Inspector
     public Transform respawnPoint;
-    public RythmGameSetup gameScript;
-    public GameObject[] LevelPieces; //Things that will be turned off when the player enters the trigger
+    public PlatformManager PlatManScript;
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,16 +24,8 @@ public class KillZone : MonoBehaviour
                     rb.linearVelocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                 }
+            PlatManScript.ResetAllPlatforms();
             }
-            else
-            {
-                
-            }
-            for (int i = 0; i < LevelPieces.Length; i++)
-        {
-            LevelPieces[i].SetActive(false);
         }
-        }
-        gameScript.RemoveOldPlatform();
     }
 }

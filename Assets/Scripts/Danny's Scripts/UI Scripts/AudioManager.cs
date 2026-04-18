@@ -37,9 +37,18 @@ public class AudioManager : MonoBehaviour
             soundEffectsVolume = 0.75f;
 
             // Set sliders
-            MasterVolumeSlider.value = MasterVolume;
-            BGMVolumeSlider.value = BGMVolume;
-            soundEffectsSlider.value = soundEffectsVolume;
+            if (MasterVolumeSlider != null)
+            {
+                MasterVolumeSlider.value = MasterVolume;
+            }
+            if (BGMVolumeSlider != null)
+            {
+                BGMVolumeSlider.value = BGMVolume;
+            }
+            if (soundEffectsSlider != null)
+            {
+                soundEffectsSlider.value = soundEffectsVolume;
+            }
 
             // Apply to mixer (!!!!! took me forever)
             SetMasterVolume(MasterVolume);
@@ -73,10 +82,13 @@ public class AudioManager : MonoBehaviour
 
     public void SaveSoundSettings()
     {
+        if (MasterVolumeSlider != null && BGMVolumeSlider != null && soundEffectsSlider != null)
+    {
         PlayerPrefs.SetFloat(MasterVolumePref, MasterVolumeSlider.value);
         PlayerPrefs.SetFloat(BGMVolumePref, BGMVolumeSlider.value);
         PlayerPrefs.SetFloat(SoundEffectsVolumePref, soundEffectsSlider.value);
         PlayerPrefs.Save();
+    }
     }
 
     public void UpdateSound()
