@@ -15,12 +15,17 @@ public class Player_Movement : MonoBehaviour
     private Vector2 lookInput;
     private CinemachineInputAxisController axisController;
     private CinemachineOrbitalFollow orbitalFollow;
-    
+    public PhysicsMaterial slipperyMat; 
+    public PhysicsMaterial NormalMat;
+    private Collider playerCollider;
+
 
     [Header("Player Variables")]
     public float speed = 7f;
     public bool IsGrounded;
     public float rotationSpeed = 320f;
+    public bool isDead = false;
+    
 
     [Header("Interaction")]
     public IInteractable currentInteractable;
@@ -34,7 +39,7 @@ public class Player_Movement : MonoBehaviour
     public float verticalScale = 1f;
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
-    public float fovTransitionSpeed = 5f; 
+    public float fovTransitionSpeed = 5f;
 
 
     [Header("Sprint Variables")]
@@ -47,15 +52,25 @@ public class Player_Movement : MonoBehaviour
     private bool isSprinting;
     private bool isExhausted;
     private float currentSpeedMultiplier;
+    private float rayRadius = 0.3f; // Roughly the width of your player
+    private float rayDistance = 1.3f; // Adjust based on your player height
+
 
     [Header("Jump Variables")]
     public float JumpHeight = 2f;
     public float MaxJumpHeight = 15f;
     public float fallmultiplier = 5f;
+    public bool CanJump = true; //can be disabled so that the player can't jump in certain situations, such as being in the air or interacting with something.
     private bool isHoldingJump;
     private bool isjumping;
     private float jumpTimeCounter;
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
+    private float lastGroundedTime;
+
+    [Header("Fan Mechanics")]
+    public bool externalVelocityLock; // For Colin's Fix
+    public float externalLockTimer;
+    public bool isInFan;
 
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
@@ -74,6 +89,11 @@ public class Player_Movement : MonoBehaviour
 }
     private void Awake()
     {
+        #region Get Components
+        playerCollider = GetComponent<Collider>();
+        playerInput = GetComponent<PlayerInput>();
+        #endregion
+
         Cursor.lockState = CursorLockMode.Locked;
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
@@ -83,11 +103,12 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        IsGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
-        HandleStamina();
+
+        IsGrounded = Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit hit, rayDistance); HandleStamina();
         //Debug.Log($"Holding: {isHoldingJump} | IsJumping: {isjumping} | Counter: {jumpTimeCounter}");
         HandleCameraFOV();
         ApplySensitivity();
+        HandleFriction();
     }
     
     void FixedUpdate()
@@ -95,6 +116,12 @@ public class Player_Movement : MonoBehaviour
         ManageMovement();
         HandleMaxJump();
         FallingGravity();
+        if (IsGrounded && !isjumping)
+            {
+                // High force (e.g., 40-50) effectively "glues" you to steep ramps
+                rb.AddForce(Vector3.down * 50f, ForceMode.Force);
+            }
+            if (IsGrounded) lastGroundedTime = Time.time;
     }
     #endregion
 
@@ -133,14 +160,13 @@ public void OnSprint(InputValue value)
     public void OnJump(InputValue Value)
     {
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump){
-            if (IsGrounded)
-                {
+        if (isHoldingJump && CanJump && IsGrounded){
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
                     jumpTimeCounter = maxJumpTime;
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
-                }
+                        lastGroundedTime = 0;
+              
         }
         else
             {
@@ -161,37 +187,58 @@ public void OnSprint(InputValue value)
         lookInput = value.Get<Vector2>();
     }
 
-#endregion
+    #endregion
 
-private void ManageMovement()
+
+    private void ManageMovement()
     {
-        Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
-        Vector3 right = cameraTransform.right; //move left and right in relation to camera
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
+        if (isInFan)
+            return;
+
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
 
         float currentSpeed = speed * currentSpeedMultiplier;
-         Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
-         rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-            if(moveDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
 
-            }
+        Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;
+
+        rb.linearVelocity = new Vector3(
+            moveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            moveDirection.z * currentSpeed
+        );
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+
+            rb.MoveRotation(
+                Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.fixedDeltaTime
+                )
+            );
+        }
     }
 
-    
-private void ExecuteInteraction()
+
+    private void ExecuteInteraction()
 {
     if (currentInteractable != null)
         {
             currentInteractable.Interact();
         }
     else
-        {}
+        {
+
+        }
 }
 
 #region Camera Settings
@@ -280,16 +327,16 @@ private void FallingGravity()
     }
 
 private void HandleStamina()
-{
-    //disables sprint if stopped moving or ran out of air
-    if ((isSprinting && MoveInputVector.magnitude < 0.1f) || CurrentStamina <= 0)
-        {
-            isSprinting = false;
-        }
+    { 
+        bool isTryingToSprint = Keyboard.current.leftShiftKey.isPressed && CurrentStamina > 0 && !isExhausted;
+        isSprinting = isTryingToSprint && MoveInputVector.magnitude > 0.0f;
+        //disables sprint if stopped moving or ran out of air
+        
     // If stamina reaches zero, mark player as exhausted
     if (CurrentStamina <= 0)
         {
             isExhausted = true;
+            isSprinting = false; // force stop if exhausted
         }
 
     // Recover from exhaustion once stamina reaches the threshold
@@ -299,7 +346,7 @@ private void HandleStamina()
         }
 
     // Drain stamina if sprinting, moving, and not exhausted
-    if (isSprinting && MoveInputVector.magnitude > 0 && CurrentStamina > 0 && !isExhausted)
+    if (isSprinting )
         {
             CurrentStamina -= StaminaDrainRate * Time.deltaTime;
             currentSpeedMultiplier = SprintMultiplier;
@@ -313,9 +360,29 @@ private void HandleStamina()
     // Ensures stamina stays within valid bounds
     CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
 }
-#endregion
+    private void HandleFriction()
+    {
+        if (playerCollider == null) return;
 
+        // If grounded and not moving
+        if (IsGrounded && MoveInputVector.magnitude < 0.01f)
+        {
+            // Apply high friction so we don't slide down bridges
+            playerCollider.material = NormalMat;
+            
+        }
+        else
+        {
+            // We are either moving or in the air: be slippery to avoid wall-clumping
+            playerCollider.material = slipperyMat;
+        }
+    }
+    #endregion
 
-
+    // FOR GLIDE STATE - SORRY I HAD TO TOUCH THIS SCRIPT
+    public bool IsHoldingJump()
+    {
+        return isHoldingJump;
+    }
 }
 

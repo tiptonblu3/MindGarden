@@ -1116,6 +1116,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4920897492789209858, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
+      propertyPath: field of view
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
       propertyPath: cameraTransform
       value: 

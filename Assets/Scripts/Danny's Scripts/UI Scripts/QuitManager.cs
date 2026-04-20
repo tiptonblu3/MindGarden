@@ -6,9 +6,11 @@ public class QuitManager : MonoBehaviour
     {
         Debug.Log("Quit button pressed\nGame exiting...");
         Application.Quit();
-        // stops playback in editor when called
+        // stops playback in editor when called (COMMENTED OUT)
+        /*
         #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
         #endif
+        */
     }
 }
