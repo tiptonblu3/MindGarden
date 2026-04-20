@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ValveBehavior : MonoBehaviour
 {
     public bool valveActive = false; //can be adjusted to whatever needed.
     public float valveSwitchTime; // Time it takes to switch the valve state (1<X = faster, 0<X<1 = slower, 0 = instant)
     public GameObject waterObject; // used to show it's functionality, made to be removed as a referebce
+    private bool interactivityCheck; //used to check if the player is in range of the valve
 
-    void Start()
+    private void Update()
     {
-        ToggleValve(); 
+        // Update captures the frame-perfect button press
+        if (interactivityCheck && InputSystem.actions["Interact"].triggered)
+        {
+            ToggleValve();
+        }
     }
     public void ToggleValve() // Toggle the valve state
     {
@@ -34,16 +40,25 @@ public class ValveBehavior : MonoBehaviour
         Functionality();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) interactivityCheck = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player")) interactivityCheck = false;
+    }
+
     private void Functionality()
     {
         //used for demonstrating it's on and off states, made to be removed as a reference
         if (valveActive)
         {
-            waterObject.SetActive(true);
+            waterObject.SetActive(false);
         }
         else
         {
-            waterObject.SetActive(false);
+            waterObject.SetActive(true);
         }
     }
 }
