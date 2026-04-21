@@ -17,12 +17,12 @@ public class UpdateCheckpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!hasTriggered && other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasTriggered)
         {
-            checkPointReturner.CurrentCheckPointIndex = checkpointIndex;
             hasTriggered = true;
-
+            // This MUST call SetCheckpoint to trigger the bird!
             checkPointReturner.SetCheckpoint(checkpointIndex);
+            Debug.Log("Triggered Checkpoint: " + checkpointIndex);
         }
     }
 
