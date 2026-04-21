@@ -6,6 +6,11 @@ public class EyeChase : MonoBehaviour
     public float EyeSpeed = 0.3f;
     public bool Chase = false;
 
+    [Header("Jordon's evil bird scripts")] //I love this fuckign bird
+    public float detectionDistance = 5f;
+    public float sphereRadius = 0.5f;
+    public LayerMask obstacleLayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,9 +35,23 @@ public class EyeChase : MonoBehaviour
 
     public void ChasePlayer()
     {
+        Vector3 moveDirection = transform.forward * Time.fixedDeltaTime * EyeSpeed; // Adjust speed as needed
+        RaycastHit hit;
         if (player != null)
         {
-            transform.position += transform.forward * Time.fixedDeltaTime * EyeSpeed; // Adjust speed as needed
+            if (Physics.SphereCast(transform.position, sphereRadius, moveDirection, out hit, detectionDistance, obstacleLayer)) 
+            {
+                Vector3 wallNormal = hit.normal;
+        
+                Vector3 avoidDirection = Vector3.ProjectOnPlane(moveDirection, wallNormal);
+    
+                transform.position += avoidDirection.normalized * EyeSpeed * Time.deltaTime;
+            }
+            
+            else
+            {
+                transform.position += transform.forward * EyeSpeed * Time.deltaTime;   
+            }
         }
     }
     
@@ -42,5 +61,10 @@ public class EyeChase : MonoBehaviour
         {
             transform.LookAt(player.transform);
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
     }
 }
