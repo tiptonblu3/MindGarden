@@ -14,7 +14,6 @@ public class BirdBehavior : MonoBehaviour
     public float moveSpeed = 5f;
     public float liftHeight = 1.5f;
     public float liftSpeed = 3f;
-
     public int triggerCheckpointIndex = 1; // Which checkpoint triggers this object
 
     private int currentWaypointIndex = -1;
@@ -22,6 +21,13 @@ public class BirdBehavior : MonoBehaviour
 
     private int targetWaypointIndex = -1;
     private Coroutine currentRoutine;
+
+
+    [Header("Jordon's Modifications")]
+    public bool isMoving = false;
+    public float detectionRadius = 1.5f;
+
+
 
     #endregion
 
@@ -84,38 +90,59 @@ public class BirdBehavior : MonoBehaviour
 
     IEnumerator MoveToTargetWaypoint()
     {
-        if (currentWaypointIndex >= waypoints.Count - 1)
-            yield break;
+        if (waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count) yield break; //make sure there are waypoints to move to
 
-        // Lift up
-        Vector3 lifted = transform.position + Vector3.up * liftHeight;
+        isMoving = true;
 
-        while (Vector3.Distance(transform.position, lifted) > 0.05f)
+
+        // Select active waypoint move the index forward
+        if (currentWaypointIndex < waypoints.Count - 1)
         {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                lifted,
-                liftSpeed * Time.deltaTime
-            );
-            yield return null;
+            currentWaypointIndex++;
+        }
+        Vector3 targetPos = waypoints[currentWaypointIndex].position;
+
+        // Move to waypoint while avoiding walls
+        while (Vector3.Distance(transform.position, targetPos) > 0.1f)
+        {
+            // This is how it avoids things specificially ignoring "Player" and "Ignore_Raycast"
+            LayerMask avoidanceLayer = ~LayerMask.GetMask("Player", "Ignore_Raycast"); 
+            bool isObstacleInWay = Physics.CheckSphere(transform.position, detectionRadius, avoidanceLayer);
+
+            Vector3 finalDestination = targetPos;
+            
+            if (isObstacleInWay)
+            {
+                // If blocked, aim UP to clear the wall
+                finalDestination = transform.position + (Vector3.up * 2.0f);
+            }
+
+            // Move bird
+            transform.position = Vector3.MoveTowards(transform.position, finalDestination, moveSpeed * Time.deltaTime);
+
+            // 3. Move to face its head towards accurate direction
+            Vector3 moveDir = finalDestination - transform.position;
+            moveDir.y = 0;
+            if (moveDir.magnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), 0.1f);
+            }
+
+            yield return null; // Wait for next frame
         }
 
-        // Move to next waypoint
-        int clampedIndex = Mathf.Clamp(targetWaypointIndex, 0, waypoints.Count - 1);
-        currentWaypointIndex = clampedIndex;
-
-        Vector3 target = waypoints[currentWaypointIndex].position;
-
-        while (Vector3.Distance(transform.position, target) > 0.05f)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                target,
-                moveSpeed * Time.deltaTime
-            );
-            yield return null;
-        }
+        isMoving = false;
+        Debug.Log("Reached Waypoint: " + currentWaypointIndex);
     }
+
+    // Visual Debugging
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+    
 
     #endregion
 
