@@ -32,8 +32,22 @@ public class CheckPointReturner : MonoBehaviour
 
     public void Respawn()
     {
-        // Move the player to the position of the current checkpoint
+        if (CurrentCheckPointIndex < 0 || CurrentCheckPointIndex >= CheckPointList.Count)
+        {
+            Debug.LogWarning("Player died before hitting a checkpoint!");
+            return;
+        }
+
+        // 1. Move the player to the saved checkpoint position
         PlayerTransform.position = CheckPointList[CurrentCheckPointIndex].transform.position;
+
+        // 2. Find the bird and tell it to reset AND start moving again
+        BirdBehavior bird = FindAnyObjectByType<BirdBehavior>();
+        if (bird != null)
+        {
+            // This calls the function we updated in the previous step
+            bird.ResetBirdOnDeath(CurrentCheckPointIndex);
+        }
     }
 
     // GetCurrentCheckpointIndex
@@ -52,7 +66,7 @@ public class CheckPointReturner : MonoBehaviour
     public void SetCheckpoint(int index)
     {
         CurrentCheckPointIndex = index;
-        OnCheckpointChanged?.Invoke(CurrentCheckPointIndex);
+        OnCheckpointChanged?.Invoke(index);
     }
 
     #endregion
