@@ -99,7 +99,7 @@ public class Player_Movement : MonoBehaviour
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
         currentSpeedMultiplier = 1f;
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
     }
 
