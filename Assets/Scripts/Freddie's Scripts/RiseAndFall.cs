@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RiseAndFall : MonoBehaviour
 {
-    public float RiseSpeed = 5f;
-    public float RiseHeight = 0f;
+    public float RiseSpeed = 1f;
+    public float RiseHeight = 5f;
     public float FallDepth;
     public Transform LAT;
     private Rigidbody LARB;
