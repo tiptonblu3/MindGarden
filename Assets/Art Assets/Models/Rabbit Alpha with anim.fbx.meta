@@ -34,8 +34,8 @@ ModelImporter:
       name: Idle
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 6
-      lastFrame: 33
+      firstFrame: 38
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
