@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ThoughtBubble : MonoBehaviour
 {
+    // Bubble animation variables
     public float pulseSpeed = 2f;
     public float pulseAmount = 0.1f;
     public float floatSpeed = 1.5f;

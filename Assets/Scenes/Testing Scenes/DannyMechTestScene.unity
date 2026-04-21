@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -247,7 +247,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -704,7 +704,6 @@ GameObject:
   - component: {fileID: 250423143}
   - component: {fileID: 250423147}
   - component: {fileID: 250423146}
-  - component: {fileID: 250423145}
   - component: {fileID: 250423144}
   m_Layer: 0
   m_Name: ThoughtBubble 3
@@ -740,31 +739,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386215dc12eb7c148af4b462c13f6df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtBubble
-  pulseSpeed: 2
+  pulseSpeed: 1.9
   pulseAmount: 0.1
   floatSpeed: 0.8
   floatAmount: 0.05
---- !u!135 &250423145
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250423142}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &250423146
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1163,7 +1141,6 @@ GameObject:
   - component: {fileID: 529090025}
   - component: {fileID: 529090029}
   - component: {fileID: 529090028}
-  - component: {fileID: 529090027}
   - component: {fileID: 529090026}
   m_Layer: 0
   m_Name: ThoughtBubble 4
@@ -1199,31 +1176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386215dc12eb7c148af4b462c13f6df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtBubble
-  pulseSpeed: 2
+  pulseSpeed: 2.1
   pulseAmount: 0.1
   floatSpeed: 0.8
   floatAmount: 0.05
---- !u!135 &529090027
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529090024}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &529090028
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1327,7 +1283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386215dc12eb7c148af4b462c13f6df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtBubble
-  pulseSpeed: 2
+  pulseSpeed: 1.9
   pulseAmount: 0.1
   floatSpeed: 0.8
   floatAmount: 0.05
@@ -2485,7 +2441,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2552,7 +2508,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2743,7 +2699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtBubble
   pulseSpeed: 0.5
-  pulseAmount: 0.05
+  pulseAmount: 0.1
   floatSpeed: 0.8
   floatAmount: 0.05
 --- !u!1 &1590944484
@@ -2956,7 +2912,7 @@ MonoBehaviour:
   FramingMode: 0
   FramingSize: 0.2
   CenterOffset: {x: 0.1, y: 0}
-  Damping: 2
+  Damping: 0.5
   SizeAdjustment: 0
   LateralAdjustment: 0
   FovRange: {x: 1, y: 55}
@@ -3013,8 +2969,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736856793}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2611764, y: -0.004791808, z: -0.00048582614, w: 0.9652791}
-  m_LocalPosition: {x: -0.17353311, y: 3.0188978, z: -4.649519}
+  m_LocalRotation: {x: 0.26163244, y: -0.0069640484, z: -0.00023091759, w: 0.9651425}
+  m_LocalPosition: {x: -1.2394298, y: 4.204276, z: -6.0858755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3054,7 +3010,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 3
   HorizontalAxis:
-    Value: 11.383758
+    Value: 11.415184
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -3064,7 +3020,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 25.642786
+    Value: 25.69649
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -3218,7 +3174,6 @@ GameObject:
   - component: {fileID: 2085115947}
   - component: {fileID: 2085115951}
   - component: {fileID: 2085115950}
-  - component: {fileID: 2085115949}
   - component: {fileID: 2085115948}
   m_Layer: 0
   m_Name: ThoughtBubble 2
@@ -3254,31 +3209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386215dc12eb7c148af4b462c13f6df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtBubble
-  pulseSpeed: 2
+  pulseSpeed: 2.1
   pulseAmount: 0.1
   floatSpeed: 0.8
   floatAmount: 0.05
---- !u!135 &2085115949
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085115946}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2085115950
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3569,6 +3503,7 @@ MonoBehaviour:
   playerCam: {fileID: 8142907480060788976}
   slipperyMat: {fileID: 13400000, guid: 25a247a556eb3864598d182a710eb1f7, type: 2}
   NormalMat: {fileID: 13400000, guid: 437ac70cfc789984a8313683ecdf34df, type: 2}
+  animator: {fileID: 0}
   speed: 7
   IsGrounded: 0
   rotationSpeed: 320
@@ -3985,7 +3920,11 @@ MonoBehaviour:
   pauseMenu: {fileID: 1499824278}
   settingsMenu: {fileID: 0}
   pauseMenuCam: {fileID: 1736856793}
+  freeLookCam: {fileID: 8142907480060788976}
   chain: {fileID: 1894571337}
+  pauseMenuFirstButton: {fileID: 1450146698}
+  settingsMenuFirstButton: {fileID: 0}
+  uiInputModule: {fileID: 429773025}
 --- !u!23 &7499632130484313320
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4098,7 +4037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 0
-    m_Value: 0
+    m_Value: 20
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -4231,7 +4170,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 0.5
+    Time: 0.8
     CustomCurve:
       serializedVersion: 2
       m_Curve: []

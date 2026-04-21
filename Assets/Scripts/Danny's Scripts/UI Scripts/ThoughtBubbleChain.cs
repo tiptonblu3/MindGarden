@@ -3,8 +3,8 @@ using UnityEngine;
 public class ThoughtBubbleChain : MonoBehaviour
 {
     public Transform headAnchor;
-    public Transform bubbleAnchor; // ThoughBubbles (Parent)
-    public Transform[] bubbles; // Index of bubbles, 0 = closest
+    public Transform bubbleAnchor;  // ThoughBubbles (Parent)
+    public Transform[] bubbles;     // Index of bubbles, 0 = closest
 
     public float springStrength = 18f;
     public float damping = 4.5f;
@@ -23,7 +23,7 @@ public class ThoughtBubbleChain : MonoBehaviour
         _positions = new Vector3[bubbles.Length];
         _velocities = new Vector3[bubbles.Length];
 
-        for (int i = 0; i < bubbles.Length; i++)
+        for (int i = 0; i < bubbles.Length; i++) // Set bubble sizes based on index so they get bigger as they get further from the head
         {
             float t = (float)i / (bubbles.Length - 1);
             float size = Mathf.Lerp(startSize, endSize, t);
@@ -33,7 +33,7 @@ public class ThoughtBubbleChain : MonoBehaviour
 
     public void Activate()
     {
-        for (int i = 0; i < bubbles.Length; i++)
+        for (int i = 0; i < bubbles.Length; i++) // Start all bubbles at headAnchor with no velocity so they pop out from the head
         {
             _positions[i] = headAnchor.position;
             _velocities[i] = Vector3.zero;
@@ -43,7 +43,7 @@ public class ThoughtBubbleChain : MonoBehaviour
 
     void LateUpdate()
     {
-        for (int i = 0; i < bubbles.Length; i++)
+        for (int i = 0; i < bubbles.Length; i++) // For each bubble calculate spring force to target position along line from head to bubble anchor
         {
             float t = (float)i / (bubbles.Length - 1);
             Vector3 target = Vector3.Lerp(headAnchor.position, bubbleAnchor.position, t);
