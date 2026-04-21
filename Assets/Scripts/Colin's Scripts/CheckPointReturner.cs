@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +7,9 @@ public class CheckPointReturner : MonoBehaviour
     public GameObject Player;
     public Transform PlayerTransform;
     public List <GameObject> CheckPointList; // List of checkpoints in the level
-    public int CurrentCheckPointIndex = 0; // Index of the current checkpoint
+    public int CurrentCheckPointIndex = -1; // Index of the current checkpoint
     public Player_Movement PlayerMovement;
+    public static event Action<int> OnCheckpointChanged;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,4 +35,25 @@ public class CheckPointReturner : MonoBehaviour
         // Move the player to the position of the current checkpoint
         PlayerTransform.position = CheckPointList[CurrentCheckPointIndex].transform.position;
     }
+
+    // GetCurrentCheckpointIndex
+    #region
+
+    public int GetCurrentCheckpointIndex()
+    {
+        return CurrentCheckPointIndex;
+    }
+
+    #endregion
+
+    // SetCheckpoint
+    #region
+
+    public void SetCheckpoint(int index)
+    {
+        CurrentCheckPointIndex = index;
+        OnCheckpointChanged?.Invoke(CurrentCheckPointIndex);
+    }
+
+    #endregion
 }
