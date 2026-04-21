@@ -12,7 +12,6 @@ public class CheckPoints : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Respawn(); // Move the player to the first checkpoint at the start of the game
         // Find the player by tag
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerTransform = Player.transform;
