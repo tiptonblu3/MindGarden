@@ -16,11 +16,13 @@ public class CheckPoints : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerTransform = Player.transform;
         PlayerMovement = Player.GetComponent<Player_Movement>();
+        Respawn(); // Move the player to the first checkpoint at the start of the game
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Respawn();
         if (PlayerMovement.isDead)
         {
             Respawn();
