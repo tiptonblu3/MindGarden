@@ -6,7 +6,7 @@ public class RotateFans : MonoBehaviour
     public float speed = 20f;
     void Awake()
     {
-        target = GameObject.Find("Fan_Middle").GetComponent<Transform>();
+        target = transform.parent.Find("Fan_Middle");
     }
 
     void Update() 

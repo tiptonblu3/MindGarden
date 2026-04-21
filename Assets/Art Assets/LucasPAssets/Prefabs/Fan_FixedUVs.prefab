@@ -601,6 +601,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3553723735078795799}
+  - component: {fileID: 4870518265321970425}
+  - component: {fileID: 7869538306343770248}
   m_Layer: 0
   m_Name: Fan_FixedUVs
   m_TagString: Untagged
@@ -616,7 +618,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7028124157985946510}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.65, y: 0.07999998, z: -20.88}
   m_LocalScale: {x: 34.205826, y: 34.205826, z: 34.205826}
   m_ConstrainProportionsScale: 0
@@ -626,6 +628,42 @@ Transform:
   - {fileID: 1131508737605032877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4870518265321970425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028124157985946510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5b12c324ebe864e926668f0755b64a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterFan
+  force: 20
+  triggerColorSolid: {r: 0, g: 1, b: 0, a: 1}
+  triggerColorOutline: {r: 0, g: 1, b: 0, a: 0.25}
+--- !u!65 &7869538306343770248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028124157985946510}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.122956194, y: 0.7554895, z: 0.122956194}
+  m_Center: {x: 0.00000011152186, y: 0.3853683, z: 0}
 --- !u!1 &7680825881648138045
 GameObject:
   m_ObjectHideFlags: 0
