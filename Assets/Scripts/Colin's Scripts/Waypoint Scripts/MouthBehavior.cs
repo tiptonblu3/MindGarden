@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BirdGuidance : MonoBehaviour
+public class MouthBehavior : MonoBehaviour
 {
     //large sphere raycast if any object collides with it besides the player make the object rise upwards till it isn't
     //when trigger is entered increment Current waypoint to go to next point
