@@ -12,6 +12,6 @@ public class RotateFans : MonoBehaviour
     void Update() 
     {
         // Position of the center, The axis of rotation, and The speed (degrees per second)
-        transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime);
+        transform.Rotate(0, speed * Time.deltaTime, 0, Space.Self);
     }
 }

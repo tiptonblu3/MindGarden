@@ -11,6 +11,9 @@ public class CheckPointReturner : MonoBehaviour
     public Player_Movement PlayerMovement;
     public static event Action<int> OnCheckpointChanged;
 
+    public int DiscNum = 0; //number of discs to check if its starting nightmare mode
+    public GameObject EndTrigger;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -67,6 +70,14 @@ public class CheckPointReturner : MonoBehaviour
     {
         CurrentCheckPointIndex = index;
         OnCheckpointChanged?.Invoke(index);
+    }
+
+    public void DiscCheck()
+    {
+        if (DiscNum >= 3)
+        {
+            EndTrigger.SetActive(true);
+        }
     }
 
     #endregion
