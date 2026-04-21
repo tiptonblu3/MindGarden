@@ -18,6 +18,7 @@ public class Player_Movement : MonoBehaviour
     public PhysicsMaterial slipperyMat; 
     public PhysicsMaterial NormalMat;
     private Collider playerCollider;
+    public Animator animator;
 
 
     [Header("Player Variables")]
@@ -98,6 +99,7 @@ public class Player_Movement : MonoBehaviour
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
         currentSpeedMultiplier = 1f;
+        animator = GetComponentInChildren<Animator>();
 
     }
 
@@ -109,6 +111,7 @@ public class Player_Movement : MonoBehaviour
         HandleCameraFOV();
         ApplySensitivity();
         HandleFriction();
+        animator.SetBool("IsJumping", isjumping || !IsGrounded);
     }
     
     void FixedUpdate()
@@ -226,6 +229,9 @@ public void OnSprint(InputValue value)
                 )
             );
         }
+
+        bool isMoving = moveDirection.magnitude > 0.1f;
+        animator.SetBool("IsMoving", isMoving);
     }
 
 
