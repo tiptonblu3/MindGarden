@@ -80,7 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CheckPoints
   Player: {fileID: 0}
   PlayerTransform: {fileID: 0}
-  CheckPointList: []
+  CheckPointList:
+  - {fileID: 1035495561394393455}
+  - {fileID: 5732063701136106086}
+  - {fileID: 5229907409100649906}
   CurrentCheckPointIndex: 0
   PlayerMovement: {fileID: 0}
 --- !u!1 &5229907409100649906

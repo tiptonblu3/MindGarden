@@ -52,6 +52,12 @@ public class CheckPointReturner : MonoBehaviour
             // This calls the function we updated in the previous step
             bird.ResetBirdOnDeath(CurrentCheckPointIndex);
         }
+
+        EyeBehavior eye = FindAnyObjectByType<EyeBehavior>();
+        if (eye != null && CurrentCheckPointIndex == 3)
+        {
+            eye.ResetEyeOnDeath(CurrentCheckPointIndex);
+        }
     }
 
     // GetCurrentCheckpointIndex
