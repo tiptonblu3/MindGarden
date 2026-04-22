@@ -3522,7 +3522,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4067789984340873822, guid: 43d435136939ecc4db6b3d17034b1da2, type: 3}
       propertyPath: m_Name
-      value: Level 3
+      value: Acrophobia
       objectReference: {fileID: 0}
     - target: {fileID: 8566265507640826903, guid: 43d435136939ecc4db6b3d17034b1da2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65627,12 +65627,12 @@ PrefabInstance:
       objectReference: {fileID: 125067349}
     - target: {fileID: 1731171519801905011, guid: 4a9c4ad95c566094c82fa4c5763da97b, type: 3}
       propertyPath: records.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731171519801905011, guid: 4a9c4ad95c566094c82fa4c5763da97b, type: 3}
       propertyPath: 'records.Array.data[0]'
       value: 
-      objectReference: {fileID: 1350130223}
+      objectReference: {fileID: 1959077964}
     - target: {fileID: 1731171519801905011, guid: 4a9c4ad95c566094c82fa4c5763da97b, type: 3}
       propertyPath: 'records.Array.data[1]'
       value: 
