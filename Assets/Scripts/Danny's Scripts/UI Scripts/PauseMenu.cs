@@ -6,9 +6,14 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
 
+    [SerializeField] private InputActionReference pauseAction;
+
     private RecordPlayer record;
     private Player_Movement playerMovement;
     private bool isPaused;
+
+    private void OnEnable() => pauseAction.action.Enable();
+    private void OnDisable() => pauseAction.action.Disable();
 
     void Awake()
     {
@@ -25,7 +30,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (pauseAction.action.triggered)
         {
             if (isPaused)
                 Resume();

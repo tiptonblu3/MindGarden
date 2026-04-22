@@ -137,26 +137,27 @@ public class Player_Movement : MonoBehaviour
 
 public void OnSprint(InputValue value)
 {
-    bool GamepadActive = Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame;
-            
-    if (GamepadActive)
+        bool isGamepad = playerInput != null && playerInput.currentControlScheme == "Gamepad";// Determine device & what multiplier to apply
+
+    if (isGamepad)
+    {
+        // TOGGLE: Only trigger when the button is first pressed down
+        if (value.isPressed) 
         {
-             //activates if you are using controller
-            if (value.isPressed) //toggle sprint
+            // Toggle the state
+            isSprinting = !isSprinting;
+
+            // Optional: If you want to prevent toggling ON while exhausted or standing still
+            if (isSprinting && (isExhausted || CurrentStamina <= 0 || MoveInputVector.magnitude < 0.1f))
             {
-                if (isSprinting)
-                {
-                    isSprinting = false;
-                }
-                else if (CurrentStamina > 0 && !isExhausted && MoveInputVector.magnitude > 0.1f)
-                {
-                    isSprinting = true;
-                }
+                isSprinting = false;
             }
         }
-    else //activates if you are using keyboard
+    }
+    else 
     {
-            isSprinting = value.isPressed; // Hold to sprint
+        // HOLD: Standard keyboard behavior
+        isSprinting = value.isPressed;
     }
 }
 
@@ -334,16 +335,24 @@ private void FallingGravity()
 
 private void HandleStamina()
     { 
-        bool isTryingToSprint = Keyboard.current.leftShiftKey.isPressed && CurrentStamina > 0 && !isExhausted;
-        isSprinting = isTryingToSprint && MoveInputVector.magnitude > 0.0f;
         //disables sprint if stopped moving or ran out of air
         
     // If stamina reaches zero, mark player as exhausted
-    if (CurrentStamina <= 0)
+    if (isSprinting)
+    {
+        // Stop if we ran out of stamina
+        if (CurrentStamina <= 0)
         {
             isExhausted = true;
-            isSprinting = false; // force stop if exhausted
+            isSprinting = false;
         }
+        
+        // Stop if the player stops moving the stick/keys
+        if (MoveInputVector.magnitude <= 0.0f)
+        {
+            isSprinting = false;
+        }
+    }
 
     // Recover from exhaustion once stamina reaches the threshold
     if (isExhausted && CurrentStamina >= RegenThreshold)

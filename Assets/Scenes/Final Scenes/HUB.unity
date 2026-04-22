@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1581594890}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &548774540
@@ -3945,6 +3945,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579786852}
   m_CullTransparentMesh: 1
+--- !u!1 &1581594890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1815169202771121799, guid: 2459648f29a74ac4f8db0605f5825473, type: 3}
+  m_PrefabInstance: {fileID: 1364916912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1604564265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4009,6 +4014,10 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1242255909}
+    - target: {fileID: 6785574157061081817, guid: 500857f9ed6487245befae97d354e7ff, type: 3}
+      propertyPath: pauseAction
+      value: 
+      objectReference: {fileID: 4160078512865269035, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 6785574157061081817, guid: 500857f9ed6487245befae97d354e7ff, type: 3}
       propertyPath: SettingsMenu
       value: 
