@@ -68,7 +68,10 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     
     private void UpdateText()
     {
-        RecordChoiceTxt.text = records[CurrentRecordIndex].name;
+        if (records.Count > 0)
+        {
+            RecordChoiceTxt.text = records[CurrentRecordIndex].name;
+        }
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
