@@ -71,7 +71,7 @@ public class EyeBehavior : MonoBehaviour
         {
             
             if (col != null) col.enabled = true;
-            if (rend != null) rend.enabled = true;
+            //if (rend != null) rend.enabled = true;
 
             if (Skybox_Alt != null)
             {
