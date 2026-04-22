@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class BirdBehavior : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class BirdBehavior : MonoBehaviour
     public float liftHeight = 1.5f;
     public float liftSpeed = 3f;
     public int triggerCheckpointIndex = 1; // Which checkpoint triggers this object
+    public Animator anim;
 
     private int currentWaypointIndex = -1;
     //private int lastCheckpointHandled = -1;
@@ -24,9 +26,9 @@ public class BirdBehavior : MonoBehaviour
 
 
     [Header("Jordon's Modifications")]
-    public bool isMoving = false;
+    public bool isMovingBird = false;
     public float detectionRadius = 1.5f;
-
+    public Vector3 sphereOffset = new Vector3(0, 5f, 0);
 
 
     #endregion
@@ -36,7 +38,9 @@ public class BirdBehavior : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(MoveToTargetWaypoint(0));
+        anim = GetComponentInChildren<Animator>();
+        currentRoutine = StartCoroutine(MoveToTargetWaypoint(0));
+        
     }
 
     #endregion
@@ -73,7 +77,8 @@ public class BirdBehavior : MonoBehaviour
         }
 
         // 2. Clear the 'isMoving' flag and start fresh
-        isMoving = false;
+        isMovingBird = false;
+        anim.SetBool("isMovingBird", false);
 
         // 3. Teleport and Start Move
         TeleportAndMove(index);
@@ -88,8 +93,8 @@ public class BirdBehavior : MonoBehaviour
     {
         if (waypoints.Count == 0 || targetIndex >= waypoints.Count) yield break; //make sure there are waypoints to move to
 
-        isMoving = true;
-
+        isMovingBird = true;
+        anim.SetBool("isMovingBird", true);
 
         // Select active waypoint move the index forward
         if (currentWaypointIndex < waypoints.Count - 1)
@@ -101,9 +106,10 @@ public class BirdBehavior : MonoBehaviour
         // Move to waypoint while avoiding walls
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
+            Vector3 spherePosition = transform.position + sphereOffset;
             // This is how it avoids things specificially ignoring "Player" and "Ignore_Raycast"
             LayerMask avoidanceLayer = ~LayerMask.GetMask("Player", "Ignore_Raycast"); 
-            bool isObstacleInWay = Physics.CheckSphere(transform.position, detectionRadius, avoidanceLayer);
+            bool isObstacleInWay = Physics.CheckSphere(spherePosition, detectionRadius, avoidanceLayer);
 
             Vector3 finalDestination = targetPos;
             
@@ -127,7 +133,8 @@ public class BirdBehavior : MonoBehaviour
             yield return null; // Wait for next frame
         }
 
-        isMoving = false;
+        isMovingBird = false;
+        anim.SetBool("isMovingBird", false);
         currentWaypointIndex = targetIndex;
         Debug.Log("Reached Waypoint: " + targetIndex);
     }
@@ -175,8 +182,10 @@ public class BirdBehavior : MonoBehaviour
     // Visual Debugging
     private void OnDrawGizmosSelected()
     {
+        Vector3 gizmoPos = transform.position + sphereOffset;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(gizmoPos, detectionRadius);
     }
     
 
