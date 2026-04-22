@@ -16,6 +16,7 @@ public class LV3Disc : MonoBehaviour,  IInteractable
     {
         Debug.Log("Record Piece Picked Up!");
         cpr.DiscNum++; // Increment the discs depending on how many were grabbed
+        cpr.DiscCheck();
         gameObject.SetActive(false); // This will disable the record object
     }
     

@@ -12,7 +12,7 @@ public class EyeKill : MonoBehaviour
 
     #endregion
 
-    // OnTriggerEnter
+    // OnCollisionEnter
     #region
 
     private void OnCollisionEnter(Collision other)
