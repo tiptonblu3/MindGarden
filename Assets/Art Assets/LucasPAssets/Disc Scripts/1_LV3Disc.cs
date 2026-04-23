@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LV3Disc : MonoBehaviour,  IInteractable
+public class LV3Disc1 : MonoBehaviour,  IInteractable
 {
     
     public CheckPointReturner cpr;
@@ -15,8 +15,8 @@ public class LV3Disc : MonoBehaviour,  IInteractable
     public void Interact()
     {
         Debug.Log("Record Piece Picked Up!");
-        cpr.DiscNum++; // Increment the discs depending on how many were grabbed
-        cpr.DiscCheck();
+        cpr.DiscNum = 1; // Increment the discs depending on how many were grabbed
+        //Raise Void to right below checkpoint here
         gameObject.SetActive(false); // This will disable the record object
     }
     

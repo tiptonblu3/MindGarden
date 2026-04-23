@@ -9,6 +9,7 @@ public class SunBehavior : MonoBehaviour
 
     private Collider col;
     private Renderer rend;
+    public CheckPointReturner OnCheckpointChanged;
 
     #endregion
 
@@ -19,6 +20,10 @@ public class SunBehavior : MonoBehaviour
     {
         col = GetComponent<Collider>();
         rend = GetComponent<Renderer>();
+        if (OnCheckpointChanged == null)
+        {
+            OnCheckpointChanged = FindAnyObjectByType<CheckPointReturner>();
+        }    
     }
 
     #endregion
@@ -28,8 +33,9 @@ public class SunBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        CheckPointReturner.OnCheckpointChanged += HandleCheckpoint;
-    }
+
+        CheckPointReturner.OnCheckpointChanged -= HandleCheckpoint;
+     }
 
     #endregion
 
