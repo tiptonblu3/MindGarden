@@ -14,7 +14,7 @@ public class CheckPointReturner : MonoBehaviour
     public int DiscNum = 0; //number of discs to check if its starting nightmare mode
     public GameObject EndTrigger;
     public EyeChase EyeChase;
-    public BirdBehavior Birbah;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -82,13 +82,5 @@ public class CheckPointReturner : MonoBehaviour
 
     #endregion
 
-    public void DiscCheck()
-    {
-        if (DiscNum >= 3)
-        {
-            EndTrigger.SetActive(true);
-            EyeChase.Chase = true;
-            Birbah.moveSpeed = 20;
-        }
-    }
+ 
 }

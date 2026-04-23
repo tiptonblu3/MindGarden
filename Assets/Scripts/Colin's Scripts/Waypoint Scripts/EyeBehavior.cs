@@ -21,10 +21,9 @@ public class EyeBehavior : MonoBehaviour
     private int currentWaypointIndex = -1;
     private int lastCheckpointHandled = -1;
 
-    private Collider col;
+
     private Renderer rend;
 
-    public Material Skybox_Alt;
     public EyeChase eyeChase;
 
     #endregion
@@ -34,7 +33,6 @@ public class EyeBehavior : MonoBehaviour
 
     private void Awake()
     {
-        col = GetComponent<Collider>();
         rend = GetComponent<Renderer>();
         eyeChase = GetComponent<EyeChase>();
     }
@@ -66,20 +64,7 @@ public class EyeBehavior : MonoBehaviour
 
     private void HandleCheckpoint(int index)
     {
-        // Enable at checkpoint 2
-        if (index == 1)
-        {
-            
-            if (col != null) col.enabled = true;
-            //if (rend != null) rend.enabled = true;
-
-            if (Skybox_Alt != null)
-            {
-                Debug.Log("Skybox switch triggered");
-                RenderSettings.skybox = Skybox_Alt;
-                DynamicGI.UpdateEnvironment();
-            }
-        }
+        
 
         // React to checkpoints 3 and 4
         if (index == 2 && index != lastCheckpointHandled && !isMoving)
@@ -88,11 +73,6 @@ public class EyeBehavior : MonoBehaviour
             StartCoroutine(MoveToNextWaypoint());
         }
 
-        if (index == 3 && index != lastCheckpointHandled && !isMoving)
-        {
-            lastCheckpointHandled = index;
-            StartCoroutine(Checkpoint4Sequence());
-        }
     }
 
     #endregion
@@ -130,7 +110,7 @@ public class EyeBehavior : MonoBehaviour
     // Checkpoint4Sequence
     #region
 
-    IEnumerator Checkpoint4Sequence()
+    public IEnumerator Checkpoint4Sequence()
     {
         inCheckpoint4Sequence = true;
         isMoving = true;
