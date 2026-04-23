@@ -33,6 +33,7 @@ public class ShooterFan : MonoBehaviour
 
         rb.useGravity = false;
         rb.linearVelocity = transform.up.normalized * force;
+
     }
 
     #endregion

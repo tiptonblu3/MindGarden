@@ -789,6 +789,10 @@ PrefabInstance:
       propertyPath: force
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1485024047931556415, guid: 593e3ed9cbf0c3744900d9916ea65f08, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4341447318935366777, guid: 593e3ed9cbf0c3744900d9916ea65f08, type: 3}
       propertyPath: m_Name
       value: TestShooterFanDiag
@@ -796,6 +800,10 @@ PrefabInstance:
     - target: {fileID: 7052553176533338168, guid: 593e3ed9cbf0c3744900d9916ea65f08, type: 3}
       propertyPath: m_Size.y
       value: 23.131796
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052553176533338168, guid: 593e3ed9cbf0c3744900d9916ea65f08, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7052553176533338168, guid: 593e3ed9cbf0c3744900d9916ea65f08, type: 3}
       propertyPath: m_Center.x

@@ -46,17 +46,19 @@ public class PlatformManager : MonoBehaviour
             ResetAllPlatforms();
 
                 // Move the Player to the start point
+                Rigidbody rb = playerObject.GetComponent<Rigidbody>();
+
                 playerObject.transform.position = StartPosition;
                 playerObject.transform.rotation = Quaternion.Euler(0, -90, 0);
 
 
-                Rigidbody rb = playerObject.GetComponent<Rigidbody>();
                 if (rb != null) {
                     rb.linearVelocity = Vector3.zero; // Stop falling/moving
                     rb.angularVelocity = Vector3.zero; // Stops any spinning
-                    // rb.position = StartPosition;    // Teleport the physics body
-                    // rb.rotation = playerObject.transform.rotation;
+                    rb.position = StartPosition;    // Teleport the physics body
+                    rb.rotation = Quaternion.Euler(0, -90, 0);
                 }
+        Physics.SyncTransforms();
 
         float verticalDrop = 1.5f; 
         Vector3 platformSpawnPos = new Vector3(StartPosition.x, StartPosition.y - verticalDrop, StartPosition.z);
@@ -143,10 +145,12 @@ public void GenerateNextStep()
 
     public void ResetAllPlatforms()
     {
+        sequenceActive = false;
         foreach (var plat in platforms)
         {
             plat.ResetPlatform();
         }
+        lastSpawnAnchor = StartPosition;
     }
 
 

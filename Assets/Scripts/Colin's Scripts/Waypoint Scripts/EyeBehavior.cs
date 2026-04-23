@@ -16,12 +16,15 @@ public class EyeBehavior : MonoBehaviour
     public int triggerCheckpointIndex = 1; // Which checkpoint triggers this object
 
     private bool isMoving = false;
+    private bool inCheckpoint4Sequence = false;
 
     private int currentWaypointIndex = -1;
     private int lastCheckpointHandled = -1;
 
-    private Collider col;
+
     private Renderer rend;
+
+    public EyeChase eyeChase;
 
     #endregion
 
@@ -30,8 +33,8 @@ public class EyeBehavior : MonoBehaviour
 
     private void Awake()
     {
-        col = GetComponent<Collider>();
         rend = GetComponent<Renderer>();
+        eyeChase = GetComponent<EyeChase>();
     }
 
     #endregion
@@ -61,12 +64,7 @@ public class EyeBehavior : MonoBehaviour
 
     private void HandleCheckpoint(int index)
     {
-        // Enable at checkpoint 2
-        if (index == 1)
-        {
-            if (col != null) col.enabled = true;
-            if (rend != null) rend.enabled = true;
-        }
+        
 
         // React to checkpoints 3 and 4
         if (index == 2 && index != lastCheckpointHandled && !isMoving)
@@ -75,11 +73,6 @@ public class EyeBehavior : MonoBehaviour
             StartCoroutine(MoveToNextWaypoint());
         }
 
-        if (index == 3 && index != lastCheckpointHandled && !isMoving)
-        {
-            lastCheckpointHandled = index;
-            StartCoroutine(Checkpoint4Sequence());
-        }
     }
 
     #endregion
@@ -117,8 +110,9 @@ public class EyeBehavior : MonoBehaviour
     // Checkpoint4Sequence
     #region
 
-    IEnumerator Checkpoint4Sequence()
+    public IEnumerator Checkpoint4Sequence()
     {
+        inCheckpoint4Sequence = true;
         isMoving = true;
 
         // wait 5 seconds
@@ -138,21 +132,28 @@ public class EyeBehavior : MonoBehaviour
             yield return null;
         }
 
-        // go to last waypoint
-        int finalWaypointIndex = 2; // adjust if needed
-        Vector3 target2 = waypoints[finalWaypointIndex].position;
-
-        while (Vector3.Distance(transform.position, target2) > 0.05f)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                target2,
-                moveSpeed * Time.deltaTime
-            );
-            yield return null;
-        }
-
         isMoving = false;
+
+        eyeChase.Chase = true;
+    }
+
+    #endregion
+
+    // ResetEyeOneDeath
+    #region
+
+    public void ResetEyeOnDeath(int checkpointIndex)
+    {
+        // Only care if we died during or after checkpoint 4 sequence start point
+        if (!inCheckpoint4Sequence)
+            return;
+
+        StopAllCoroutines();
+        isMoving = false;
+        transform.position = waypoints[0].position;
+        eyeChase.Chase = false;
+
+        StartCoroutine(Checkpoint4Sequence());
     }
 
     #endregion

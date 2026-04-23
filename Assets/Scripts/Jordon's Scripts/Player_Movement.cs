@@ -18,6 +18,7 @@ public class Player_Movement : MonoBehaviour
     public PhysicsMaterial slipperyMat; 
     public PhysicsMaterial NormalMat;
     private Collider playerCollider;
+    public Animator animator;
 
 
     [Header("Player Variables")]
@@ -40,7 +41,6 @@ public class Player_Movement : MonoBehaviour
     public bool invertY = true;
     public float normalFOV = 60f;  //normal fov
     public float fovTransitionSpeed = 5f;
-    public bool isInFan; // For Colin's Fucked Up Fix
 
 
     [Header("Sprint Variables")]
@@ -68,6 +68,11 @@ public class Player_Movement : MonoBehaviour
     public float maxJumpTime = 0.1f; // Maximum time the player can hold the jump button to achieve higher jumps
     private float lastGroundedTime;
 
+    [Header("Fan Mechanics")]
+    public bool externalVelocityLock; // For Colin's Fix
+    public float externalLockTimer;
+    public bool isInFan;
+
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
 {
@@ -94,6 +99,7 @@ public class Player_Movement : MonoBehaviour
         // The cursor is automatically invisible when locked
         Cursor.visible = false;
         currentSpeedMultiplier = 1f;
+        animator = GetComponentInChildren<Animator>();
 
     }
 
@@ -105,6 +111,7 @@ public class Player_Movement : MonoBehaviour
         HandleCameraFOV();
         ApplySensitivity();
         HandleFriction();
+        animator.SetBool("IsJumping", isjumping || !IsGrounded);
     }
     
     void FixedUpdate()
@@ -130,41 +137,40 @@ public class Player_Movement : MonoBehaviour
 
 public void OnSprint(InputValue value)
 {
-    bool GamepadActive = Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame;
-            
-    if (GamepadActive)
+        bool isGamepad = playerInput != null && playerInput.currentControlScheme == "Gamepad";// Determine device & what multiplier to apply
+
+    if (isGamepad)
+    {
+        // TOGGLE: Only trigger when the button is first pressed down
+        if (value.isPressed) 
         {
-             //activates if you are using controller
-            if (value.isPressed) //toggle sprint
+            // Toggle the state
+            isSprinting = !isSprinting;
+
+            // Optional: If you want to prevent toggling ON while exhausted or standing still
+            if (isSprinting && (isExhausted || CurrentStamina <= 0 || MoveInputVector.magnitude < 0.1f))
             {
-                if (isSprinting)
-                {
-                    isSprinting = false;
-                }
-                else if (CurrentStamina > 0 && !isExhausted && MoveInputVector.magnitude > 0.1f)
-                {
-                    isSprinting = true;
-                }
+                isSprinting = false;
             }
         }
-    else //activates if you are using keyboard
+    }
+    else 
     {
-            isSprinting = value.isPressed; // Hold to sprint
+        // HOLD: Standard keyboard behavior
+        isSprinting = value.isPressed;
     }
 }
 
     public void OnJump(InputValue Value)
     {
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
-        if (isHoldingJump && CanJump){
-            if (IsGrounded)
-                {
+        if (isHoldingJump && CanJump && IsGrounded){
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
                     jumpTimeCounter = maxJumpTime;
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
                         lastGroundedTime = 0;
-                }
+              
         }
         else
             {
@@ -187,64 +193,7 @@ public void OnSprint(InputValue value)
 
     #endregion
 
-    /*
-private void ManageMovement()
-    {
-        Vector3 forward = cameraTransform.forward; //move forward and back in relation to camera
-        Vector3 right = cameraTransform.right; //move left and right in relation to camera
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
 
-        float currentSpeed = speed * currentSpeedMultiplier;
-         Vector3 moveDirection = forward * MoveInputVector.y + right * MoveInputVector.x;        //move player object based on directional data and speed variable
-         rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-        if (IsGrounded)
-        {
-            // Get the ground normal from the SphereCast we did in Update()
-            // We reuse the 'hit' variable you defined in Update
-            Physics.SphereCast(transform.position, rayRadius, Vector3.down, out RaycastHit slopeHit, rayDistance);
-
-            // Project the movement onto the slope plane this fixes the super jump when hitting an angle
-            Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-
-            // Apply velocity using the slope-aligned direction
-            // We keep rb.linearVelocity.y slightly negative to keep the player "snapped" to the floor
-            rb.linearVelocity = new Vector3(slopeMoveDirection.x * currentSpeed, rb.linearVelocity.y, slopeMoveDirection.z * currentSpeed);
-
-            // Add a tiny extra downward force while moving on slopes to prevent "skipping"
-            if (moveDirection.magnitude > 0.1f)
-            {
-                rb.AddForce(Vector3.down * 15f, ForceMode.Force);
-            }
-        }
-        else
-        {
-            // Air movement 
-            rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, rb.linearVelocity.y, moveDirection.z * currentSpeed);
-        }
-
-        if (moveDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
-
-            }
-        bool wasRecentlyGrounded = (Time.time - lastGroundedTime) < 0.1f;
-
-        if (wasRecentlyGrounded && !isjumping && rb.linearVelocity.y > 1f)
-            {
-                if (rb.linearVelocity.y > MaxJumpHeight)
-                {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-                }
-            }
-        
-    }
-    */
-
-    // Colin's ManageMovement (Sorry Fred & Jordan)
     private void ManageMovement()
     {
         if (isInFan)
@@ -281,7 +230,11 @@ private void ManageMovement()
                 )
             );
         }
+
+        bool isMoving = moveDirection.magnitude > 0.1f;
+        animator.SetBool("IsMoving", isMoving);
     }
+
 
     private void ExecuteInteraction()
 {
@@ -382,16 +335,24 @@ private void FallingGravity()
 
 private void HandleStamina()
     { 
-        bool isTryingToSprint = Keyboard.current.leftShiftKey.isPressed && CurrentStamina > 0 && !isExhausted;
-        isSprinting = isTryingToSprint && MoveInputVector.magnitude > 0.0f;
         //disables sprint if stopped moving or ran out of air
         
     // If stamina reaches zero, mark player as exhausted
-    if (CurrentStamina <= 0)
+    if (isSprinting)
+    {
+        // Stop if we ran out of stamina
+        if (CurrentStamina <= 0)
         {
             isExhausted = true;
-            isSprinting = false; // force stop if exhausted
+            isSprinting = false;
         }
+        
+        // Stop if the player stops moving the stick/keys
+        if (MoveInputVector.magnitude <= 0.0f)
+        {
+            isSprinting = false;
+        }
+    }
 
     // Recover from exhaustion once stamina reaches the threshold
     if (isExhausted && CurrentStamina >= RegenThreshold)
