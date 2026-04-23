@@ -24519,6 +24519,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 497894215}
     - target: {fileID: 4730685144473625198, guid: 85e4f326867f5824eb75cdd957c21535, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730685144473625198, guid: 85e4f326867f5824eb75cdd957c21535, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730685144473625198, guid: 85e4f326867f5824eb75cdd957c21535, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730685144473625198, guid: 85e4f326867f5824eb75cdd957c21535, type: 3}
       propertyPath: m_LocalPosition.x
       value: 118.05
       objectReference: {fileID: 0}
@@ -43710,6 +43722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LV3Disc2
   cpr: {fileID: 497894215}
   Skybox_Alt: {fileID: 2100000, guid: 7293dadd528f06647a6c70c930978c3a, type: 2}
+  eyechange: 0
 --- !u!23 &7217604785359734997
 MeshRenderer:
   m_ObjectHideFlags: 0
