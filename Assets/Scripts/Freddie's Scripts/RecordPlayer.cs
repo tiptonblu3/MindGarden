@@ -1,11 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class RecordPlayer : MonoBehaviour, IInteractable
 {
     public GameObject RecordSelect;
     public PauseMenu Pause;
+
+    [SerializeField] private GameObject defaultButton;
+    [SerializeField] private GameObject PauseStartButton;
 
     public void Interact()
     {
@@ -14,6 +18,11 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         Cursor.lockState = CursorLockMode.None; // Unlock Cursor
         Cursor.visible = true; // Make Cursor Visible
         CurrentRecordIndex = (CurrentRecordIndex) % records.Count;
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(defaultButton);
+        }
     }
     public void CloseRecordSelect()
     {
@@ -21,6 +30,11 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         Time.timeScale = 1f; // Unpause Game
         Cursor.lockState = CursorLockMode.Locked; // Lock Cursor
         Cursor.visible = false; // Make Cursor Invisible
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(PauseStartButton);
+        }
     }
 
     public List<GameObject> records; // List of records available to play
