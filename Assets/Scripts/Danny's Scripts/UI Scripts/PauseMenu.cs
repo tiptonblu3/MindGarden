@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
 {
     [Header("Pause Menu")]
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuContent;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject pauseMenuCam;
     [SerializeField] private CinemachineCamera freeLookCam;
@@ -17,6 +18,8 @@ public class PauseMenu : MonoBehaviour
     [Header("Controller Navigation")]
     [SerializeField] private Button pauseMenuFirstButton;
     [SerializeField] private Button settingsMenuFirstButton;
+    [SerializeField] private Button hubConfirmFirstButton;
+    [SerializeField] private Button quitConfirmFirstButton;
     [SerializeField] private UnityEngine.InputSystem.UI.InputSystemUIInputModule uiInputModule;
 
     private RecordPlayer record;
@@ -102,13 +105,15 @@ public class PauseMenu : MonoBehaviour
             pauseMenu.SetActive(false);
         if (settingsMenu != null)
             settingsMenu.SetActive(false);
+        if (pauseMenuContent != null)
+            pauseMenuContent.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Unlocks jumping in pause menu with controller
+        // Locks jumping in pause menu with controller
         if (Gamepad.current != null)
         {
             playerMovement.GetComponent<PlayerInput>().actions["Jump"].Enable();
@@ -116,17 +121,7 @@ public class PauseMenu : MonoBehaviour
             var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
             navigate.RemoveAllBindingOverrides();
         }
-    }
 
-    // Both set the highlighted button when you open or close the settings menu to be the same
-    public void OnOpenSettings()
-    {
-        StartCoroutine(SelectFirstButton(settingsMenuFirstButton));
-    }
-
-    public void OnCloseSettings()
-    {
-        StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
     }
 
     private IEnumerator SelectFirstButton(Button button)
@@ -137,4 +132,28 @@ public class PauseMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(button.gameObject);
     }
 
+    // Disables and enables parts of the menu so that the bubbles dont rerender and look all jittery 
+    // when changing menus. Also sets default selected button for controller navigation when changing menus.
+    public void OpenSettingsMenu()
+    {
+        pauseMenuContent.SetActive(false);
+        settingsMenu.SetActive(true);
+        StartCoroutine(SelectFirstButton(settingsMenuFirstButton));
+    }
+
+    public void CloseSettingsMenu()
+    {
+        settingsMenu.SetActive(false);
+        pauseMenuContent.SetActive(true);
+        StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
+    }
+    public void OnHubConfirmOpen()
+    {
+        StartCoroutine(SelectFirstButton(hubConfirmFirstButton));
+    }
+
+    public void OnQuitConfirmOpen()
+    {
+        StartCoroutine(SelectFirstButton(quitConfirmFirstButton));
+    }
 }
