@@ -80,6 +80,9 @@ public class PauseMenu : MonoBehaviour
         {
             playerMovement.GetComponent<PlayerInput>().actions["Jump"].Disable();
 
+            // Sets the highlighted button when you open the menu every time to always be the same
+            StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
+
             var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
             foreach (var binding in navigate.bindings)
             {
@@ -88,9 +91,6 @@ public class PauseMenu : MonoBehaviour
                     navigate.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
             }
         }
-
-        // Sets the highlighted button when you open the menu every time to always be the same
-        StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
     }
 
     public void Resume()
