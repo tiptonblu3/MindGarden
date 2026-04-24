@@ -6,7 +6,6 @@ using UnityEngine;
 public class WaterBehavior : MonoBehaviour
 {
     public float waterOpacity = 0.5f; //can be adjusted to whatever needed.
-    public float underwaterSpeedMultiplier = 0.5f; //can be adjusted to whatever needed.
     private Player_Movement playerController;
     private float originalPlayerSpeed;
 
@@ -16,21 +15,18 @@ public class WaterBehavior : MonoBehaviour
         Color color = renderer.material.color;
         color.a = waterOpacity;
         renderer.material.color = color;
-        //playerController = GameObject.Find("Player").GetComponent<Player_Movement>();
-        //originalPlayerSpeed = playerController.speed;
+        playerController = GameObject.Find("Player").GetComponent<Player_Movement>();
+        originalPlayerSpeed = playerController.speed;
     }
 
-    void Update()
-    {
 
-    }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerController.CanJump = false;
-            playerController.speed = playerController.speed * underwaterSpeedMultiplier;
+            playerController.speed =3;
         }
     }
     void OnTriggerExit(Collider other)

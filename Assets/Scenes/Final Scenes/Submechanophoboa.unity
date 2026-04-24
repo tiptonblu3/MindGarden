@@ -10484,6 +10484,7 @@ GameObject:
   - component: {fileID: 1616284654}
   - component: {fileID: 1616284653}
   - component: {fileID: 1616284652}
+  - component: {fileID: 1616284656}
   m_Layer: 0
   m_Name: Water Placeholder V2
   m_TagString: Untagged
@@ -10584,6 +10585,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1616284656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616284651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bed1c9622b17645b5136d17c48a972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterBehavior
+  waterOpacity: 0.5
 --- !u!114 &1625173425 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5374664654274359683, guid: a642c5680ee0c224abbf15e825d2dd16, type: 3}
