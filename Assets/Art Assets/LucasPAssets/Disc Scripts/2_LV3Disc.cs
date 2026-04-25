@@ -7,6 +7,7 @@ public class LV3Disc2 : MonoBehaviour,  IInteractable
     private Collider col;
     public Material Skybox_Alt;
     public bool eyechange = false;
+    public SunBehavior sun;
 
     private void Start()
     {
@@ -32,6 +33,9 @@ public class LV3Disc2 : MonoBehaviour,  IInteractable
             RenderSettings.skybox = Skybox_Alt;
             DynamicGI.UpdateEnvironment();
         }
+
+        sun.HandleCheckpoint();
+
         gameObject.SetActive(false); // This will disable the record object
     }
     
