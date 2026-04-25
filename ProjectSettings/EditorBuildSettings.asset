@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Final Scenes/Tutorial.unity
     guid: 6653e776a29a39e43a64ecc08494dcf2
   - enabled: 1
+    path: Assets/Scenes/Final Scenes/Submechanophoboa.unity
+    guid: 7039c33275d6317448624b70a44d7dc6
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/submech_nightmare.unity
+    guid: 2f5ce150588409e4fbc832874e791cfe
+  - enabled: 1
     path: Assets/Scenes/Final Scenes/Acrophobia.unity
     guid: 4884ac89a5610f64eba07550cf5654a1
   - enabled: 1
