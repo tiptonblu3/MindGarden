@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RiseAndFall
   RiseSpeed: 5
-  RiseHeight: 10
+  RiseHeight: 0
   FallDepth: 0
   LAT: {fileID: 8566265507640826903}
 --- !u!54 &8309629254322208222
@@ -85,6 +85,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8566265507640826903}
     m_Modifications:
+    - target: {fileID: 2994665961708346672, guid: e60496521d891ce449d7c1c9ba51b652, type: 3}
+      propertyPath: sceneToLoad
+      value: Acrophobia
+      objectReference: {fileID: 0}
     - target: {fileID: 5156121953880334060, guid: e60496521d891ce449d7c1c9ba51b652, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.27476
