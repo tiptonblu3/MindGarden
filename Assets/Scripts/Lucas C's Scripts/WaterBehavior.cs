@@ -15,7 +15,7 @@ public class WaterBehavior : MonoBehaviour
         Color color = renderer.material.color;
         color.a = waterOpacity;
         renderer.material.color = color;
-        playerController = GameObject.Find("Player").GetComponent<Player_Movement>();
+        playerController = GameObject.FindWithTag("Player").GetComponent<Player_Movement>();
         originalPlayerSpeed = playerController.speed;
     }
 
