@@ -34,6 +34,16 @@ public class SaveProgress : MonoBehaviour
             SaveGame();
             save = false;
         }
+        if (newGame)
+        {
+            NewGame();
+            newGame = false;
+        }
+        if (loadGame)
+        {
+            LoadGame();
+            loadGame = false;
+        }
     }
 
     private void InitializeReferences()
@@ -63,6 +73,7 @@ public class SaveProgress : MonoBehaviour
         if (newGame)
         {
             NewGame();
+            LoadGame();
             newGame = false;
         }
         if (loadGame)

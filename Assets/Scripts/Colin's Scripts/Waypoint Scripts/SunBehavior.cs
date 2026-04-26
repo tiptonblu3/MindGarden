@@ -23,36 +23,13 @@ public class SunBehavior : MonoBehaviour
 
     #endregion
 
-    // OnEnable
-    #region
-
-    private void OnEnable()
-    {
-        CheckPointReturner.OnCheckpointChanged += HandleCheckpoint;
-    }
-
-    #endregion
-
-    // OnDisable
-    #region
-
-    private void OnDisable()
-    {
-        CheckPointReturner.OnCheckpointChanged -= HandleCheckpoint;
-    }
-
-    #endregion
-
     // HandleCheckpoint
     #region
 
-    private void HandleCheckpoint(int index)
+    public void HandleCheckpoint()
     {
-        if (index == 1)
-        {
-            if (col != null) col.enabled = false;
-            if (rend != null) rend.enabled = false;
-        }
+        if (col != null) col.enabled = false;
+        if (rend != null) rend.enabled = false;
     }
 
     #endregion

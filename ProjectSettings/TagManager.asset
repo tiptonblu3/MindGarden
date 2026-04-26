@@ -15,7 +15,7 @@ TagManager:
   - PlayerSensor
   - KillZone
   - Camera
-  - 
+  - Ignore_Raycast
   - 
   - 
   - 
