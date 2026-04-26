@@ -26,6 +26,8 @@ public class Player_Movement : MonoBehaviour
     public bool IsGrounded;
     public float rotationSpeed = 320f;
     public bool isDead = false;
+
+    public bool StupidDumbJumpOption = false;
     
 
     [Header("Interaction")]
@@ -341,28 +343,57 @@ private void HandleStamina()
 
     // 3. Logic for Draining Stamina
     // Only drain if: Holding Sprint key AND Moving AND Not Exhausted AND Grounded
-    if (isSprinting && isMoving && !isExhausted)
-    {
-        CurrentStamina -= StaminaDrainRate * Time.deltaTime;
-        currentSpeedMultiplier = SprintMultiplier;
-
-        // If we hit zero, force stop
-        if (CurrentStamina <= 0)
+    if(StupidDumbJumpOption == true)
         {
-            CurrentStamina = 0;
-            isExhausted = true;
+            if (isSprinting && isMoving && !isExhausted && IsGrounded)
+            {
+                CurrentStamina -= StaminaDrainRate * Time.deltaTime;
+                currentSpeedMultiplier = SprintMultiplier;
+
+                // If we hit zero, force stop
+                if (CurrentStamina <= 0)
+                {
+                    CurrentStamina = 0;
+                    isExhausted = true;
+                }
+            }
+            else
+            {
+                // 4. Logic for Regenerating Stamina
+                CurrentStamina += StaminaRegenRate * Time.deltaTime;
+                currentSpeedMultiplier = 1f;
+                
+                // If the player stopped moving or is exhausted, 
+                // we keep isSprinting true (if they are holding the key) 
+                // but the speed multiplier remains 1f.
+            }
         }
-    }
-    else
-    {
-        // 4. Logic for Regenerating Stamina
-        CurrentStamina += StaminaRegenRate * Time.deltaTime;
-        currentSpeedMultiplier = 1f;
-        
-        // If the player stopped moving or is exhausted, 
-        // we keep isSprinting true (if they are holding the key) 
-        // but the speed multiplier remains 1f.
-    }
+        else
+        {
+            if (isSprinting && isMoving && !isExhausted)
+            {
+                CurrentStamina -= StaminaDrainRate * Time.deltaTime;
+                currentSpeedMultiplier = SprintMultiplier;
+
+                // If we hit zero, force stop
+                if (CurrentStamina <= 0)
+                {
+                    CurrentStamina = 0;
+                    isExhausted = true;
+                }
+            }
+            else
+            {
+                // 4. Logic for Regenerating Stamina
+                CurrentStamina += StaminaRegenRate * Time.deltaTime;
+                currentSpeedMultiplier = 1f;
+                
+                // If the player stopped moving or is exhausted, 
+                // we keep isSprinting true (if they are holding the key) 
+                // but the speed multiplier remains 1f.
+            }
+        }
+    
 
     CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
 }
