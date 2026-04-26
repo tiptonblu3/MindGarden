@@ -341,7 +341,7 @@ private void HandleStamina()
 
     // 3. Logic for Draining Stamina
     // Only drain if: Holding Sprint key AND Moving AND Not Exhausted AND Grounded
-    if (isSprinting && isMoving && !isExhausted && IsGrounded)
+    if (isSprinting && isMoving && !isExhausted)
     {
         CurrentStamina -= StaminaDrainRate * Time.deltaTime;
         currentSpeedMultiplier = SprintMultiplier;
