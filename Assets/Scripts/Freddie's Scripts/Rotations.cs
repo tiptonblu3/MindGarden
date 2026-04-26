@@ -8,10 +8,16 @@ public class Rotations : MonoBehaviour
     public bool rotateZ = false; // Option to rotate around the Z-axis
     public bool floating = false; // Option to enable or disable floating animation
     private Vector3 startPos; // Store the initial position of the object for animation purposes
+    private GameObject player; // Reference to the player object
+    private GameObject camera; // Reference to the main camera
+    public bool lookAtPlayer = false; // Option to enable or disable looking at the player
+    public bool lookAtCamera = false; // Option to enable or disable looking at the camera
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         startPos = transform.position;
+        player = GameObject.FindGameObjectWithTag("Player");
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -19,6 +25,7 @@ public class Rotations : MonoBehaviour
     {
         Rotate();
         Float();
+        LookAt();
     }
 
     void Rotate()
@@ -43,6 +50,17 @@ public class Rotations : MonoBehaviour
             float bounce = Mathf.Sin(Time.time * 2) * 0.1f;
             transform.position = new Vector3(startPos.x, startPos.y + bounce, startPos.z);
         }
-        
+    
+    }
+    void LookAt()
+    {
+        if (lookAtPlayer && player != null)
+        {
+            transform.LookAt(player.transform);
+        }
+        else if (lookAtCamera && camera != null)
+        {
+            transform.LookAt(camera.transform);
+        }
     }
 }
