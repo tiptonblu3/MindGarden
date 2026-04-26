@@ -26,7 +26,7 @@ public class WaterBehavior : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerController.CanJump = false;
-            playerController.speed =4.5f;
+            playerController.speed =6f;
         }
     }
     void OnTriggerExit(Collider other)

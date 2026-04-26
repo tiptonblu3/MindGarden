@@ -28,12 +28,12 @@ public class ValveBehavior : MonoBehaviour
 
     private IEnumerator AnimateValveToggle()
     {
-        Quaternion startRotation = transform.rotation;
+        Quaternion startRotation = transform.localRotation;
         Quaternion endRotation = valveActive ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0);
 
         for (float t = 0; t < 1; t += Time.deltaTime * valveSwitchTime)
         {
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            transform.localRotation = Quaternion.Lerp(startRotation, endRotation, t);
             yield return null;
         }
 
