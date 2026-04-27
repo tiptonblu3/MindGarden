@@ -3,15 +3,15 @@ using UnityEngine;
 public class ThoughtBubbleChain : MonoBehaviour
 {
     public Transform headAnchor;
-    public Transform bubbleAnchor;  // ThoughBubbles (Parent)
+    public Transform bubbleAnchor;  // ThoughtBubbles (Parent)
     public Transform[] bubbles;     // Index of bubbles, 0 = closest
 
     public float springStrength = 18f;
     public float damping = 4.5f;
     public float mass = 0.8f;
     public float gravity = -4f;
-    public float startSize = .85f;
-    public float endSize = 1.5f;
+    public float startSize = 0.04f;
+    public float endSize = 0.08f;
 
     private Vector3[] _positions;
     private Vector3[] _velocities;
@@ -65,6 +65,24 @@ public class ThoughtBubbleChain : MonoBehaviour
             projected = Mathf.Clamp(projected, padding, toAnchor.magnitude - padding);
             _positions[i] = headAnchor.position + toAnchor.normalized * projected;
 
+        }
+
+        // Give each bubble its own padding so they dont overlap
+        for (int i = 1; i < bubbles.Length; i++)
+        {
+            Vector3 diff = _positions[i] - _positions[i - 1];
+            float minDist = (bubbles[i].localScale.x + bubbles[i - 1].localScale.x) * 1.25f;
+            if (diff.magnitude < minDist)
+            {
+                Vector3 correction = diff.normalized * (minDist - diff.magnitude) * 1.25f;
+                _positions[i] += correction;
+                _positions[i - 1] -= correction;
+            }
+        }
+
+        // Give corrected position
+        for (int i = 0; i < bubbles.Length; i++)
+        {
             bubbles[i].position = _positions[i];
         }
     }
