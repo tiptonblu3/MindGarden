@@ -103,18 +103,24 @@ public class PauseMenu : MonoBehaviour
                 navigate.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
         }
 
-        // Locks jumping and menu navigation with thumbstick in pause menu with controller
+        // Stops all jumping in pause menu with controller
+        var jumpAction = playerMovement.GetComponent<PlayerInput>().actions["Jump"];
+        foreach (var binding in jumpAction.bindings)
+        {
+            if (binding.path.Contains("Gamepad") || binding.path.Contains("button"))
+                jumpAction.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
+        }
+
         if (Gamepad.current != null)
         {
-            playerMovement.GetComponent<PlayerInput>().actions["Jump"].Disable();
-
-            // Sets the highlighted button when you open the menu every time to always be the same
+            // Sets the highlighted button when you open the menu every time to always be the same (only on controller)
             StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
 
+            // Disable thumbstick navigation
             navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
             foreach (var binding in navigate.bindings)
             {
-                // Stops thumbstick navigation in pause menu
+                // Stops thumbstick UI navigation
                 if (binding.path.Contains("leftStick") || binding.path.Contains("rightStick"))
                     navigate.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
             }
@@ -150,16 +156,14 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
 
         // Should fix the camera transition spin thing 
-        playerMovement.GetComponent<PlayerInput>().actions["Look"].Enable();/*
-        pauseMenuCam.transform.position = Camera.main.transform.position;
-        pauseMenuCam.transform.rotation = Camera.main.transform.rotation;*/
+        playerMovement.GetComponent<PlayerInput>().actions["Look"].Enable();
 
+        // Restores all jump bindings on resume
+        var jumpAction = playerMovement.GetComponent<PlayerInput>().actions["Jump"];
+        jumpAction.RemoveAllBindingOverrides();
 
-        // Locks jumping in pause menu with controller
         if (Gamepad.current != null)
         {
-            playerMovement.GetComponent<PlayerInput>().actions["Jump"].Enable();
-
             navigate.Enable();
         }
 
