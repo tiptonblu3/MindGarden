@@ -95,6 +95,7 @@ public class Player_Movement : MonoBehaviour
         #region Get Components
         playerCollider = GetComponent<Collider>();
         playerInput = GetComponent<PlayerInput>();
+        cameraTransform = Camera.main.transform;
         #endregion
 
         Cursor.lockState = CursorLockMode.Locked;
