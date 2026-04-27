@@ -11,9 +11,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject pauseMenuContent;
     [SerializeField] private GameObject settingsMenu;
-    [SerializeField] private GameObject pauseMenuCam;
+    [SerializeField] private CinemachineCamera pauseMenuCam;
     [SerializeField] private CinemachineCamera freeLookCam;
     [SerializeField] private ThoughtBubbleChain chain;
+    [SerializeField] private GameObject[] subMenus;
+    [SerializeField] private PauseCamSync pauseCamSync;
 
     [Header("Controller Navigation")]
     [SerializeField] private Button pauseMenuFirstButton;
@@ -44,10 +46,25 @@ public class PauseMenu : MonoBehaviour
         // Keyboard pause input
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (isPaused)
-                Resume();
-            else
+            if (!isPaused)
+            {
                 Pause();
+            }
+            else
+            {
+                bool closedAMenu = false;
+                foreach (var menu in subMenus)
+                {
+                    if (menu.activeSelf)
+                    {
+                        menu.SetActive(false);
+                        pauseMenuContent.SetActive(true);
+                        closedAMenu = true;
+                        break;
+                    }
+                }
+                if (!closedAMenu) Resume();
+            }
         }
         // Controller pause input
         if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
@@ -67,26 +84,43 @@ public class PauseMenu : MonoBehaviour
 
         isPaused = true;
         pauseMenu.SetActive(true);
-        pauseMenuCam.SetActive(true);
-        freeLookCam.enabled = false; // This will freeze the main cam while the pause menu is active to prevent that weird spin when unpausing
-
+        pauseMenuCam.Priority = 20;
+        freeLookCam.Priority = 10;
         chain.Activate();
+
+        playerMovement.GetComponent<PlayerInput>().actions["Look"].Disable(); // Prevents camera movement at all in pause
+        pauseMenuCam.GetComponent<CinemachineCamera>().PreviousStateIsValid = false; // SUPPOSED TO prevent the camera from spinning around when you open the menu
+        pauseCamSync.onPause(); // Locks the pause menu camera rotation to prevent spinning
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Locks jumping and menu navigation with thumbstick in pause menu with controller
+        // Properly disables WASD menu navigation
+        var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
+        foreach (var binding in navigate.bindings)
+        {
+            if (binding.path.Contains("Keyboard") || binding.path.Contains("arrow"))
+                navigate.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
+        }
+
+        // Stops all jumping in pause menu with controller
+        var jumpAction = playerMovement.GetComponent<PlayerInput>().actions["Jump"];
+        foreach (var binding in jumpAction.bindings)
+        {
+            if (binding.path.Contains("Gamepad") || binding.path.Contains("button"))
+                jumpAction.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
+        }
+
         if (Gamepad.current != null)
         {
-            playerMovement.GetComponent<PlayerInput>().actions["Jump"].Disable();
-
-            // Sets the highlighted button when you open the menu every time to always be the same
+            // Sets the highlighted button when you open the menu every time to always be the same (only on controller)
             StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
 
-            var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
+            // Disable thumbstick navigation
+            navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
             foreach (var binding in navigate.bindings)
             {
-                // Stops thumbstick navigation in pause menu
+                // Stops thumbstick UI navigation
                 if (binding.path.Contains("leftStick") || binding.path.Contains("rightStick"))
                     navigate.ApplyBindingOverride(new InputBinding { path = binding.path, overridePath = "" });
             }
@@ -96,8 +130,10 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         isPaused = false;
-        pauseMenuCam.SetActive(false);
-        freeLookCam.enabled = true; 
+        pauseMenuCam.Priority = 10;
+        freeLookCam.Priority = 20;
+        var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
+        var orbital = freeLookCam.GetComponent<CinemachineOrbitalFollow>();
 
         if (playerMovement != null)
             playerMovement.enabled = true;
@@ -107,53 +143,71 @@ public class PauseMenu : MonoBehaviour
             settingsMenu.SetActive(false);
         if (pauseMenuContent != null)
             pauseMenuContent.SetActive(true);
+        pauseCamSync.onResume();
+
+        // Counters the freeze in Pause to stop jittering when coming back
+        if (orbital != null)
+            orbital.HorizontalAxis.Value = pauseMenuCam.transform.eulerAngles.y;
+        freeLookCam.PreviousStateIsValid = false; 
 
         EventSystem.current.SetSelectedGameObject(null);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Locks jumping in pause menu with controller
+        // Should fix the camera transition spin thing 
+        playerMovement.GetComponent<PlayerInput>().actions["Look"].Enable();
+
+        // Restores all jump bindings on resume
+        var jumpAction = playerMovement.GetComponent<PlayerInput>().actions["Jump"];
+        jumpAction.RemoveAllBindingOverrides();
+
         if (Gamepad.current != null)
         {
-            playerMovement.GetComponent<PlayerInput>().actions["Jump"].Enable();
-
-            var navigate = uiInputModule.actionsAsset.FindAction("UI/Navigate");
-            navigate.RemoveAllBindingOverrides();
+            navigate.Enable();
         }
+
+        navigate.RemoveAllBindingOverrides();
 
     }
 
+    // Highlights a first button for the controller to work
     private IEnumerator SelectFirstButton(Button button)
     {
         yield return null;
-
-        if (button != null)
-            EventSystem.current.SetSelectedGameObject(button.gameObject);
+        if (playerMovement.GetComponent<PlayerInput>().currentControlScheme == "Gamepad")
+        {
+            if (button != null)
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+        }
     }
 
     // Disables and enables parts of the menu so that the bubbles dont rerender and look all jittery 
-    // when changing menus. Also sets default selected button for controller navigation when changing menus.
+    // when changing menus. Also sets the first button to be selected for controller navigation.
     public void OpenSettingsMenu()
     {
         pauseMenuContent.SetActive(false);
         settingsMenu.SetActive(true);
-        StartCoroutine(SelectFirstButton(settingsMenuFirstButton));
+        if (Gamepad.current != null)
+            StartCoroutine(SelectFirstButton(settingsMenuFirstButton));
     }
 
     public void CloseSettingsMenu()
     {
         settingsMenu.SetActive(false);
         pauseMenuContent.SetActive(true);
-        StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
+        if (Gamepad.current != null)
+            StartCoroutine(SelectFirstButton(pauseMenuFirstButton));
     }
     public void OnHubConfirmOpen()
     {
-        StartCoroutine(SelectFirstButton(hubConfirmFirstButton));
+        if (Gamepad.current != null)
+            StartCoroutine(SelectFirstButton(hubConfirmFirstButton));
     }
 
     public void OnQuitConfirmOpen()
     {
-        StartCoroutine(SelectFirstButton(quitConfirmFirstButton));
+        if (Gamepad.current != null)
+            StartCoroutine(SelectFirstButton(quitConfirmFirstButton));
     }
 }
