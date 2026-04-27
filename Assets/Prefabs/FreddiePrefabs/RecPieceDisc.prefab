@@ -143,6 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rotations
   rotationSpeed: 80
   rotateX: 0
-  rotateY: 1
-  rotateZ: 0
+  rotateY: 0
+  rotateZ: 1
   floating: 1
+  lookAtPlayer: 0
+  lookAtCamera: 0
