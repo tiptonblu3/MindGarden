@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Interactable
+  - Checkpoints
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - KillZone
   - Camera
   - Ignore_Raycast
-  - 
+  - Ground
   - 
   - 
   - 

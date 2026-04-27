@@ -19,14 +19,7 @@ public class WaterPipeBehavior : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Approximately(currentRotation, rotationGoal))
-        {
-            pipeRenderer.material.color = Color.green;
-        }
-        else
-        {
-            pipeRenderer.material.color = Color.red;
-        }
+        
 
         if (currentRotation >= 360)
         {

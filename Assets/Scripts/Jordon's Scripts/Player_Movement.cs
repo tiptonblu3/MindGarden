@@ -26,6 +26,8 @@ public class Player_Movement : MonoBehaviour
     public bool IsGrounded;
     public float rotationSpeed = 320f;
     public bool isDead = false;
+
+    public bool StupidDumbJumpOption = false;
     
 
     [Header("Interaction")]
@@ -146,12 +148,7 @@ public void OnSprint(InputValue value)
         {
             // Toggle the state
             isSprinting = !isSprinting;
-
-            // Optional: If you want to prevent toggling ON while exhausted or standing still
-            if (isSprinting && (isExhausted || CurrentStamina <= 0 || MoveInputVector.magnitude < 0.1f))
-            {
-                isSprinting = false;
-            }
+            if (isSprinting && isExhausted) isSprinting = false;
         }
     }
     else 
@@ -335,44 +332,69 @@ private void FallingGravity()
 
 private void HandleStamina()
     { 
-        //disables sprint if stopped moving or ran out of air
-        
-    // If stamina reaches zero, mark player as exhausted
-    if (isSprinting)
+        // 1. Determine if the player IS ACTUALLY moving
+    bool isMoving = MoveInputVector.magnitude > 0.1f;
+
+    // 2. Handle Exhaustion recovery
+    if (isExhausted && CurrentStamina >= RegenThreshold)
     {
-        // Stop if we ran out of stamina
-        if (CurrentStamina <= 0)
-        {
-            isExhausted = true;
-            isSprinting = false;
-        }
-        
-        // Stop if the player stops moving the stick/keys
-        if (MoveInputVector.magnitude <= 0.0f)
-        {
-            isSprinting = false;
-        }
+        isExhausted = false;
     }
 
-    // Recover from exhaustion once stamina reaches the threshold
-    if (isExhausted && CurrentStamina >= RegenThreshold)
+    // 3. Logic for Draining Stamina
+    // Only drain if: Holding Sprint key AND Moving AND Not Exhausted AND Grounded
+    if(StupidDumbJumpOption == true)
         {
-            isExhausted = false;
-        }
+            if (isSprinting && isMoving && !isExhausted && IsGrounded)
+            {
+                CurrentStamina -= StaminaDrainRate * Time.deltaTime;
+                currentSpeedMultiplier = SprintMultiplier;
 
-    // Drain stamina if sprinting, moving, and not exhausted
-    if (isSprinting )
+                // If we hit zero, force stop
+                if (CurrentStamina <= 0)
+                {
+                    CurrentStamina = 0;
+                    isExhausted = true;
+                }
+            }
+            else
+            {
+                // 4. Logic for Regenerating Stamina
+                CurrentStamina += StaminaRegenRate * Time.deltaTime;
+                currentSpeedMultiplier = 1f;
+                
+                // If the player stopped moving or is exhausted, 
+                // we keep isSprinting true (if they are holding the key) 
+                // but the speed multiplier remains 1f.
+            }
+        }
+        else
         {
-            CurrentStamina -= StaminaDrainRate * Time.deltaTime;
-            currentSpeedMultiplier = SprintMultiplier;
-        }
-    else
-        {   // Regenerate stamina when not sprinting
-            CurrentStamina += StaminaRegenRate * Time.deltaTime;
-            currentSpeedMultiplier = 1f;
-        }
+            if (isSprinting && isMoving && !isExhausted)
+            {
+                CurrentStamina -= StaminaDrainRate * Time.deltaTime;
+                currentSpeedMultiplier = SprintMultiplier;
 
-    // Ensures stamina stays within valid bounds
+                // If we hit zero, force stop
+                if (CurrentStamina <= 0)
+                {
+                    CurrentStamina = 0;
+                    isExhausted = true;
+                }
+            }
+            else
+            {
+                // 4. Logic for Regenerating Stamina
+                CurrentStamina += StaminaRegenRate * Time.deltaTime;
+                currentSpeedMultiplier = 1f;
+                
+                // If the player stopped moving or is exhausted, 
+                // we keep isSprinting true (if they are holding the key) 
+                // but the speed multiplier remains 1f.
+            }
+        }
+    
+
     CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
 }
     private void HandleFriction()

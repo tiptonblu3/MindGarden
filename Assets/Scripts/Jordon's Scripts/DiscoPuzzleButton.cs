@@ -1,6 +1,8 @@
-using UnityEditor.VersionControl;
-using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
+using System.Numerics;
+using System.Collections;          // Fixes the IEnumerator error
+using UnityEngine;                 // Essential for Unity
+using Vector3 = UnityEngine.Vector3;       // Prevents the System.Numerics conflict
+using Quaternion = UnityEngine.Quaternion; // Prevents the System.Numerics conflictusing UnityEngine;
 using UnityEngine.UI;
 
 public class PuzzleButton : MonoBehaviour, IInteractable
@@ -9,26 +11,33 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     public GameObject PuzzleUI;
     public bool puzzleSolved = false;
     public bool PuzActive = false;
-    public bool Submit1 = false;
-    public bool Submit2 = false;
-    public bool Submit3 = false;
-    public bool Submit4 = false;
-    public bool Submit5 = false;
+    private bool DoorClosed = false;
+    public GameObject door;
+
+    #region UI Stuff
     
     public Slider Gain; //Gain Slider
     public Image GainIndicator;
+    public bool Submit1 = false;
 
     public Slider Resample; //Resample Slider
     public Image ResampleIndicator;
+    public bool Submit2 = false;
 
     public Slider Volume; //Volume Slider
     public Image VolumeIndicator;
+    public bool Submit3 = false;
 
     public Slider Pitch; //Pitch Slider
     public Image PitchIndicator;
+    public bool Submit4 = false;
 
     public Slider Reverb; //Reverb Slider
     public Image ReverbIndicator;
+    public bool Submit5 = false;
+
+    #endregion
+
 
     void Awake()
     {
@@ -37,10 +46,9 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     void Update()
     {
         PuzzleCheck();
-        if (puzzleSolved == true)
-        {
-            
-            //Door opened
+        if (puzzleSolved && !DoorClosed){
+                DoorClosed = true;
+                StartCoroutine(PuzzleComplete(UnityEngine.Vector3.forward));
         }
     }
     public void Interact()
@@ -114,10 +122,22 @@ public class PuzzleButton : MonoBehaviour, IInteractable
 
 
     }
-    public void PuzzleComplete()
+    public IEnumerator PuzzleComplete(UnityEngine.Vector3 axis)
     {
-        Debug.Log("Door is opened!");
-      //actually open door  
+        
+        
+            UnityEngine.Quaternion startRotation = door.transform.rotation;
+            UnityEngine.Quaternion endRotation = startRotation * Quaternion.Euler(axis * 90);
+            float elapsed = 0f;
+
+        while (elapsed < 1.0f)
+        {
+            door.transform.rotation = UnityEngine.Quaternion.Slerp(startRotation, endRotation, elapsed / 1.0f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        door.transform.rotation = endRotation;
+        
 
     }
     public void PuzzleCheck()

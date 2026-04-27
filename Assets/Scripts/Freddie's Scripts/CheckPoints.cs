@@ -12,11 +12,15 @@ public class CheckPoints : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+    }
+
+    void Awake()
+    {
         // Find the player by tag
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerTransform = Player.transform;
         PlayerMovement = Player.GetComponent<Player_Movement>();
-        Respawn(); // Move the player to the first checkpoint at the start of the game
     }
 
     // Update is called once per frame
@@ -32,7 +36,14 @@ public class CheckPoints : MonoBehaviour
 
     public void Respawn()
     {
-        // Move the player to the position of the current checkpoint
+        if (PlayerTransform == null) return; // Safety check
+        // Move the player
         PlayerTransform.position = CheckPointList[CurrentCheckPointIndex].transform.position;
+        
+        Debug.Log("Player Respawned to index: " + CurrentCheckPointIndex);
+    }
+    public void ResetCheckpoints()
+    {
+        CurrentCheckPointIndex = 0; // Reset to the first checkpoint
     }
 }
