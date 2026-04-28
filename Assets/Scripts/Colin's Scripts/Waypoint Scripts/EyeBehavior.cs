@@ -25,6 +25,7 @@ public class EyeBehavior : MonoBehaviour
     private Renderer rend;
 
     public EyeChase eyeChase;
+    public float timeBeforeChase = 2f;
 
     #endregion
 
@@ -116,7 +117,7 @@ public class EyeBehavior : MonoBehaviour
         isMoving = true;
 
         // wait 5 seconds
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(timeBeforeChase);
 
         // go to waypoint
         int newWaypointIndex = 1; // adjust if needed
