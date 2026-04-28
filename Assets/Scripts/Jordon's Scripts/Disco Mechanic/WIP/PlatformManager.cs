@@ -11,6 +11,7 @@ public class PlatformManager : MonoBehaviour
     public GameObject StartPlatform; // start platform
     public Vector3 StartPosition = new Vector3(0, 0, 0);
     public bool canSpawn = true;
+    private PathBehavior currentStandingPlatform;
 
     [Header("Direction Settings")]
     // Set this in the inspector (e.g., X = 1, Y = 0, Z = 0 for the X-axis)
@@ -24,12 +25,22 @@ public class PlatformManager : MonoBehaviour
     public float forwardOffset = 8f;
     public float sideSpacing = 6f;
     public float stopDistance = 10f; // Distance from goal to stop spawning
-
     private float lastSpawnTime;
     private Vector3 lastSpawnAnchor;
 
 
-    private PathBehavior currentStandingPlatform;
+    [Header("Animated Character Settings")]
+    public Animator DiscoAnimator;
+    public GameObject LeftArrow;
+    public GameObject RightArrow;
+    public GameObject UpArrow;
+    public GameObject DownArrow; 
+    public NighmarManager NM;
+    public GameObject DiscoGuy;
+    public GameObject Eyeball;
+    public GameObject NewVoid;
+    public GameObject OldVoid;
+    
 
     void Update()
     {
@@ -37,6 +48,7 @@ public class PlatformManager : MonoBehaviour
         if (sequenceActive)
         {
            GenerateNextStep();
+           AnimateCharacter();
         }
     }
 
@@ -146,6 +158,7 @@ public void GenerateNextStep()
     public void ResetAllPlatforms()
     {
         sequenceActive = false;
+        DiscoGuy.SetActive(false);
         foreach (var plat in platforms)
         {
             plat.ResetPlatform();
@@ -153,6 +166,27 @@ public void GenerateNextStep()
         lastSpawnAnchor = StartPosition;
     }
 
+    public void AnimateCharacter()
+    {
+        DiscoGuy.SetActive(true);
+        if(NM.isNighmarActive)
+        {
+            DiscoAnimator.SetBool("NightmareMode", true);
+            Eyeball.SetActive(true);
+            DiscoGuy.SetActive(false);
+            NewVoid.SetActive(true);
+            OldVoid.SetActive(false);
+        }
+        else
+        {
+            //if arrow is active in scene then play animation
+            DiscoAnimator.SetBool("LeftArrow", LeftArrow.activeInHierarchy);
+            DiscoAnimator.SetBool("RightArrow", RightArrow.activeInHierarchy);
+            DiscoAnimator.SetBool("UpArrow", UpArrow.activeInHierarchy);
+            DiscoAnimator.SetBool("DownArrow", DownArrow.activeInHierarchy);
+        }
+
+    }
 
 
 }

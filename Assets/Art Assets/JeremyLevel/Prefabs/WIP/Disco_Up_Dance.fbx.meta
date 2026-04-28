@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5f757a99aded8545ba00001ce765654
+guid: 20661c6cc519df844976b1a46e8639bc
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -38,8 +38,8 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 33
-      lastFrame: 115
+      firstFrame: 26
+      lastFrame: 103
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -50,7 +50,7 @@ ModelImporter:
       loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -253,105 +253,105 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Disco_Idle(Clone)
+    - name: Disco_Up_Dance(Clone)
       parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Guy_Final_Low_Poly
-      parentName: Disco_Idle(Clone)
+      parentName: Disco_Up_Dance(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Root
-      parentName: Disco_Idle(Clone)
-      position: {x: 0.017977439, y: 0, z: 0}
+      parentName: Disco_Up_Dance(Clone)
+      position: {x: -0.015184954, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Pelvis
       parentName: Disco_Root
-      position: {x: -0.01796976, y: 0.8915682, z: -0.046318777}
-      rotation: {x: 0.00004240498, y: -0.00004835007, z: -0.00006107428, w: 1}
+      position: {x: 0.015184923, y: 0.8942992, z: -0.0744026}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Leg
       parentName: Disco_Pelvis
-      position: {x: 0.14709197, y: -0.06309315, z: 0.0000000021883761}
-      rotation: {x: -0.028980527, y: -0.013556766, z: 0.03110693, w: 0.9990039}
+      position: {x: 0.14709182, y: -0.063093185, z: -8.881784e-18}
+      rotation: {x: 0.007901447, y: -0.0117859915, z: 0.0010031605, w: 0.99989885}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Knee
       parentName: Disco_Right_Leg
-      position: {x: 0.00000073430454, y: -0.25782967, z: -0.00000677416}
-      rotation: {x: 0.092669815, y: -0.00064777996, z: -0.0022188083, w: 0.9956942}
+      position: {x: 0.000000022113293, y: -0.25782955, z: -0.0000032798603}
+      rotation: {x: 0.022186505, y: -0.0000053679705, z: -0.0005224243, w: 0.9997537}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Foot
       parentName: Disco_Right_Knee
-      position: {x: -0.000000028375187, y: -0.42132336, z: 0.0000015266753}
-      rotation: {x: -0.0640834, y: -0.00032191013, z: -0.029105827, w: 0.99751997}
+      position: {x: -0.00000006325282, y: -0.42132267, z: -0.0000027583317}
+      rotation: {x: -0.030096566, y: -0.0000037150667, z: -0.00038774605, w: 0.99954695}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Spine_1
       parentName: Disco_Pelvis
-      position: {x: 1.7099658e-10, y: 0.19375785, z: -0.000000001932285}
+      position: {x: 2.220446e-18, y: 0.19375777, z: 0.0000000047683715}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Spine_2
       parentName: Disco_Spine_1
-      position: {x: -5.035327e-10, y: 0.18238357, z: -4.236189e-10}
+      position: {x: -2.220446e-18, y: 0.1823835, z: 0.0000000047683715}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Spine_3
       parentName: Disco_Spine_2
-      position: {x: -4.2411577e-10, y: 0.18759461, z: 0.0000000010569834}
+      position: {x: -0, y: 0.18759444, z: 0.0000000047683715}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Head
       parentName: Disco_Spine_3
-      position: {x: -2.9426475e-10, y: 0.37499923, z: -8.4693963e-10}
-      rotation: {x: -0.00030452866, y: 0.00013500618, z: 0.0005294042, w: 0.9999998}
+      position: {x: -0, y: 0.3749983, z: 0.0000000047683715}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Shoulder
       parentName: Disco_Spine_3
-      position: {x: 0.31985328, y: 0.000000008430169, z: -5.407065e-10}
-      rotation: {x: -0.00011822592, y: 0.00013427454, z: 0.000028818868, w: 1}
+      position: {x: 0.31985262, y: 5.1159075e-15, z: -0.0000000047683715}
+      rotation: {x: 0.0000059902754, y: 0.000017856299, z: 0.000010967502, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Arm
       parentName: Disco_Right_Shoulder
-      position: {x: 0.28969342, y: -0.00000694426, z: 0.000010841233}
-      rotation: {x: -0.00008527966, y: -0.00006558992, z: 0.000014327783, w: 1}
+      position: {x: 0.28969356, y: -0.000006354367, z: 0.000010345748}
+      rotation: {x: -0.000006042441, y: -0.00001895258, z: -0.000010967497, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Right_Hand
       parentName: Disco_Right_Arm
-      position: {x: 0.29733908, y: -0.000000025141603, z: -0.00000059675483}
-      rotation: {x: 0.0001706294, y: -0.0000903255, z: -0.00017996837, w: 1}
+      position: {x: 0.29733866, y: 5.3972826e-13, z: -0.0000006519337}
+      rotation: {x: 0, y: 0.0000010944188, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Shoulder
       parentName: Disco_Spine_3
-      position: {x: -0.319853, y: 0.00000014419237, z: 5.003294e-10}
-      rotation: {x: 1, y: 0.000059969097, z: -0.0000032871646, w: 0.000120108765}
+      position: {x: -0.3198523, y: 0.00000015258787, z: 0.0000000047683715}
+      rotation: {x: 1, y: -0.0000115244375, z: 0.000017961716, w: -0.0000058587475}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Arm
       parentName: Disco_Left_Shoulder
-      position: {x: -0.28968462, y: 0.0016692717, z: -0.0015073409}
-      rotation: {x: 0.03844752, y: -0.002715578, z: -0.0028819875, w: 0.9992528}
+      position: {x: -0.28968453, y: 0.0016692571, z: -0.0015073512}
+      rotation: {x: 0.038965687, y: -0.0027130342, z: -0.0027771764, w: 0.999233}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Hand
       parentName: Disco_Left_Arm
-      position: {x: -0.29733902, y: 0.00000012203714, z: 0.0000006681808}
-      rotation: {x: -0.000025914898, y: -0.00012655067, z: 0.00016464235, w: 1}
+      position: {x: -0.29733858, y: 0.00000015374847, z: 0.00000065169195}
+      rotation: {x: 0, y: 0.0000010850626, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Leg
       parentName: Disco_Pelvis
-      position: {x: -0.14709193, y: -0.06309276, z: 1.486573e-10}
-      rotation: {x: 0.99927133, y: -0.013731891, z: -0.000047922207, w: -0.03561213}
+      position: {x: -0.14709176, y: -0.06309272, z: -8.881784e-18}
+      rotation: {x: 0.9999473, y: -0.009036302, z: -0.00021023703, w: 0.0048668045}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Knee
       parentName: Disco_Left_Leg
-      position: {x: -0.000000703126, y: 0.25782955, z: 0.000014072253}
-      rotation: {x: 0.008034736, y: -0.000019373223, z: -0.000016099411, w: 0.99996775}
+      position: {x: 0.00000058037995, y: 0.2578295, z: -0.00010869833}
+      rotation: {x: 0.037509903, y: -0.00007712138, z: -0.000004187868, w: 0.9992963}
       scale: {x: 1, y: 1, z: 1}
     - name: Disco_Left_Foot
       parentName: Disco_Left_Knee
-      position: {x: -0.00000045736513, y: 0.4213243, z: 0.0000025161253}
-      rotation: {x: -0.043747082, y: -0.000060385933, z: -0.013603765, w: 0.99895006}
+      position: {x: -0.00000004279951, y: 0.42132294, z: 0.0000030221088}
+      rotation: {x: -0.032645185, y: -0.00005171574, z: -0.009034018, w: 0.9994262}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5

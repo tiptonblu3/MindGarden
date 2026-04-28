@@ -12,8 +12,6 @@ public class discoDialogue : MonoBehaviour, IInteractable
     public TextMeshPro Dialogue;
     public GameObject DialogBackUI;
     public PlatformManager platmanscript;
-    public EndLevel EndL;
-    public KillZone KillZ;
 
 #region things to dissappear
     public GameObject NPCDissappear;
@@ -70,21 +68,6 @@ public class discoDialogue : MonoBehaviour, IInteractable
         
     }
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-
     void DialogueStart()
     {
         switch (dialogueIndex)
@@ -104,7 +87,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
                 if (finished && NM.isNighmarActive) dialogueIndex++;
                 break;
             case 4:
-                if (HandleConversation(fifthConvo)) dialogueIndex++;
+                if (ConvoDiscoStart(fifthConvo)) dialogueIndex++;
                 break;
             default:
                 Dialogue.text = "This is awkward, I lost my dialogue text";
@@ -140,19 +123,13 @@ public class discoDialogue : MonoBehaviour, IInteractable
             Dialogue.text = textToDisplay;
             return false; // Not finished yet
         }
-        else if (KillZ.iFell == true && EndL.EndBeat == false)
-        {
-            subIndex = 0;
-            dialogueIndex = 1;
-            KillZ.iFell = false;
-            return false;
-        }
         else
         {
             EndDialogue();
             platmanscript.StartDiscoSequence();
             DilogueDissappear.SetActive(false);
             NPCDissappear.SetActive(false);
+            if (dialogueIndex == 3) NM.hasInitializedNightmare = true; // Start nightmare mode if it's the right dialogue
             return true; // Finished this array
         }
     }
