@@ -12,6 +12,13 @@ public class ValveBehavior : MonoBehaviour
     private bool interactivityCheck; //used to check if the player is in range of the valve
     public float correctPosition;
 
+    public void Start()
+    {
+        if (valveActive == true)
+        {
+            ToggleValve();
+        }
+    }
     private void Update()
     {
         if (interactivityCheck && InputSystem.actions["Interact"].triggered)

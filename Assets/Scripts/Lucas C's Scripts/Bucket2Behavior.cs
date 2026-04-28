@@ -14,7 +14,14 @@ public class Bucket2Behavior : MonoBehaviour
     public GameObject redWater;
     public GameObject yellowWater;
     public GameObject barricadeDoor;
-
+    public bool bucketFilled;
+    public void Start()
+    {
+        if (bucketFilled == true)
+        {
+            ToggleBucket();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
