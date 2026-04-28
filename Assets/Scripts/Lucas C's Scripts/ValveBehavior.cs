@@ -10,13 +10,21 @@ public class ValveBehavior : MonoBehaviour
     public float valveSwitchTime; // Time it takes to switch the valve state (1<X = faster, 0<X<1 = slower, 0 = instant)
     public GameObject waterObject; // used to show it's functionality, made to be removed as a referebce
     private bool interactivityCheck; //used to check if the player is in range of the valve
+    public float correctPosition;
 
     private void Update()
     {
-        // Update captures the frame-perfect button press
         if (interactivityCheck && InputSystem.actions["Interact"].triggered)
         {
             ToggleValve();
+        }
+        if (valveActive==true)
+        {
+            correctPosition = 1;
+        }
+        else
+        {
+            correctPosition = 0;
         }
     }
     public void ToggleValve() // Toggle the valve state
@@ -29,14 +37,14 @@ public class ValveBehavior : MonoBehaviour
     private IEnumerator AnimateValveToggle()
     {
         Quaternion startRotation = transform.localRotation;
-        Quaternion endRotation = valveActive ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0);
+        Quaternion endRotation = valveActive ? Quaternion.Euler(0, 0, 180+15) : Quaternion.Euler(0, 0, 0+15);
 
         for (float t = 0; t < 1; t += Time.deltaTime * valveSwitchTime)
         {
             transform.localRotation = Quaternion.Lerp(startRotation, endRotation, t);
             yield return null;
         }
-
+        transform.rotation = endRotation;
         Functionality();
     }
 

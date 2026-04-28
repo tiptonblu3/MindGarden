@@ -2,43 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WaterPipeBehavior : MonoBehaviour
 {
     public float rotationGoal; // The target rotation angle for the pipe (can be either 0, 90, 180, or 270)
     public float currentRotation; // The current rotation angle of the pipe
     public float PipeRotateTime = 1.0f; // Time it takes to rotate the pipe (1<X = faster, 0<X<1 = slower, 0 = instant)
-    private Renderer pipeRenderer;
+    //private Renderer pipeRenderer;
+    public float rotationAngle;
+    public float correctPosition;
+    public bool onXAxis;
 
-    void Start()
+    private void Start()
     {
-        currentRotation = transform.eulerAngles.z;
-        pipeRenderer = GetComponent<Renderer>();
-        TogglePipe();
+        currentRotation = transform.rotation.eulerAngles.z;
     }
 
     void Update()
     {
-        
-
         if (currentRotation >= 360)
         {
             currentRotation -= 360;
+        }
+        if (currentRotation == rotationGoal)
+        {
+            correctPosition = 1;
+        }
+        else
+        {
+            correctPosition = 0;
         }
     }
 
 
     public void TogglePipe()
     {
-        StartCoroutine(AnimatePipeToggle());
+        if (onXAxis)
+        {
+            StartCoroutine(AnimatePipeToggleX());
+        }
+        else
+        {
+            StartCoroutine(AnimatePipeToggle());
+        }
         Debug.Log("Pipe is now rotating");
 
     }
     private IEnumerator AnimatePipeToggle()
     {
         Quaternion startRotation = transform.rotation;
-        float z = currentRotation + 90f;
-        Quaternion endRotation = Quaternion.Euler(0, 0, z);
+        float z = currentRotation + rotationAngle;
+        Quaternion endRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, z);
 
         for (float t = 0; t < 1; t += Time.deltaTime * PipeRotateTime)
         {
@@ -47,5 +62,19 @@ public class WaterPipeBehavior : MonoBehaviour
         }
         transform.rotation = endRotation;
         currentRotation = z;
+    }
+    private IEnumerator AnimatePipeToggleX()
+    {
+        Quaternion startRotation = transform.rotation;
+        float x = currentRotation + rotationAngle;
+        Quaternion endRotation = Quaternion.Euler(x, transform.localEulerAngles.y, transform.localEulerAngles.z);
+
+        for (float t = 0; t < 1; t += Time.deltaTime * PipeRotateTime)
+        {
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            yield return null;
+        }
+        transform.rotation = endRotation;
+        currentRotation = x;
     }
 }
