@@ -8,6 +8,8 @@ public class LV3Disc2 : MonoBehaviour,  IInteractable
     public Material Skybox_Alt;
     public bool eyechange = false;
     public SunBehavior sun;
+    public ParticleSystem groundFog;
+    public ParticleSystem skyFog;
 
     private void Start()
     {
@@ -21,6 +23,7 @@ public class LV3Disc2 : MonoBehaviour,  IInteractable
     public void Interact()
     {
         Debug.Log("Record Piece Picked Up!");
+        RenderSettings.fog = true;
         cpr.DiscNum = 2; // Increment the discs depending on how many were grabbed
         //Raise Void to right below checkpoint here
         eyechange = true;
@@ -32,6 +35,18 @@ public class LV3Disc2 : MonoBehaviour,  IInteractable
             Debug.Log("Skybox switch triggered");
             RenderSettings.skybox = Skybox_Alt;
             DynamicGI.UpdateEnvironment();
+        }
+
+        if (groundFog != null)
+        {
+            groundFog.gameObject.SetActive(true);
+            groundFog.Play();
+        }
+
+        if (skyFog != null)
+        {
+            skyFog.gameObject.SetActive(true);
+            skyFog.Play();
         }
 
         sun.HandleCheckpoint();
