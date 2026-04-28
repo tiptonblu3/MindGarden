@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Final Scenes/submech_nightmare.unity
     guid: 2f5ce150588409e4fbc832874e791cfe
   - enabled: 1
-    path: Assets/Scenes/Final Scenes/Acrophobia.unity
+    path: Assets/Scenes/Final Scenes/Acrophobia Pop.unity
     guid: 4884ac89a5610f64eba07550cf5654a1
   - enabled: 1
     path: Assets/Scenes/Final Scenes/GameplayTestScene.unity
