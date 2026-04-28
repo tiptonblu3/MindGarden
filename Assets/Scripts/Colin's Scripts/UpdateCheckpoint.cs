@@ -16,6 +16,11 @@ public class UpdateCheckpoint : MonoBehaviour
     public float targetYScale;
     public float growDuration = 2f;
 
+    [Header("Fog Settings")]
+    public ParticleSystem fog;
+    public float targetYPosition;
+    public float moveDuration = 2f;
+
     #endregion
 
     // OnTriggerEnter
@@ -33,6 +38,11 @@ public class UpdateCheckpoint : MonoBehaviour
             if (deathBox != null)
             {
                 StartCoroutine(GrowDeathBox());
+            }
+
+            if (fog != null)
+            {
+                StartCoroutine(MoveFogY());
             }
         }
     }
@@ -60,6 +70,31 @@ public class UpdateCheckpoint : MonoBehaviour
         }
 
         deathBox.localScale = targetScale;
+    }
+
+    #endregion
+
+    // MoveFogY
+    #region
+
+    // Moves the Fog up and down
+    IEnumerator MoveFogY()
+    {
+        Vector3 startPos = fog.transform.position;
+        Vector3 targetPos = new Vector3(startPos.x, targetYPosition, startPos.z);
+
+        float elapsed = 0f;
+
+        while (elapsed < moveDuration)
+        {
+            float t = elapsed / moveDuration;
+            fog.transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        fog.transform.position = targetPos;
     }
 
     #endregion
