@@ -3,8 +3,11 @@ using UnityEngine;
 public class KillZone : MonoBehaviour
 {
     // Drag your Respawn Point object into this slot in the Inspector
-    public Transform respawnPoint;
-    public PlatformManager PlatManScript;
+    public Player_Movement playermove;
+    public bool iFell;
+    public PlatformManager platmanscript;
+    public discoDialogue discoScript;
+
     
 
     private void OnTriggerEnter(Collider other)
@@ -12,20 +15,11 @@ public class KillZone : MonoBehaviour
         // 1. Check if the thing hitting the zone is the Player
         if (other.CompareTag("Player"))
         {
-            if (respawnPoint != null)
-            {
-                // 2. Move the Player (other) to the respawn point
-                other.transform.position = respawnPoint.position;
-
-                // 3. Stop physics momentum so they don't keep falling speed
-                Rigidbody rb = other.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.linearVelocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                }
-            PlatManScript.ResetAllPlatforms();
-            }
+            playermove.isDead = true; // Set the player's isDead flag to true
+            platmanscript.ResetAllPlatforms();
+            iFell = true;
+            discoScript.subIndex = 0;
+            discoScript.dialogueIndex = 1;
         }
     }
 }

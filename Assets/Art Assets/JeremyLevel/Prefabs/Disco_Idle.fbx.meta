@@ -1,0 +1,379 @@
+fileFormatVersion: 2
+guid: e5f757a99aded8545ba00001ce765654
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Disco_Pelvis' has translation animation
+      that will be discarded.\n\t'Disco_Pelvis' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 33
+      lastFrame: 115
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: Disco_Root
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Leg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Leg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Knee
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Knee
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Spine_1
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Spine_2
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Shoulder
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Shoulder
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Arm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Arm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Left_Hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Right_Hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Disco_Spine_3
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Disco_Idle(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Guy_Final_Low_Poly
+      parentName: Disco_Idle(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Root
+      parentName: Disco_Idle(Clone)
+      position: {x: 0.017977439, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Pelvis
+      parentName: Disco_Root
+      position: {x: -0.01796976, y: 0.8915682, z: -0.046318777}
+      rotation: {x: 0.00004240498, y: -0.00004835007, z: -0.00006107428, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Leg
+      parentName: Disco_Pelvis
+      position: {x: 0.14709197, y: -0.06309315, z: 0.0000000021883761}
+      rotation: {x: -0.028980527, y: -0.013556766, z: 0.03110693, w: 0.9990039}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Knee
+      parentName: Disco_Right_Leg
+      position: {x: 0.00000073430454, y: -0.25782967, z: -0.00000677416}
+      rotation: {x: 0.092669815, y: -0.00064777996, z: -0.0022188083, w: 0.9956942}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Foot
+      parentName: Disco_Right_Knee
+      position: {x: -0.000000028375187, y: -0.42132336, z: 0.0000015266753}
+      rotation: {x: -0.0640834, y: -0.00032191013, z: -0.029105827, w: 0.99751997}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Spine_1
+      parentName: Disco_Pelvis
+      position: {x: 1.7099658e-10, y: 0.19375785, z: -0.000000001932285}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Spine_2
+      parentName: Disco_Spine_1
+      position: {x: -5.035327e-10, y: 0.18238357, z: -4.236189e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Spine_3
+      parentName: Disco_Spine_2
+      position: {x: -4.2411577e-10, y: 0.18759461, z: 0.0000000010569834}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Head
+      parentName: Disco_Spine_3
+      position: {x: -2.9426475e-10, y: 0.37499923, z: -8.4693963e-10}
+      rotation: {x: -0.00030452866, y: 0.00013500618, z: 0.0005294042, w: 0.9999998}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Shoulder
+      parentName: Disco_Spine_3
+      position: {x: 0.31985328, y: 0.000000008430169, z: -5.407065e-10}
+      rotation: {x: -0.00011822592, y: 0.00013427454, z: 0.000028818868, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Arm
+      parentName: Disco_Right_Shoulder
+      position: {x: 0.28969342, y: -0.00000694426, z: 0.000010841233}
+      rotation: {x: -0.00008527966, y: -0.00006558992, z: 0.000014327783, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Right_Hand
+      parentName: Disco_Right_Arm
+      position: {x: 0.29733908, y: -0.000000025141603, z: -0.00000059675483}
+      rotation: {x: 0.0001706294, y: -0.0000903255, z: -0.00017996837, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Shoulder
+      parentName: Disco_Spine_3
+      position: {x: -0.319853, y: 0.00000014419237, z: 5.003294e-10}
+      rotation: {x: 1, y: 0.000059969097, z: -0.0000032871646, w: 0.000120108765}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Arm
+      parentName: Disco_Left_Shoulder
+      position: {x: -0.28968462, y: 0.0016692717, z: -0.0015073409}
+      rotation: {x: 0.03844752, y: -0.002715578, z: -0.0028819875, w: 0.9992528}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Hand
+      parentName: Disco_Left_Arm
+      position: {x: -0.29733902, y: 0.00000012203714, z: 0.0000006681808}
+      rotation: {x: -0.000025914898, y: -0.00012655067, z: 0.00016464235, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Leg
+      parentName: Disco_Pelvis
+      position: {x: -0.14709193, y: -0.06309276, z: 1.486573e-10}
+      rotation: {x: 0.99927133, y: -0.013731891, z: -0.000047922207, w: -0.03561213}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Knee
+      parentName: Disco_Left_Leg
+      position: {x: -0.000000703126, y: 0.25782955, z: 0.000014072253}
+      rotation: {x: 0.008034736, y: -0.000019373223, z: -0.000016099411, w: 0.99996775}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Disco_Left_Foot
+      parentName: Disco_Left_Knee
+      position: {x: -0.00000045736513, y: 0.4213243, z: 0.0000025161253}
+      rotation: {x: -0.043747082, y: -0.000060385933, z: -0.013603765, w: 0.99895006}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
