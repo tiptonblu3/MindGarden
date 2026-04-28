@@ -9,14 +9,26 @@ public class discoDialogue : MonoBehaviour, IInteractable
     public NighmarManager NM; //Nightmare manager script that changes the scene to be nightmare mode
     
 
-    public TextMeshProUGUI Dialogue;
+    public TextMeshPro Dialogue;
     public GameObject DialogBackUI;
+    public PlatformManager platmanscript;
+    public EndLevel EndL;
+    public KillZone KillZ;
+
+#region things to dissappear
+    public GameObject NPCDissappear;
+    public GameObject DilogueDissappear;
+
+#endregion
+
+
 
 #region Dialogue Arrays
     public string[] firstConvo = { 
         "Hey kid, ready to tango?", 
-        "The goal is to jump on the right platforms to get to the end of the disco.", 
-        "Whenever your ready talk to me again and we will get this party started!",  
+        "The goal is to jump on the right platforms to get to the end",
+        "of the dance floor! Whenever your ready talk to me again", 
+        "and we will get this party started!",  
     };
     public string[] secondConvo = { 
         "Lets do this!",   
@@ -24,7 +36,8 @@ public class discoDialogue : MonoBehaviour, IInteractable
     public string[] thirdConvo = { 
         "Nice Dancing! What were you looking for again?", 
         "The Disc Pieces?.. I think I have some in my studio but...", 
-        "Unfortunately a vengeful fan screwed up my setup. If you can fix it, you can have my disc pieces!",  
+        "Unfortunately a vengeful fan screwed up my setup.",  
+        "If you can fix it, you can have my disc pieces!",  
     };
     public string[] fourthConvo = { 
         "What are you waiting for?",   
@@ -42,7 +55,19 @@ public class discoDialogue : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        DialogueStart();
+        if (!DialogBackUI.activeSelf)
+        {
+            DialogBackUI.SetActive(true);
+            Dialogue.enabled = true;
+            DialogueStart();
+        }
+        else
+        {
+            // If it's already on, move to the next line
+            subIndex++;
+            DialogueStart();
+        }
+        
     }
 
     
@@ -65,99 +90,81 @@ public class discoDialogue : MonoBehaviour, IInteractable
         switch (dialogueIndex)
         {
             case 0:
-                // Iterate through the specific set
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-                Dialogue.text = firstConvo[subIndex]; //starting dialogue
-                subIndex++;
-
-                // If we've reached the end of the array, move to the next dialogueIndex
-                if (subIndex >= firstConvo.Length)
-                {
-                    dialogueIndex++;
-                    subIndex = 0; // Reset for the next set of dialogue
-                }
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
+                if (HandleConversation(firstConvo)) dialogueIndex++;
                 break;
-
             case 1:
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-
-                Dialogue.text = secondConvo[subIndex]; //start dance sequence
-                subIndex++;
-
-                // If we've reached the end of the array, move to the next dialogueIndex
-                if (subIndex >= secondConvo.Length)
-                {
-                    dialogueIndex++;
-                    subIndex = 0; // Reset for the next set of dialogue
-                }
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
+                if (ConvoDiscoStart(secondConvo)) dialogueIndex++;
                 break;
-
             case 2:
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-
-                Dialogue.text = thirdConvo[subIndex]; //tell player to grab disc pieces
-                subIndex++;
-
-                // If we've reached the end of the array, move to the next dialogueIndex
-                if (subIndex >= thirdConvo.Length)
-                {
-                    dialogueIndex++;
-                    subIndex = 0; // Reset for the next set of dialogue
-                }
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
+                if (HandleConversation(thirdConvo)) dialogueIndex++;
                 break;
-
             case 3:
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-
-                Dialogue.text = fourthConvo[subIndex]; //Waiting for player to start sequence
-                subIndex++;
-
-                // If we've reached the end of the array, move to the next dialogueIndex
-                if (subIndex >= fourthConvo.Length)
-                {
-                    if(NM.isNighmarActive == true)dialogueIndex++;
-                    subIndex = 0; // Reset for the next set of dialogue
-                }
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
+                // Special condition for Nightmare Manager
+                bool finished = HandleConversation(fourthConvo);
+                if (finished && NM.isNighmarActive) dialogueIndex++;
                 break;
-            
             case 4:
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-
-                Dialogue.text = fifthConvo[subIndex]; //corrupted text?
-                subIndex++;
-
-                // If we've reached the end of the array, move to the next dialogueIndex
-                if (subIndex >= fifthConvo.Length)
-                {
-                    dialogueIndex++;
-                    subIndex = 0; // Reset for the next set of dialogue
-                }
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
+                if (HandleConversation(fifthConvo)) dialogueIndex++;
                 break;
-
             default:
-                DialogBackUI.SetActive(true);
-                Dialogue.enabled = true;
-                
                 Dialogue.text = "This is awkward, I lost my dialogue text";
-                
-                DialogBackUI.SetActive(false);
-                Dialogue.enabled = false;
                 break;
         }
+
+            
+        
     }
+
+    bool HandleConversation(string[] currentArray)
+    {
+        
+        if (subIndex < currentArray.Length)
+        {
+            string textToDisplay = currentArray[subIndex];
+            Dialogue.text = textToDisplay;
+            return false; // Not finished yet
+        }
+        else
+        {
+            EndDialogue();
+            return true; // Finished this array
+        }
+    }
+
+    bool ConvoDiscoStart(string[] currentArray)
+    {
+        
+        if (subIndex < currentArray.Length)
+        {
+            string textToDisplay = currentArray[subIndex];
+            Dialogue.text = textToDisplay;
+            return false; // Not finished yet
+        }
+        else if (KillZ.iFell == true && EndL.EndBeat == false)
+        {
+            subIndex = 0;
+            dialogueIndex = 1;
+            KillZ.iFell = false;
+            return false;
+        }
+        else
+        {
+            EndDialogue();
+            platmanscript.StartDiscoSequence();
+            DilogueDissappear.SetActive(false);
+            NPCDissappear.SetActive(false);
+            return true; // Finished this array
+        }
+    }
+
+    void EndDialogue()
+    {
+        subIndex = 0;
+        DialogBackUI.SetActive(false);
+        Dialogue.enabled = false;
+    }
+
+
+
+
 }
