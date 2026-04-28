@@ -20,7 +20,6 @@ public class WaterBehavior : MonoBehaviour
     }
 
 
-
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
