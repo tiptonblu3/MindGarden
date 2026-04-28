@@ -1201,9 +1201,9 @@ Transform:
   m_GameObject: {fileID: 73349361}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.41997, y: 0.79600024, z: 0.77711487}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -4.132, y: 0.79600024, z: 1.303}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 992801590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5691,9 +5691,9 @@ Transform:
   m_GameObject: {fileID: 461023331}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.85603, y: 0.79600024, z: 0.77711487}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.615, y: 0.79600024, z: 1.369}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 992801590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20480,7 +20480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546179173648927781, guid: 212403680459bb74e8a89fd22e46930f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.06
+      value: 17.665
       objectReference: {fileID: 0}
     - target: {fileID: 5546179173648927781, guid: 212403680459bb74e8a89fd22e46930f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20488,7 +20488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546179173648927781, guid: 212403680459bb74e8a89fd22e46930f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75.526115
+      value: 75.869
       objectReference: {fileID: 0}
     - target: {fileID: 5546179173648927781, guid: 212403680459bb74e8a89fd22e46930f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25040,7 +25040,6 @@ GameObject:
   - component: {fileID: 4157411287957871728}
   - component: {fileID: 2186181801318115514}
   - component: {fileID: 4157411287957871729}
-  - component: {fileID: 4157411287957871730}
   - component: {fileID: 4157411287957871731}
   m_Layer: 0
   m_Name: YellowBucket (1)
@@ -31424,29 +31423,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5463311755144466001, guid: c79385a0e9bfc554089ee03a790a3b44, type: 3}
---- !u!114 &4157411287957871730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384526376655571311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e62713e81a9aeb4eaa9f3c4bfe656d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BucketBehavior
-  pipe1: {fileID: 8171321323625168575}
-  pipe2: {fileID: 427682026000969068}
-  pipe3: {fileID: 6357391599141811760}
-  pipe4: {fileID: 148057136008272949}
-  blueCheck: 0
-  redCheck: 0
-  yellowCheck: 0
-  blueWater: {fileID: 1064760734}
-  redWater: {fileID: 2144931008}
-  yellowWater: {fileID: 2085657728}
-  barricadeDoor: {fileID: 0}
 --- !u!114 &4157411287957871731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31469,7 +31445,7 @@ MonoBehaviour:
   blueWater: {fileID: 1064760734}
   redWater: {fileID: 2144931008}
   yellowWater: {fileID: 2085657728}
-  barricadeDoor: {fileID: 0}
+  barricadeDoor: {fileID: 1635202263}
 --- !u!33 &4157411289086112474
 MeshFilter:
   m_ObjectHideFlags: 0
