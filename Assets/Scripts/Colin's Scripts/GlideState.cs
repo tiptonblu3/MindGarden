@@ -18,6 +18,7 @@ public class GlideState : MonoBehaviour
 
     // Sees if the player is gliding
     private bool isGliding;
+    public bool glideUnlocked;
 
     // For gliding stamina
     [Header("Glide Timer")]
@@ -47,7 +48,7 @@ public class GlideState : MonoBehaviour
         if (playerMovement == null || glidePickup == null || rb == null)
             return;
 
-        bool glideUnlocked = glidePickup.IsGlideUnlocked;
+        glideUnlocked = glidePickup.IsGlideUnlocked;
 
         bool canGlide = currentGlideTime > 0f;
 
@@ -129,6 +130,17 @@ public class GlideState : MonoBehaviour
         {
             currentGlideTime = maxGlideTime;
         }
+    }
+
+    #endregion
+
+    // IsGlideUnlocked
+    #region
+
+    // For Save Tracker
+    public bool IsGlideUnlocked()
+    {
+        return glideUnlocked;
     }
 
     #endregion
