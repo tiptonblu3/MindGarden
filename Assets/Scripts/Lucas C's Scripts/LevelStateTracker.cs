@@ -21,7 +21,9 @@ public class LevelStateTracker : MonoBehaviour
     public bool bucket1Filled;
     public GameObject bucket2;
     public bool bucket2Filled;
-    // Update is called once per frame
+    //nightmare
+    public bool nightmareTracker;
+    public GameObject gameManager;
     private void Start()
     {
         valve1.GetComponent<ValveBehavior>().valveActive = valve1On;
@@ -96,6 +98,14 @@ public class LevelStateTracker : MonoBehaviour
         else
         {
             bucket2Filled = false;
+        }
+        if (gameManager.GetComponent<NightmareChecker>().nightmareActive == true)
+        {
+            nightmareTracker = true;
+        }
+        else
+        {
+            nightmareTracker = false;
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 // for cam transition
 using Unity.Cinemachine;
@@ -11,6 +12,13 @@ using UnityEngine.UI;
 
 public class RecordPlayer : MonoBehaviour, IInteractable
 {
+    [System.Serializable]
+    public class RecordData
+    {
+        public string recordName;      // The UI Display Name
+        public GameObject levelPortal; // The Level GameObject to activate
+        public Transform menuVisual;   // The 2D/3D visual icon in the menu
+    }
     public GameObject RecordSelect;
     public PauseMenu Pause;
 
@@ -21,7 +29,6 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     [SerializeField] private MonoBehaviour playerMovementScript; 
 
     [Header("Record Selection Menu")]
-    public Transform[] recordVisuals; // put all 3 level record visual assets here
     public Transform centerPosition; // Empty positions for record transition
     public Transform topPosition;
     public Transform bottomPosition;
@@ -30,50 +37,31 @@ public class RecordPlayer : MonoBehaviour, IInteractable
     private bool isMenuReady = false;
 
 
-    public List<GameObject> records; // List of records available to play
+    public List<RecordData> allRecords = new List<RecordData>();
     private int CurrentRecordIndex = 0; // Index of the currently selected record
     public TextMeshProUGUI RecordChoiceTxt;
     public GameObject RecordID;
     public GameObject OldRecordID; 
-    
-    private InputAction verticalMoveAction;
-    private InputAction submitAction;
-    private InputAction cancelAction;
 
-    private void Awake()
+    private void SortRecords()
     {
-        // Initialize Gamepad Bindings
-        verticalMoveAction = new InputAction("VerticalMove", binding: "<Gamepad>/leftStick/y");
-        submitAction = new InputAction("Submit", binding: "<Gamepad>/buttonSouth");
-        cancelAction = new InputAction("Cancel", binding: "<Gamepad>/buttonEast");
-
-        // Add Keyboard Bindings
-        verticalMoveAction.AddCompositeBinding("1DAxis")
-            .With("Positive", "<Keyboard>/w")
-            .With("Negative", "<Keyboard>/s");
-
-        submitAction.AddBinding("<Keyboard>/e");
-        submitAction.AddBinding("<Keyboard>/enter");
-
-        cancelAction.AddBinding("<Keyboard>/escape");
-    }
-    // Quick reference methods to disable/enable ui input
-    private void OnEnable()
-    {
-        verticalMoveAction?.Enable();
-        submitAction?.Enable();
-        cancelAction?.Enable();
-    }
-
-    private void OnDisable()
-    {
-        verticalMoveAction?.Disable();
-        submitAction?.Disable();
-        cancelAction?.Disable();
+        if (allRecords.Count > 0)
+        {
+            // This sorts the list alphabetically based on the string 'recordName'
+            // Tutorial usually comes last alphabetically, or you can prefix with numbers
+            allRecords = allRecords.OrderBy(r => r.recordName).ToList();
+        }
     }
 
     public void Interact()
     {
+        if (allRecords.Count == 0)
+        {
+            Debug.LogWarning("You don't have any records yet!");
+            return;
+        }
+        SortRecords();
+
         RecordSelect.SetActive(true);
         LYKText.SetActive(false); // Hide text on menu open
         RecordSelectCam.Priority = 25;
@@ -82,7 +70,7 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
         Cursor.lockState = CursorLockMode.None; // Unlock Cursor
         Cursor.visible = true; // Make Cursor Visible
-        CurrentRecordIndex = (CurrentRecordIndex) % records.Count;
+        CurrentRecordIndex = (CurrentRecordIndex) % allRecords.Count;
         if (EventSystem.current != null)
         {
             EventSystem.current.SetSelectedGameObject(null);
@@ -112,23 +100,22 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     public void NextRecord()
     {
-        CurrentRecordIndex = (CurrentRecordIndex + 1) % records.Count; // Move to the next record, loop back to the start if at the end
-        Debug.Log("Selected Record: " + records[CurrentRecordIndex]); // Log the currently selected record
-
+        CurrentRecordIndex = (CurrentRecordIndex + 1) % allRecords.Count; // Move to the next record, loop back to the start if at the end
+        Debug.Log("Selected Record: " + allRecords[CurrentRecordIndex].recordName); // Log the currently selected record
     }
 
     public void PreviousRecord()
     {
         if (CurrentRecordIndex == 0)
         {
-            CurrentRecordIndex = records.Count - 1; // Move to the last record if currently at the first record
+            CurrentRecordIndex = allRecords.Count - 1; // Move to the last record if currently at the first record
         }
         else
         {
-            CurrentRecordIndex = (CurrentRecordIndex - 1) % records.Count; // Move to the Previous record, loop back to the end if at the start
+            CurrentRecordIndex = (CurrentRecordIndex - 1) % allRecords.Count; // Move to the Previous record, loop back to the end if at the start
         }
 
-        Debug.Log("Selected Record: " + records[CurrentRecordIndex]); // Log the currently selected record
+        Debug.Log("Selected Record: " + allRecords[CurrentRecordIndex].recordName); // Log the currently selected record
     }
 
     public void PlayRecord()
@@ -138,11 +125,17 @@ public class RecordPlayer : MonoBehaviour, IInteractable
         {
             OldRecordID.SetActive(false); // Deactivate the previously played record
         }
-        Debug.Log("Playing Record: " + records[CurrentRecordIndex]); // Log the currently selected record
-        GameObject RecordID = records[CurrentRecordIndex]; // Find the GameObject with the name of the Record
-        RecordID.SetActive(true); // Activate the GameObject to play the record
-        OldRecordID = RecordID; // Set the currently played record as the old record for the next time a record is played
-        CloseRecordSelect(); // Close the record selection menu
+        Debug.Log("Playing Record: " + allRecords[CurrentRecordIndex].recordName); // DEBUG LOG TO SEE IF TRIGGERED
+
+        RecordID = allRecords[CurrentRecordIndex].levelPortal;
+
+        if (RecordID != null)
+        {
+            RecordID.SetActive(true);
+            OldRecordID = RecordID;
+        }
+
+        CloseRecordSelect();
     }
 
     private System.Collections.IEnumerator MenuActivationDelay()
@@ -155,93 +148,139 @@ public class RecordPlayer : MonoBehaviour, IInteractable
 
     private void UpdateText()
     {
-        if (records.Count > 0)
+        if (allRecords.Count > 0)
         {
-            RecordChoiceTxt.text = records[CurrentRecordIndex].name;
+            RecordChoiceTxt.text = allRecords[CurrentRecordIndex].recordName;
         }
     }
     private void UpdateRecordPositions()
     {
-        // Figure out which records go where based on CurrentRecordIndex
-        int topIndex = (CurrentRecordIndex - 1 + records.Count) % records.Count;
+        int count = allRecords.Count;
+        if (count == 0) return;
+
+        int topIndex = (CurrentRecordIndex - 1 + count) % count;
         int centerIndex = CurrentRecordIndex;
-        int bottomIndex = (CurrentRecordIndex + 1) % records.Count;
-        for (int i = 0; i < recordVisuals.Length; i++)
+        int bottomIndex = (CurrentRecordIndex + 1) % count;
+
+        for (int i = 0; i < count; i++)
         {
-            Vector3 targetPos;
+            // Get each specific visual asset inside the list entry
+            Transform visual = allRecords[i].menuVisual;
+            if (visual == null) continue;
+
+            Vector3 targetLocalPos;
             Vector3 targetScale;
 
+            // Determine where this specific record should be sitting
             if (i == centerIndex)
             {
-                // CENTER - big + rotating
-                targetPos = centerPosition.position;
+                targetLocalPos = centerPosition.localPosition;
                 targetScale = Vector3.one * 1.5f;
-                recordVisuals[i].Rotate(0, 0, 50f * Time.deltaTime);
+                visual.Rotate(0, 0, 50f * Time.deltaTime);
             }
             else if (i == topIndex)
             {
-                // TOP - Small above center
-                targetPos = topPosition.position;
+                targetLocalPos = topPosition.localPosition;
                 targetScale = Vector3.one * 0.7f;
             }
             else if (i == bottomIndex)
             {
-                // BOTTOM - Small below center
-                targetPos = bottomPosition.position;
+                targetLocalPos = bottomPosition.localPosition;
                 targetScale = Vector3.one * 0.7f;
             }
             else
             {
-                // If there are more than 3 records in the index, don't show the extra
-                targetPos = topPosition.position + Vector3.right * 200f;  // Off-screen to the right
+                targetLocalPos = centerPosition.localPosition + (Vector3.right * 1000f);
                 targetScale = Vector3.zero;
             }
-            recordVisuals[i].position = Vector3.Lerp(recordVisuals[i].position, targetPos, Time.deltaTime * transitionSpeed);
-            recordVisuals[i].localScale = Vector3.Lerp(recordVisuals[i].localScale, targetScale, Time.deltaTime * transitionSpeed);
+
+            RectTransform rect = visual as RectTransform;
+            if (rect != null)
+            {
+                // Make sure your target positions are also RectTransforms
+                rect.localPosition = Vector3.Lerp(rect.localPosition, targetLocalPos, Time.deltaTime * transitionSpeed);
+            }
+            visual.localScale = Vector3.Lerp(visual.localScale, targetScale, Time.deltaTime * transitionSpeed);
         }
     }
 
     private void SnapRecordPositions()
     {
-        int centerIndex = CurrentRecordIndex;
-        int topIndex = (CurrentRecordIndex - 1 + recordVisuals.Length) % recordVisuals.Length;
-        int bottomIndex = (CurrentRecordIndex + 1) % recordVisuals.Length;
+        int count = allRecords.Count;
+        if (count == 0) return;
 
-        for (int i = 0; i < recordVisuals.Length; i++)
-        {
-            if (i == centerIndex) recordVisuals[i].position = centerPosition.position;
-            else if (i == topIndex) recordVisuals[i].position = topPosition.position;
-            else if (i == bottomIndex) recordVisuals[i].position = bottomPosition.position;
-            else recordVisuals[i].position = centerPosition.position + (centerPosition.right * 10f);
+        int centerIndex = CurrentRecordIndex;
+        int topIndex = (CurrentRecordIndex - 1 + count) % count;
+        int bottomIndex = (CurrentRecordIndex + 1) % count;
+
+        for (int i = 0; i < count; i++)
+        {      
+            Transform visual = allRecords[i].menuVisual;
+
+            if (visual == null) continue;
+
+            if (i == centerIndex)
+                visual.localPosition = centerPosition.localPosition;
+            else if (i == topIndex)
+                visual.localPosition = topPosition.localPosition;
+            else if (i == bottomIndex)
+                visual.localPosition = bottomPosition.localPosition;
+            else
+                visual.localPosition = centerPosition.localPosition + (centerPosition.right * 10f);
         }
     }
 
     void Update()
     {
-        if (RecordSelect.activeSelf)
-        {
-            float verticalInput = verticalMoveAction.ReadValue<float>();
+        if (!RecordSelect.activeSelf) return;
 
-            if (canMoveSelection)
+        if (isMenuReady)
+        {
+            float verticalInput = 0f;
+
+            // Check Keyboard
+            if (Keyboard.current != null)
             {
-                if (verticalInput > 0.5f) // Pushing Up
-                {
-                    PreviousRecord();
-                    StartCoroutine(InputCooldown());
-                }
-                else if (verticalInput < -0.5f) // Pushing Down
-                {
-                    NextRecord();
-                    StartCoroutine(InputCooldown());
-                }
+                if (Keyboard.current.wKey.isPressed) verticalInput = 1f;
+                else if (Keyboard.current.sKey.isPressed) verticalInput = -1f;
             }
 
-            if (submitAction.WasPressedThisFrame() && isMenuReady)
+            // Check Gamepad
+            if (Gamepad.current != null)
+            {
+                float stickY = Gamepad.current.leftStick.y.ReadValue();
+                if (Mathf.Abs(stickY) > 0.5f) verticalInput = stickY;
+            }
+
+            // Selection Movement
+            if (canMoveSelection && Mathf.Abs(verticalInput) > 0.5f)
+            {
+                if (verticalInput > 0.5f) PreviousRecord();
+                else NextRecord();
+
+                StartCoroutine(InputCooldown());
+            }
+
+            // Submit (F, Enter or South Button)
+            bool submitPressed = false;
+            if (Keyboard.current != null && (Keyboard.current.fKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
+                submitPressed = true;
+            if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+                submitPressed = true;
+
+            if (submitPressed)
             {
                 PlayRecord();
             }
 
-            if (cancelAction.WasPressedThisFrame() && isMenuReady)
+            // Cancel (Esc or East Button)
+            bool cancelPressed = false;
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+                cancelPressed = true;
+            if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+                cancelPressed = true;
+
+            if (cancelPressed)
             {
                 CloseRecordSelect();
             }
