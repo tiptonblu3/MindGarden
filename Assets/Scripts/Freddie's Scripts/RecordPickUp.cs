@@ -30,7 +30,7 @@ public class RecordPickUp : MonoBehaviour, IInteractable
     {
        if (IsFloating)
         {
-            transform.Rotate(Vector3.up, 50 * Time.deltaTime);
+            transform.Rotate(Vector3.up, 80 * Time.deltaTime);
             float bounce = Mathf.Sin(Time.time * 2) * 0.1f;
             transform.position = new Vector3(startPos.x, startPos.y + bounce, startPos.z);
         } 
