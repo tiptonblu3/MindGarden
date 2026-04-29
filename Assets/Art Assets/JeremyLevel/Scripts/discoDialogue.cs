@@ -12,8 +12,6 @@ public class discoDialogue : MonoBehaviour, IInteractable
     public TextMeshPro Dialogue;
     public GameObject DialogBackUI;
     public PlatformManager platmanscript;
-    public EndLevel EndL;
-    public KillZone KillZ;
 
 #region things to dissappear
     public GameObject NPCDissappear;
@@ -43,8 +41,9 @@ public class discoDialogue : MonoBehaviour, IInteractable
         "What are you waiting for?",   
     };
     public string[] fifthConvo = { 
+        "",
 
-
+        
         "G̶̨̧̛̠͓̘͓̺͉̤̮̠̿͌ͧ͂̂ͯͦ̃̅ͮ́͂̿̇̐̆ͯ͘͘ę̨̭̼̎̏̅͆͆͋t̵̴̸̫͕̘͔̘͍̃͌͛̊ͧ́̓ͨ̋̉̂̕͟͡ͅ r̶͍̘̞̰̳ͥ̎ͮͨ̀̕͞_̜͈̱́͐_̟̉ȩ͖͉̌͗͌̾a̧̗͌d̷̸̵̖̹̘̝̜͚͓̙͎̜͗̋͒̓ͨ̂ͥ͆̋͆̐̕͡y̧͎̦̲̙͉̝̗̲̆͑ͥͨ̆̄̒͗̔̂̈́͢ ṫ̶̴̡̢̛͕̝̘̭̣̱̘̠͇ͩ̑ͣ́͑ͫ̈̒̏ͦ͑̀ͬ͐̀̐̎́̿̊͒́͢ȯ̷̷̖͈̲͍͍͈̮͙̗̻̼̏ͧ̓͊̽̓ͮ̔͘ g͓̘̮̼̹̯ͯ̌͐͂́͒̌͢͟ę̡̪̯̼̖̞̘̞͇̟̭̜̬͗̾̂̽ͯ̔͊̂͗̆͑͗ͩͨͩ͋̉̇ͨ͋̚͜ţ̵̰͔̙͙̗͎͉̱̟̮͂͂̈ͤͦͥ͂ͪ͊̑͌͟_ͣ̓ͬ C̟̪̻͓͈̖͛͂ͦ̍͋͋ͬ͂ͫ͌ͬͣͯ̕͡R̵̛̯̲͖̺̼̯̖͉̯͚̩̞͎̲̬̗͇͑͐́͋̌͆̽̌ͯ̿ͣͤ̃͌͐̈́̈ͥ͋ͪ́͢͠Ù͖͈̒̕S̫̺̻̗̆ͣḨ̧̗̻͙̪̣͍͉̞͎̫̠͚̦͕̭͙͈̞̣̤̰̎ͪͧͮ̇͗̎̃ͧ̾̅̑ͥ̅͛̓̐͠͡E̛̹̻ͧͥ̚͞_̶͓̼̀ͤD̶̢̛̛͈̤̗͙̞͇̽̆͑̀̂͌̇ͮ̏̕", 
     
     
@@ -70,22 +69,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
         
     }
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-
-    void DialogueStart()
+    public void DialogueStart()
     {
         switch (dialogueIndex)
         {
@@ -104,7 +88,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
                 if (finished && NM.isNighmarActive) dialogueIndex++;
                 break;
             case 4:
-                if (HandleConversation(fifthConvo)) dialogueIndex++;
+                if (ConvoDiscoStart(fifthConvo)) dialogueIndex++;
                 break;
             default:
                 Dialogue.text = "This is awkward, I lost my dialogue text";
@@ -140,19 +124,13 @@ public class discoDialogue : MonoBehaviour, IInteractable
             Dialogue.text = textToDisplay;
             return false; // Not finished yet
         }
-        else if (KillZ.iFell == true && EndL.EndBeat == false)
-        {
-            subIndex = 0;
-            dialogueIndex = 1;
-            KillZ.iFell = false;
-            return false;
-        }
         else
         {
             EndDialogue();
             platmanscript.StartDiscoSequence();
             DilogueDissappear.SetActive(false);
             NPCDissappear.SetActive(false);
+            if (dialogueIndex == 3) NM.hasInitializedNightmare = true; // Start nightmare mode if it's the right dialogue
             return true; // Finished this array
         }
     }
