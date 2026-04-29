@@ -19,7 +19,8 @@ public class KillZone : MonoBehaviour
             platmanscript.ResetAllPlatforms();
             iFell = true;
             discoScript.subIndex = 0;
-            if(discoScript.dialogueIndex <= 3) discoScript.dialogueIndex = 5; //may not be needed though
+            if (discoScript.dialogueIndex >= 2) discoScript.dialogueIndex = 1;
+            
             
         }
     }

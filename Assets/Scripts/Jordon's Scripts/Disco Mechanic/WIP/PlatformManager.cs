@@ -40,7 +40,12 @@ public class PlatformManager : MonoBehaviour
     public GameObject Eyeball;
     public GameObject NewVoid;
     public GameObject OldVoid;
-    
+
+    [Header("Animated Character Settings")]
+    public AudioSource musicSource;
+    public AudioClip IdleMus;
+    public AudioClip DanceMus;
+    public AudioClip DistortDanceMus;
 
     void Update()
     {
@@ -56,6 +61,18 @@ public class PlatformManager : MonoBehaviour
     {
             currentStandingPlatform = null;
             ResetAllPlatforms();
+            if (NM.isNighmarActive)
+                {
+                    musicSource.Stop(); // Kill the old song
+                    musicSource.clip = DistortDanceMus; // Swap the file
+                    musicSource.Play();
+                }
+            else
+                {
+                    musicSource.Stop(); // Kill the old song
+                    musicSource.clip = DanceMus; // Swap the file
+                    musicSource.Play();
+                }
 
                 // Move the Player to the start point
                 Rigidbody rb = playerObject.GetComponent<Rigidbody>();
@@ -86,6 +103,7 @@ public void GenerateNextStep()
     {
         // Debug.Log("Generating next step...");
         // Check if the player reaches the end of the level area
+        
         if (!sequenceActive) return;
         if (Time.time < lastSpawnTime + cooldownTime) return;        // Checks for the cooldown
 
@@ -164,6 +182,10 @@ public void GenerateNextStep()
             plat.ResetPlatform();
         }
         lastSpawnAnchor = StartPosition;
+            
+            musicSource.Stop(); // Kill the old song
+            musicSource.clip = IdleMus; // Swap the file
+            musicSource.Play();
     }
 
     public void AnimateCharacter()
