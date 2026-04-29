@@ -71,6 +71,16 @@ public class CheckPointReturner : MonoBehaviour
 
     #endregion
 
+    // GetDiscs
+    #region
+
+    public int GetDiscs()
+    {
+        return DiscNum;
+    }
+
+    #endregion
+
     // SetCheckpoint
     #region
 

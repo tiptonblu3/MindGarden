@@ -12,6 +12,7 @@ public class EyeBehavior : MonoBehaviour
     public List<Transform> waypoints; // The list of waypoints the bird will go to.
 
     public float moveSpeed = 5f;
+    public float fastMoveSpeed = 20f;
 
     public int triggerCheckpointIndex = 1; // Which checkpoint triggers this object
 
@@ -128,7 +129,7 @@ public class EyeBehavior : MonoBehaviour
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 target1,
-                moveSpeed * Time.deltaTime
+                fastMoveSpeed * Time.deltaTime
             );
             yield return null;
         }
