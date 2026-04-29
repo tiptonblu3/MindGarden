@@ -6,6 +6,7 @@ public class NightmareChecker : MonoBehaviour
     public GameObject dreamObjects;//objects leaving the scene
     public GameObject nightmareObjects;//objects entering the scene
     public bool nightmareActive;
+    public CheckPoints checkpointScript;
 
     private void Start()
     {
@@ -16,6 +17,10 @@ public class NightmareChecker : MonoBehaviour
     }
     void Update()
     {
+        if (checkpointScript.CurrentCheckPointIndex == 3 && nightmareActive == false)
+        {
+            nightmareActive = true;
+        }
         if (nightmareActive == true)
         {
             ToggleNightmare();
