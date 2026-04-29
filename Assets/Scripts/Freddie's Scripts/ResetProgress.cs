@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ResetProgress : MonoBehaviour
+public class ResetProgress : MonoBehaviour, IInteractable
 {
     public SaveState saveStateScript;
     public string sceneToLoad;

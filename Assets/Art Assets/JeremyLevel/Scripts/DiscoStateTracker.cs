@@ -52,12 +52,11 @@ public class DiscoStateTracker : MonoBehaviour
     void Start()
     {
         // Start the routine to change state after the scene is ready
-        StartCoroutine(StabilizeAndSetState());
+        Invoke ("StabilizeAndSetState", 1f); // Delay to ensure all Start() methods have run
     }
     
-    IEnumerator StabilizeAndSetState()
+    public void StabilizeAndSetState()
     {
-        yield return new WaitForEndOfFrame();
         if (checkpoint3Activated)
         {
             ApplyCheckpoint3();
