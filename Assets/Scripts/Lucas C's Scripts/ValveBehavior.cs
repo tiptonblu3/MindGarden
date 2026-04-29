@@ -69,11 +69,17 @@ public class ValveBehavior : MonoBehaviour
         //used for demonstrating it's on and off states, made to be removed as a reference
         if (valveActive)
         {
-            waterObject.SetActive(false);
+            if (waterObject != null)
+            {
+                waterObject.SetActive(false);
+            }
         }
         else
         {
-            waterObject.SetActive(true);
+            if (waterObject != null)
+            {
+                waterObject.SetActive(true);
+            }
         }
     }
 }

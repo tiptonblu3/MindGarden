@@ -8,6 +8,7 @@ public class WaterBehavior : MonoBehaviour
     public float waterOpacity = 0.5f; //can be adjusted to whatever needed.
     private Player_Movement playerController;
     private float originalPlayerSpeed;
+    public float waterSpeed = 4.5f;
 
     void Start()
     {
@@ -25,7 +26,7 @@ public class WaterBehavior : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerController.CanJump = false;
-            playerController.speed =6f;
+            playerController.speed = waterSpeed;
         }
     }
     void OnTriggerExit(Collider other)
