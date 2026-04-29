@@ -42880,9 +42880,9 @@ MonoBehaviour:
   Dialogue1: {fileID: 7312868690751512903}
   Guy2: {fileID: 919132147813299799}
   Dialogue2: {fileID: 4223719963814201443}
-  checkpoint1Activated: 1
-  checkpoint2Activated: 1
-  checkpoint3Activated: 1
+  checkpoint1Activated: 0
+  checkpoint2Activated: 0
+  checkpoint3Activated: 0
 --- !u!23 &3521887762827275396
 MeshRenderer:
   m_ObjectHideFlags: 0
