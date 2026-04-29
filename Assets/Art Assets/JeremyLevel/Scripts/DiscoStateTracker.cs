@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DiscoStateTracker : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class DiscoStateTracker : MonoBehaviour
     public GameObject DiscPiece3;
     public GameObject Guy1;
     public GameObject Dialogue1;
+    public GameObject Guy2;
+    public GameObject Dialogue2;
     /*
     Jordon's Notes
     ================
@@ -45,41 +48,88 @@ public class DiscoStateTracker : MonoBehaviour
     public bool checkpoint2Activated = false;
     [Header("Checkpoint 3")] 
     public bool checkpoint3Activated = false;
-    
-    void Update()
+
+    void Start()
     {
-        if (checkpoint1Activated)
-        {
-            CheckPoints.CurrentCheckPointIndex = 1;
-            DiscPiece1.SetActive(false);
-        }
-        if (checkpoint2Activated)
-        {
-            if (!checkpoint1Activated) checkpoint1Activated=true; //in case they skip the first one, it will still update the checkpoint index and make sure the first disc piece is gone
-            CheckPoints.CurrentCheckPointIndex = 2;
-            discoDial.dialogueIndex = 2;
-            DiscPiece1.SetActive(false);
-            DiscPiece2.SetActive(false);
-            Guy1.SetActive(false);
-            Dialogue1.SetActive(false);
-            CheckPoints.Respawn();
-        }
+        // Start the routine to change state after the scene is ready
+        StartCoroutine(StabilizeAndSetState());
+    }
+    
+    IEnumerator StabilizeAndSetState()
+    {
+        yield return new WaitForEndOfFrame();
         if (checkpoint3Activated)
         {
-            if (!checkpoint1Activated) checkpoint1Activated=true; //in case they skip the first one, it will still update the checkpoint index and make sure the first disc piece is gone
-            if (!checkpoint1Activated) checkpoint1Activated=true; //in case they skip the first one, it will still update the checkpoint index and make sure the first disc piece is gone
-            CheckPoints.CurrentCheckPointIndex = 3;
-            discoDial2.dialogueIndex = 4;
-            NightMan.isNighmarActive = true;
-            PuzzButton.puzzleSolved = true;
-            DiscPiece1.SetActive(false);
-            DiscPiece2.SetActive(false);
-            DiscPiece3.SetActive(false);
-            CheckPoints.Respawn();
+            ApplyCheckpoint3();
+        }
+        else if (checkpoint2Activated)
+        {
+            ApplyCheckpoint2();
+        }
+        else if (checkpoint1Activated)
+        {
+            ApplyCheckpoint1();
 
         }
-
     }
 
+    void ApplyCheckpoint3()
+    {
+        if (discoDial2 != null) 
+            {
+                discoDial2.dialogueIndex = 4;
+                discoDial2.DialogueStart(); // Or whatever function your script uses to refresh the text
+            }
 
+        if (CheckPoints != null) CheckPoints.CurrentCheckPointIndex = 3;       
+        if (NightMan != null) NightMan.isNighmarActive = true;
+        if (PuzzButton != null) PuzzButton.puzzleSolved = true;
+
+        // Saftey Check for 2 and 1
+        SafeDisable(DiscPiece1);
+        SafeDisable(DiscPiece2);
+        SafeDisable(DiscPiece3);
+        SafeDisable(Guy1);
+        SafeDisable(Dialogue1);
+
+        SafeEnable(Guy2);
+        SafeEnable(Dialogue2);
+    }
+    void ApplyCheckpoint2()
+    {
+        if (CheckPoints != null) CheckPoints.CurrentCheckPointIndex = 2;
+        if (discoDial != null) discoDial.dialogueIndex = 2;
+
+        // Saftey Check for 1
+        SafeDisable(DiscPiece1);
+        SafeDisable(DiscPiece2);
+        SafeDisable(Guy1);
+        SafeDisable(Dialogue1);
+        
+    }
+    void ApplyCheckpoint1()
+    {
+        if (CheckPoints != null) CheckPoints.CurrentCheckPointIndex = 1;
+        
+        SafeDisable(DiscPiece1);
+    }
+
+    void SafeDisable(GameObject obj)
+    {
+        if (obj != null)
+        {
+            obj.SetActive(false);
+        }
+    }
+    void SafeEnable(GameObject obj)
+    {
+        if (obj != null)
+        {
+            obj.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Missing Reference: You forgot to assign an object in the State Tracker!");
+        }
+    }
 }

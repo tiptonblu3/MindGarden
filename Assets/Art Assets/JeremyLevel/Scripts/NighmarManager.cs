@@ -5,13 +5,14 @@ using UnityEngine;
 public class NighmarManager : MonoBehaviour
 {
     public bool isNighmarActive = false;
-    public bool hasInitializedNightmare = true;
+    public bool hasInitializedNightmare = false;
     public PlatformManager platmanscript;
 
     public Collider endCollider; //for start area to block you from going back up there after the nightmare starts
 
     public GameObject oldTrigger; //so it allows you to continue
-    public float minCooldown = 0.2f; // Minimum cooldown time
+    public GameObject oldStartTrigger;
+    public GameObject NewStartTrigger;
     public Animator animator;
     public discoDialogue discoScript;
     
@@ -29,9 +30,12 @@ public class NighmarManager : MonoBehaviour
     {
         if (isNighmarActive)
         {
+            platmanscript.cooldownTime = 1.0f;
             animator.SetBool("NIghtmareSeq", isNighmarActive);
             endCollider.isTrigger = false;
             oldTrigger.SetActive(false);
+            oldStartTrigger.SetActive(false);
+            NewStartTrigger.SetActive(true);
             FixArrows();
             // You can add any additional logic here that should happen when the nightmare is active
             platmanscript.spawnDirection = new UnityEngine.Vector3(1, 0, 0);
@@ -49,26 +53,10 @@ public class NighmarManager : MonoBehaviour
             }
 
 
-            if (!hasInitializedNightmare)
-            {
-                hasInitializedNightmare = true;
-                StartCoroutine(SpeedUpNightmare());
-            }
+           
         }
     }
-
-    IEnumerator SpeedUpNightmare()
-    {
-        while (isNighmarActive)
-        {
-            yield return new WaitForSeconds(2f);
-
-            if (platmanscript.cooldownTime > 0.3f)
-            {
-                platmanscript.cooldownTime -= 0.1f;
-            }
-        }
-    }
+    
 
     public void FixArrows()
 {

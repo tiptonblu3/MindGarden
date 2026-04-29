@@ -169,13 +169,15 @@ public void GenerateNextStep()
     public void AnimateCharacter()
     {
         DiscoGuy.SetActive(true);
-        if(NM.isNighmarActive)
+        if(NM.isNighmarActive && !NM.hasInitializedNightmare)
         {
             DiscoAnimator.SetBool("NightmareMode", true);
+            
             Eyeball.SetActive(true);
             DiscoGuy.SetActive(false);
             NewVoid.SetActive(true);
             OldVoid.SetActive(false);
+        
         }
         else
         {

@@ -41,8 +41,9 @@ public class discoDialogue : MonoBehaviour, IInteractable
         "What are you waiting for?",   
     };
     public string[] fifthConvo = { 
+        "",
 
-
+        
         "G̶̨̧̛̠͓̘͓̺͉̤̮̠̿͌ͧ͂̂ͯͦ̃̅ͮ́͂̿̇̐̆ͯ͘͘ę̨̭̼̎̏̅͆͆͋t̵̴̸̫͕̘͔̘͍̃͌͛̊ͧ́̓ͨ̋̉̂̕͟͡ͅ r̶͍̘̞̰̳ͥ̎ͮͨ̀̕͞_̜͈̱́͐_̟̉ȩ͖͉̌͗͌̾a̧̗͌d̷̸̵̖̹̘̝̜͚͓̙͎̜͗̋͒̓ͨ̂ͥ͆̋͆̐̕͡y̧͎̦̲̙͉̝̗̲̆͑ͥͨ̆̄̒͗̔̂̈́͢ ṫ̶̴̡̢̛͕̝̘̭̣̱̘̠͇ͩ̑ͣ́͑ͫ̈̒̏ͦ͑̀ͬ͐̀̐̎́̿̊͒́͢ȯ̷̷̖͈̲͍͍͈̮͙̗̻̼̏ͧ̓͊̽̓ͮ̔͘ g͓̘̮̼̹̯ͯ̌͐͂́͒̌͢͟ę̡̪̯̼̖̞̘̞͇̟̭̜̬͗̾̂̽ͯ̔͊̂͗̆͑͗ͩͨͩ͋̉̇ͨ͋̚͜ţ̵̰͔̙͙̗͎͉̱̟̮͂͂̈ͤͦͥ͂ͪ͊̑͌͟_ͣ̓ͬ C̟̪̻͓͈̖͛͂ͦ̍͋͋ͬ͂ͫ͌ͬͣͯ̕͡R̵̛̯̲͖̺̼̯̖͉̯͚̩̞͎̲̬̗͇͑͐́͋̌͆̽̌ͯ̿ͣͤ̃͌͐̈́̈ͥ͋ͪ́͢͠Ù͖͈̒̕S̫̺̻̗̆ͣḨ̧̗̻͙̪̣͍͉̞͎̫̠͚̦͕̭͙͈̞̣̤̰̎ͪͧͮ̇͗̎̃ͧ̾̅̑ͥ̅͛̓̐͠͡E̛̹̻ͧͥ̚͞_̶͓̼̀ͤD̶̢̛̛͈̤̗͙̞͇̽̆͑̀̂͌̇ͮ̏̕", 
     
     
@@ -68,7 +69,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
         
     }
 
-    void DialogueStart()
+    public void DialogueStart()
     {
         switch (dialogueIndex)
         {
