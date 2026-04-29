@@ -6,10 +6,17 @@ public class RecordPickUp : MonoBehaviour, IInteractable
     public GameObject Level;
     public bool IsFloating = true; // Option to enable or disable floating animation
     private Vector3 startPos; // Store the initial position of the record for animation purposes
+    public Transform MenuVisualAsset;
     public void Interact()
     {
-        Debug.Log("Record Picked Up!");
-        RecordPlayer.records.Add(Level);
+        RecordPlayer.RecordData newRecord = new RecordPlayer.RecordData
+        {
+            recordName = Level.name,
+            levelPortal = Level,
+            menuVisual = MenuVisualAsset
+        };
+
+        RecordPlayer.allRecords.Add(newRecord);
         gameObject.SetActive(false); // This will disable the record object
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
