@@ -236,6 +236,7 @@ MonoBehaviour:
   IsGrounded: 0
   rotationSpeed: 320
   isDead: 0
+  StupidDumbJumpOption: 0
   masterSens: 2
   verticalMatchRatio: 0.02
   mouseWeight: 15
@@ -3620,7 +3621,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 3c621671a79177749951006f8771a13a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -4080,7 +4081,7 @@ Transform:
   m_GameObject: {fileID: 4200516493574353769}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0898056, y: 0.00000003201484, z: -0.0000000028867764, w: 0.99595934}
-  m_LocalPosition: {x: 0, y: 2.9500003, z: -5.5}
+  m_LocalPosition: {x: 0, y: 2.9500003, z: -5.499999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4847,7 +4848,7 @@ Transform:
   m_GameObject: {fileID: 4799451837919050314}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000014901159, y: -0.00000003703981, z: -8.5738125e-11, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4749999, z: 0}
+  m_LocalPosition: {x: 0, y: 1.4749999, z: 0.0000009536743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
