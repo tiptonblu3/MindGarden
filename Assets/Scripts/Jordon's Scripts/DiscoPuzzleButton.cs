@@ -36,12 +36,19 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     public Image ReverbIndicator;
     public bool Submit5 = false;
 
+    [Header("Solutions")]
+    int GainSol;
+    int ResampleSol;
+    int VolumeSol; 
+    int PitchSol; 
+    int ReverbSol;
+
     #endregion
 
 
     void Awake()
     {
-        GetComponent<Renderer>().material.color = Color.yellowNice;
+        RandomizeNums();
     }
     void Update()
     {
@@ -77,35 +84,35 @@ public class PuzzleButton : MonoBehaviour, IInteractable
         float ReverbVal = Reverb.value;
 
 
-        if (GainVal == 2)
+        if (GainVal == GainSol)
             {
             //Deactivate Slider and make button green
             Gain.interactable = false;
             GainIndicator.color = Color.green;
             Submit1 = true;
             }
-        if (ResampleVal == 6)
+        if (ResampleVal == ResampleSol)
             {
             //Deactivate Slider and make button green
             Resample.interactable = false;
             ResampleIndicator.color = Color.green;
             Submit2 = true;
             }
-        if (VolumeVal == 7)
+        if (VolumeVal == VolumeSol)
             {
             //Deactivate Slider and make button green
             Volume.interactable = false;
             VolumeIndicator.color = Color.green;
             Submit3 = true;
             }
-        if (PitchVal == 9)
+        if (PitchVal == PitchSol)
             {
                 //Deactivate Slider and make button green
                 Pitch.interactable = false;
                 PitchIndicator.color = Color.green;
                 Submit4 = true;
             }
-        if (ReverbVal == 3)
+        if (ReverbVal == ReverbSol)
             {
                 //Deactivate Slider and make button green
                 Reverb.interactable = false;
@@ -149,7 +156,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
         float ReverbVal = Reverb.value;
             if (Submit1 == false)
             {
-                if (GainVal == 2)
+                if (GainVal == GainSol)
                     {
                         GainIndicator.color = Color.yellow;
                     }
@@ -158,7 +165,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
 
             if (Submit2 == false)
             {
-                if (ResampleVal == 6)
+                if (ResampleVal == ResampleSol)
                     {
                         ResampleIndicator.color = Color.yellow;
                     }
@@ -167,7 +174,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
             
             if (Submit3 == false)
             {
-                if (VolumeVal == 7)
+                if (VolumeVal == VolumeSol)
                     {
                         VolumeIndicator.color = Color.yellow;
                     }
@@ -176,7 +183,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
 
             if (Submit4 == false)
             {
-                if (PitchVal == 9)
+                if (PitchVal == PitchSol)
                     {
                         PitchIndicator.color = Color.yellow;
                     }
@@ -184,13 +191,21 @@ public class PuzzleButton : MonoBehaviour, IInteractable
             }
             if (Submit5 == false)
             {
-                if (ReverbVal == 3)
+                if (ReverbVal == ReverbSol)
                     {
                         ReverbIndicator.color = Color.yellow;
                     }
                 else ReverbIndicator.color = new Color32(255, 136, 136, 255);
             }
     }
+    public void RandomizeNums()
+    {
+        GainSol = Random.Range(0, 10);
+        ResampleSol = Random.Range(0, 10);
+        VolumeSol = Random.Range(0, 10);
+        PitchSol = Random.Range(0, 10);
+        ReverbSol = Random.Range(0, 10);
 
+    }
 
 }
