@@ -10279,6 +10279,7 @@ MonoBehaviour:
   dreamObjects: {fileID: 2034322481}
   nightmareObjects: {fileID: 530976037}
   nightmareActive: 0
+  checkpointScript: {fileID: 1960065132}
 --- !u!1 &903768105 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7635d3ec0f14c2241bf01bb3441b6e98, type: 3}
