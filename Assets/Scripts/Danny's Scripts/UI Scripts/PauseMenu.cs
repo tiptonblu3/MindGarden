@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button hubConfirmFirstButton;
     [SerializeField] private Button quitConfirmFirstButton;
     [SerializeField] private UnityEngine.InputSystem.UI.InputSystemUIInputModule uiInputModule;
+    public SaveState saveStateScript;
 
     private RecordPlayer record;
     private Player_Movement playerMovement;
@@ -49,6 +50,7 @@ public class PauseMenu : MonoBehaviour
             if (!isPaused)
             {
                 Pause();
+                SaveState();
             }
             else
             {
@@ -209,5 +211,19 @@ public class PauseMenu : MonoBehaviour
     {
         if (Gamepad.current != null)
             StartCoroutine(SelectFirstButton(quitConfirmFirstButton));
+    }
+
+    public void SaveState()
+    {
+        SaveState saveState = FindAnyObjectByType<SaveState>();
+        if (saveState != null)
+        {
+            saveState.SaveProgress();
+            Debug.Log("Game Saved!");
+        }
+        else
+        {
+            Debug.LogWarning("PauseMenu: No SaveState found in scene to save progress!");
+        }
     }
 }

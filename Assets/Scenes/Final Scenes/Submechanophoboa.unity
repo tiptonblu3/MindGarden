@@ -12632,15 +12632,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1151777703857021709, guid: 70424e8e90a47bc44b14828e2a54eb30, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.87
+      value: 18.53
       objectReference: {fileID: 0}
     - target: {fileID: 1151777703857021709, guid: 70424e8e90a47bc44b14828e2a54eb30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.9
+      value: 3.96
       objectReference: {fileID: 0}
     - target: {fileID: 1151777703857021709, guid: 70424e8e90a47bc44b14828e2a54eb30, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.87
+      value: -4.32
       objectReference: {fileID: 0}
     - target: {fileID: 4149289384723299385, guid: 70424e8e90a47bc44b14828e2a54eb30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17026,7 +17026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1305324965}
   - component: {fileID: 1305324967}
-  - component: {fileID: 1305324966}
+  - component: {fileID: 1305324968}
   m_Layer: 0
   m_Name: EndTrigger
   m_TagString: Untagged
@@ -17049,19 +17049,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 530976038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1305324966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305324964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 468de91fe0df97247ab53eb92a49ede2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelLoader
-  sceneToLoad: HUB
 --- !u!65 &1305324967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17083,6 +17070,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 16.002146, y: 7.614839, z: 19.519085}
   m_Center: {x: -1.7367306, y: 3.3074195, z: -1.1026783}
+--- !u!114 &1305324968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305324964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602b626809991b3418dc6335859a5e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResetProgress
+  saveStateScript: {fileID: 0}
+  sceneToLoad: HUB
+  DelayTime: 1
 --- !u!1 &1308760279
 GameObject:
   m_ObjectHideFlags: 0

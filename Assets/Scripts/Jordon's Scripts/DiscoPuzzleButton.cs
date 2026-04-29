@@ -13,6 +13,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     public bool PuzActive = false;
     private bool DoorClosed = false;
     public GameObject door;
+    public CheckPoints CheckPointsScript;
 
     #region UI Stuff
     
@@ -36,6 +37,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     public Image ReverbIndicator;
     public bool Submit5 = false;
 
+
     [Header("Solutions")]
     int GainSol;
     int ResampleSol;
@@ -57,6 +59,7 @@ public class PuzzleButton : MonoBehaviour, IInteractable
                 DoorClosed = true;
                 StartCoroutine(PuzzleComplete(UnityEngine.Vector3.forward));
         }
+        Checks();
     }
     public void Interact()
     {
@@ -206,6 +209,14 @@ public class PuzzleButton : MonoBehaviour, IInteractable
         PitchSol = Random.Range(0, 10);
         ReverbSol = Random.Range(0, 10);
 
+    }
+
+    public void Checks()
+    {
+        if (CheckPointsScript.CurrentCheckPointIndex == 3)
+        {
+            puzzleSolved = true;
+        }
     }
 
 }

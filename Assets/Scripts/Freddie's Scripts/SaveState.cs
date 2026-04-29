@@ -106,6 +106,16 @@ public class SaveState : MonoBehaviour
         }
     }
 
+    public void ResetProgress()
+    {
+        if (checkPointsScript != null)
+        {
+            checkPointsScript.CurrentCheckPointIndex = 0;
+            SaveProgress(); // Save the reset state immediately
+        }
+        Debug.Log("Progress reset!");
+    }
+
     private string GetSavePath()
     {
         return Path.Combine(Application.persistentDataPath, "Save_" + SceneManager.GetActiveScene().name + ".json");
