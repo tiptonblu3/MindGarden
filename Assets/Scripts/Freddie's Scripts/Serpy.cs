@@ -34,13 +34,6 @@ public class Serpy : MonoBehaviour
         {
             ChasePlayer();
         }
-        else if (playerM != null && playerM.isDead)
-        {
-            if (Vector3.Distance(transform.position, initialSpawnPoint.position) > 0.5f)
-            {
-                ResetSerpy();
-            }
-        }
     }
 
     void OnCollisionEnter(Collision other) 
@@ -48,6 +41,7 @@ public class Serpy : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && playerM != null)
         {
             playerM.isDead = true;
+            ResetSerpy();
             Debug.Log("Serpy caught the player!");
         }
     }
