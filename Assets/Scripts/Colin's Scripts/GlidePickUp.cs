@@ -13,6 +13,8 @@ public class GlidePickUp : MonoBehaviour, IInteractable
     // Makes object intangable when picked up (Not destroyed so it can still be referenced)
     private Collider objectCollider;
     private Renderer objectRenderer;
+    public AudioSource musicSource;
+
 
     #endregion
 
@@ -42,8 +44,8 @@ public class GlidePickUp : MonoBehaviour, IInteractable
         }
 
         Debug.Log("Picked up!");
-
-        DisableObject();
+        musicSource.Play();
+        Invoke("DisableObject", 0.5f);
     }
 
     #endregion
