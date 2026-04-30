@@ -8,6 +8,7 @@ TagManager:
   - Checkpoints
   - SaveState
   - Eye
+  - Bird
   layers:
   - Default
   - TransparentFX

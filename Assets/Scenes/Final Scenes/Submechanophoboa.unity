@@ -34020,7 +34020,7 @@ AudioSource:
   m_GameObject: {fileID: 3368672281085474642}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2931129412639266218, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 3c621671a79177749951006f8771a13a, type: 3}
   m_PlayOnAwake: 1
@@ -42174,6 +42174,7 @@ MonoBehaviour:
   rb: {fileID: 6913104238185479277}
   glideFallSpeed: -2
   glideGravityScale: 0.3
+  glideUnlocked: 0
   maxGlideTime: 10
   currentGlideTime: 0
 --- !u!224 &4330588169103828873
@@ -50259,6 +50260,7 @@ MonoBehaviour:
   hubConfirmFirstButton: {fileID: 7801379017885944195}
   quitConfirmFirstButton: {fileID: 7119528045697539647}
   uiInputModule: {fileID: 3389499603599923021}
+  saveStateScript: {fileID: 0}
 --- !u!1 &7104944626622843643
 GameObject:
   m_ObjectHideFlags: 0

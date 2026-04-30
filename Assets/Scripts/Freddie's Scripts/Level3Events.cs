@@ -58,7 +58,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 3 Events
         else if (checkPoints.CurrentCheckPointIndex == 3)
         {
-            birdWaypoints.currentWaypointIndex = 3; // Set the bird's target waypoint to the first one
+            birdWaypoints.currentWaypointIndex = 2; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             eyeWaypoints.currentWaypointIndex = 0; // Set the eye's target waypoint to the first one
             eyeWaypoints.isMoving = true;
@@ -68,7 +68,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 4 Events
         else if (checkPoints.CurrentCheckPointIndex == 4)
         {
-            birdWaypoints.currentWaypointIndex = 4; // Set the bird's target waypoint to the first one
+            birdWaypoints.currentWaypointIndex = 3; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
             EndLevelTrigger.SetActive(true);
@@ -92,6 +92,7 @@ public class Level3Events : MonoBehaviour
     {
         // Disable the Sun and change the skybox enable the vfx
         Sun.SetActive(false);
+        RenderSettings.fog = true;
 
         if (Skybox_Alt != null)
         {

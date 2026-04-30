@@ -5,7 +5,7 @@ public class BirdWaypoints : MonoBehaviour
     public Transform[] waypoints; // Array of waypoints for the Bird to follow
     public float moveSpeed = 5f; // Speed at which the Bird moves
     public int currentWaypointIndex = 0; // Index of the current waypoint
-    public bool isMoving = false; // Flag to check if the Bird is currently moving
+    public bool isMoving = true; // Flag to check if the Bird is currently moving
     public CheckPoints checkPoints; // Reference to the CheckPoints script
     public GameObject Bird; // Reference to the Bird GameObject
 
