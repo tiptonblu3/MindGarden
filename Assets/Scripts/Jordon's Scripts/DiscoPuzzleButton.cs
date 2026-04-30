@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PuzzleButton : MonoBehaviour, IInteractable
 {
+    [Header("General stuff")]
     public PlatformManager platmanscript;
     public GameObject PuzzleUI;
     public bool puzzleSolved = false;
@@ -14,25 +15,31 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     private bool DoorClosed = false;
     public GameObject door;
     public CheckPoints CheckPointsScript;
+    public AudioSource musicSource;
+    public AudioSource DoorSource;
 
     #region UI Stuff
-    
+    [Header("Gain")]
     public Slider Gain; //Gain Slider
     public Image GainIndicator;
     public bool Submit1 = false;
 
+    [Header("Resample")]
     public Slider Resample; //Resample Slider
     public Image ResampleIndicator;
     public bool Submit2 = false;
-
+    
+    [Header("Volume")]
     public Slider Volume; //Volume Slider
     public Image VolumeIndicator;
     public bool Submit3 = false;
 
+    [Header("Pitch")]
     public Slider Pitch; //Pitch Slider
     public Image PitchIndicator;
     public bool Submit4 = false;
 
+    [Header("Reverb")]
     public Slider Reverb; //Reverb Slider
     public Image ReverbIndicator;
     public bool Submit5 = false;
@@ -63,7 +70,8 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-         PuzzleUI.SetActive(true);
+        musicSource.Play();
+        PuzzleUI.SetActive(true);
         Time.timeScale = 0f; // Pause Game
         Cursor.lockState = CursorLockMode.None; // Unlock Cursor
         Cursor.visible = true; // Make Cursor Visible
@@ -134,9 +142,9 @@ public class PuzzleButton : MonoBehaviour, IInteractable
     }
     public IEnumerator PuzzleComplete(UnityEngine.Vector3 axis)
     {
-        
-        
-            UnityEngine.Quaternion startRotation = door.transform.rotation;
+        DoorSource.Play();
+
+        UnityEngine.Quaternion startRotation = door.transform.rotation;
             UnityEngine.Quaternion endRotation = startRotation * Quaternion.Euler(axis * 90);
             float elapsed = 0f;
 
