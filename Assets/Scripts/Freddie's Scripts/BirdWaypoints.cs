@@ -8,11 +8,14 @@ public class BirdWaypoints : MonoBehaviour
     public bool isMoving = true; // Flag to check if the Bird is currently moving
     public CheckPoints checkPoints; // Reference to the CheckPoints script
     public GameObject Bird; // Reference to the Bird GameObject
+    public Animator anim; // Reference to the Animator component
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         checkPoints = GameObject.FindGameObjectWithTag("Checkpoints").GetComponent<CheckPoints>();
+        anim = GetComponentInChildren<Animator>();
+        Bird = GameObject.FindGameObjectWithTag("Bird");
     }
 
     // Update is called once per frame
@@ -25,6 +28,7 @@ public class BirdWaypoints : MonoBehaviour
     {
         if (isMoving == true)
         {
+            anim.SetBool("isMovingBird", true);
             Vector3 targetPosition = waypoints[currentWaypointIndex].position;
             Bird.transform.position = Vector3.MoveTowards(Bird.transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
@@ -32,6 +36,7 @@ public class BirdWaypoints : MonoBehaviour
             {
                 //currentWaypointIndex++;
                 isMoving = false;
+                anim.SetBool("isMovingBird", false);
             }
         }
     }
