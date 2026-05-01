@@ -61,6 +61,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 3 Events
         else if (checkPoints.CurrentCheckPointIndex == 3)
         {
+            Point2();
             playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 2; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
@@ -72,6 +73,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 4 Events
         else if (checkPoints.CurrentCheckPointIndex == 4)
         {
+            Point2();
             playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 3; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
