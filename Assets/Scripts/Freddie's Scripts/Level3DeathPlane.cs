@@ -6,7 +6,7 @@ public class Level3DeathPlane : MonoBehaviour
     public EyeWaypoints eyeWaypoints;
     void Awake()
     {
-        player = GetComponent<Player_Movement>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Movement>();
         eyeWaypoints = GameObject.FindGameObjectWithTag("Eye").GetComponent<EyeWaypoints>();
     }
     private void OnTriggerEnter(Collider other)
