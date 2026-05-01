@@ -9,6 +9,8 @@ public class Level3Events : MonoBehaviour
     public EyeChase eyeChase;
     public GameObject Sun;
 
+    public GameObject CheckPoint3;
+
     public ParticleSystem groundFog;
     public ParticleSystem skyFog;
     public Material Skybox_Alt;
@@ -67,6 +69,7 @@ public class Level3Events : MonoBehaviour
             birdWaypoints.isMoving = true;
             eyeWaypoints.currentWaypointIndex = 0; // Set the eye's target waypoint to the first one
             eyeWaypoints.isMoving = true;
+            CheckPoint3.SetActive(false);
         }
         #endregion
         
@@ -80,6 +83,7 @@ public class Level3Events : MonoBehaviour
             Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
             EndLevelTrigger.SetActive(true);
             Invoke("FogOff", 5f);
+            CheckPoint3.SetActive(false);
         }
         #endregion
     }
