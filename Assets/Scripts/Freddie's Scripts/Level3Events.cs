@@ -10,6 +10,7 @@ public class Level3Events : MonoBehaviour
     public GameObject Sun;
 
     public GameObject CheckPoint3;
+    public GameObject Wings;
 
     public ParticleSystem groundFog;
     public ParticleSystem skyFog;
@@ -48,6 +49,7 @@ public class Level3Events : MonoBehaviour
             playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 1; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
+            Wings.SetActive(false);
         }
 
         #region Checkpoint 2 Events
@@ -57,6 +59,7 @@ public class Level3Events : MonoBehaviour
             birdWaypoints.currentWaypointIndex = 2; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             Point2();
+            Wings.SetActive(false);
         }
         #endregion
 
@@ -70,6 +73,7 @@ public class Level3Events : MonoBehaviour
             eyeWaypoints.currentWaypointIndex = 0; // Set the eye's target waypoint to the first one
             eyeWaypoints.isMoving = true;
             CheckPoint3.SetActive(false);
+            Wings.SetActive(false);
         }
         #endregion
         
@@ -84,6 +88,7 @@ public class Level3Events : MonoBehaviour
             EndLevelTrigger.SetActive(true);
             Invoke("FogOff", 5f);
             CheckPoint3.SetActive(false);
+            Wings.SetActive(false);
         }
         #endregion
     }
