@@ -8,6 +8,8 @@ public class EyeWaypoints : MonoBehaviour
     public bool isMoving = false; // Flag to check if the eye is currently moving
     public CheckPoints checkPoints; // Reference to the CheckPoints script
     public GameObject Eye; // Reference to the Eye GameObject
+    public EyeChase eyeChase;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,4 +37,16 @@ public class EyeWaypoints : MonoBehaviour
             }
         }
     }
+
+    public void ResetPosition()
+    {
+        // Reset the eye's position to the first waypoint
+        Eye.transform.position = waypoints[currentWaypointIndex].position;
+        if (eyeChase.Chase == true)
+        {
+            eyeChase.Chase = false;
+            Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
+        }
+    }
+
 }

@@ -9,7 +9,10 @@ public class ResetProgress : MonoBehaviour, IInteractable
 
      void Start()
     {
-        saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
+        if (saveStateScript != null)
+        {
+            saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
+        }
     }
     public void Interact()
     {

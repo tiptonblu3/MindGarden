@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Level3Events : MonoBehaviour
 {
+    public GlidePickUp playerGlide;
     public CheckPoints checkPoints;
     public EyeWaypoints eyeWaypoints;
     public BirdWaypoints birdWaypoints;
@@ -42,6 +43,7 @@ public class Level3Events : MonoBehaviour
 
         else if (checkPoints.CurrentCheckPointIndex == 1)
         {
+            playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 1; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
         }
@@ -49,6 +51,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 2 Events
         else if (checkPoints.CurrentCheckPointIndex == 2)
         {
+            playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 2; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             Point2();
@@ -58,6 +61,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 3 Events
         else if (checkPoints.CurrentCheckPointIndex == 3)
         {
+            playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 2; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             eyeWaypoints.currentWaypointIndex = 0; // Set the eye's target waypoint to the first one
@@ -68,6 +72,7 @@ public class Level3Events : MonoBehaviour
         #region Checkpoint 4 Events
         else if (checkPoints.CurrentCheckPointIndex == 4)
         {
+            playerGlide.IsGlideUnlocked = true;
             birdWaypoints.currentWaypointIndex = 3; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
