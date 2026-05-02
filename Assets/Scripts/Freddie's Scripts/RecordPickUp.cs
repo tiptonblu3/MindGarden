@@ -7,8 +7,13 @@ public class RecordPickUp : MonoBehaviour, IInteractable
     public bool IsFloating = true; // Option to enable or disable floating animation
     private Vector3 startPos; // Store the initial position of the record for animation purposes
     public Transform MenuVisualAsset;
+    public AudioClip PickupSound;
+    public AudioSource musicSource;
+
+    
     public void Interact()
     {
+        AudioSource.PlayClipAtPoint(PickupSound, transform.position);
         RecordPlayer.RecordData newRecord = new RecordPlayer.RecordData
         {
             recordName = Level.name,

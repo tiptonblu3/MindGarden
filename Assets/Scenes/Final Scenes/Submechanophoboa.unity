@@ -4179,6 +4179,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: e3d13510eb42b9747961b1cd423dd454, type: 3}
     - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
+      propertyPath: PickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 92dc8c8b9c79ac0429b781b774729f0f, type: 3}
+    - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
       propertyPath: musicSource
       value: 
       objectReference: {fileID: 1178043003}
@@ -11397,6 +11401,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: e3d13510eb42b9747961b1cd423dd454, type: 3}
     - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
+      propertyPath: PickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 92dc8c8b9c79ac0429b781b774729f0f, type: 3}
+    - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
       propertyPath: musicSource
       value: 
       objectReference: {fileID: 888853605}
@@ -15566,7 +15574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DiscDisabler
   CheckP: {fileID: 1960065132}
   Disc: {fileID: 865721569}
-  DiscNum: 2
+  DiscNum: 3
 --- !u!82 &1178043003
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18764,6 +18772,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: e3d13510eb42b9747961b1cd423dd454, type: 3}
     - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
+      propertyPath: PickupSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 92dc8c8b9c79ac0429b781b774729f0f, type: 3}
+    - target: {fileID: 723515897330388013, guid: ce9837a7bbe2feb4f8b613c4161b1aef, type: 3}
       propertyPath: musicSource
       value: 
       objectReference: {fileID: 1432334608}
@@ -19761,7 +19773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DiscDisabler
   CheckP: {fileID: 1960065132}
   Disc: {fileID: 1419488145}
-  DiscNum: 3
+  DiscNum: 2
 --- !u!82 &1432334608
 AudioSource:
   m_ObjectHideFlags: 0
@@ -34732,7 +34744,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -49596,18 +49608,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103337045806391120}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: CloseSettingsMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 5285177309781407150}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
         m_MethodName: UpdateSound
@@ -49623,6 +49623,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5285177309781407150}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
         m_MethodName: SaveSoundSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7103337045806391120}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: CloseSettingsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

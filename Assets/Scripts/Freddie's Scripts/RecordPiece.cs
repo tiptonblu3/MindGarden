@@ -4,21 +4,24 @@ public class RecordPiece : MonoBehaviour, IInteractable
 {
     public CheckPoints CheckPoints;
     public AudioSource musicSource;
+    public AudioClip PickupSound;
     
 
     void Awake()
     {
         CheckPoints = GameObject.FindGameObjectWithTag("Checkpoints").GetComponent<CheckPoints>();
+        
     }
 
     public void Interact()
     {
         if (gameObject.activeInHierarchy)
         {
-            musicSource.Play();
+            AudioSource.PlayClipAtPoint(PickupSound, transform.position);
             Debug.Log("Record Piece Picked Up!");
             CheckPoints.CurrentCheckPointIndex++; // Increment the check point index
-            Invoke("SetDisactive", 0.5f);
+            SetDisactive();
+            //Invoke("SetDisactive", 0.5f);
         }
         
     }
