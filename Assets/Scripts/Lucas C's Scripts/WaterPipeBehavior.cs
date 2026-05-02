@@ -14,6 +14,8 @@ public class WaterPipeBehavior : MonoBehaviour
     public float correctPosition;
     public bool onXAxis;
 
+    public bool isMoving;
+
     private void Start()
     {
         currentRotation = transform.rotation.eulerAngles.z;
@@ -38,6 +40,7 @@ public class WaterPipeBehavior : MonoBehaviour
 
     public void TogglePipe()
     {
+        isMoving = true;
         if (onXAxis)
         {
             StartCoroutine(AnimatePipeToggleX());
@@ -62,6 +65,7 @@ public class WaterPipeBehavior : MonoBehaviour
         }
         transform.rotation = endRotation;
         currentRotation = z;
+        isMoving = false;
     }
     private IEnumerator AnimatePipeToggleX()
     {
@@ -76,5 +80,6 @@ public class WaterPipeBehavior : MonoBehaviour
         }
         transform.rotation = endRotation;
         currentRotation = x;
+        isMoving = false;
     }
 }

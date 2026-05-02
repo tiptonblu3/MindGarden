@@ -13,7 +13,7 @@ public class InteractionZoneBehavior : MonoBehaviour
     void Update()
     {
 
-        if (interactivityCheck && InputSystem.actions["Interact"].triggered)
+        if (interactivityCheck && InputSystem.actions["Interact"].triggered&& !pipeObject.GetComponent<WaterPipeBehavior>().isMoving)
         {
             pipeObject.GetComponent<WaterPipeBehavior>().TogglePipe();
         }
