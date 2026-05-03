@@ -89,6 +89,7 @@ public class Level3Events : MonoBehaviour
             Invoke("FogOff", 5f);
             CheckPoint3.SetActive(false);
             Wings.SetActive(false);
+            eyeWaypoints.finalCheckpointReached = true;
         }
         #endregion
     }
