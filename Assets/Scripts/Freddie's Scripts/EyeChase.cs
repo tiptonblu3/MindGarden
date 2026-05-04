@@ -5,6 +5,7 @@ public class EyeChase : MonoBehaviour
     public GameObject player;
     public float EyeSpeed = 0.3f;
     public bool Chase = false;
+    public bool canChase = true;
 
     [Header("Jordon's evil bird scripts")] //I love this fuckign bird
     public float detectionDistance = 5f;
@@ -20,18 +21,18 @@ public class EyeChase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
     {
         LookAtPlayer();
-        if (Chase)
+
+        if (Chase && canChase)
         {
             ChasePlayer();
         }
     }
-        
 
     public void ChasePlayer()
     {
@@ -39,22 +40,22 @@ public class EyeChase : MonoBehaviour
         RaycastHit hit;
         if (player != null)
         {
-            if (Physics.SphereCast(transform.position, sphereRadius, moveDirection, out hit, detectionDistance, obstacleLayer)) 
+            if (Physics.SphereCast(transform.position, sphereRadius, moveDirection, out hit, detectionDistance, obstacleLayer))
             {
                 Vector3 wallNormal = hit.normal;
-        
+
                 Vector3 avoidDirection = Vector3.ProjectOnPlane(moveDirection, wallNormal);
-    
+
                 transform.position += avoidDirection.normalized * EyeSpeed * Time.deltaTime;
             }
-            
+
             else
             {
-                transform.position += transform.forward * EyeSpeed * Time.deltaTime;   
+                transform.position += transform.forward * EyeSpeed * Time.deltaTime;
             }
         }
     }
-    
+
     public void LookAtPlayer()
     {
         if (player != null)

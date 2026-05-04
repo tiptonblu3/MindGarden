@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EyeWaypoints : MonoBehaviour
@@ -9,7 +10,7 @@ public class EyeWaypoints : MonoBehaviour
     public CheckPoints checkPoints; // Reference to the CheckPoints script
     public GameObject Eye; // Reference to the Eye GameObject
     public EyeChase eyeChase;
-
+    public bool finalCheckpointReached = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,13 +41,25 @@ public class EyeWaypoints : MonoBehaviour
 
     public void ResetPosition()
     {
-        // Reset the eye's position to the first waypoint
-        Eye.transform.position = waypoints[currentWaypointIndex].position;
-        if (eyeChase.Chase == true)
+        eyeChase.Chase = false;
+        eyeChase.canChase = false;
+
+        if (finalCheckpointReached)
         {
-            eyeChase.Chase = false;
-            Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
+            currentWaypointIndex = 0;
+            Eye.transform.position = waypoints[0].position;
+            isMoving = false;
+
+            StopAllCoroutines();
+            StartCoroutine(RestartChaseAfterDelay());
         }
     }
 
+    public IEnumerator RestartChaseAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+
+        eyeChase.canChase = true;
+        eyeChase.Chase = true;
+    }
 }
