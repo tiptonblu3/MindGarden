@@ -75,6 +75,11 @@ public class Player_Movement : MonoBehaviour
     public float externalLockTimer;
     public bool isInFan;
 
+    [Header("Audio")]
+    public AudioSource WalkingAS;
+    public AudioSource JumpingAS;
+    public AudioSource LandingAS;
+
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
 {
