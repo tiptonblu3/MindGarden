@@ -23282,7 +23282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterSplash
   splashSound: {fileID: 8300000, guid: c1d0c67f8d3b7de47a0fff157b41d147, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 683364977120938446}
 --- !u!1 &1491138500 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7635d3ec0f14c2241bf01bb3441b6e98, type: 3}
@@ -24950,7 +24950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1533869966
 Transform:
   m_ObjectHideFlags: 0
