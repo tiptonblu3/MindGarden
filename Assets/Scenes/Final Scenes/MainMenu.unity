@@ -803,7 +803,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Programming:\nColin Pierce\nLucas Craycroft\n\nUI Design and Programming:
     \nDaniel Casas\n\nLevel Design: \nBella Rastrelli\nLucas Pereyra\nJeremy Cruz\n\nArtists:\nBryan
-    Hernandez\nNoel De La Cruz\nRylan LastName\n\n\n"
+    Hernandez\nNoel De La Cruz\nRylan Trombley\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e68c769e643aa9d4f98061fc84743d0a, type: 2}
   m_sharedMaterial: {fileID: -4497203553616668610, guid: e68c769e643aa9d4f98061fc84743d0a, type: 2}
@@ -2986,7 +2986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &983005868
 MonoBehaviour:
   m_ObjectHideFlags: 0
