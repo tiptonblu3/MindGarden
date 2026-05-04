@@ -46,6 +46,7 @@ public class PlatformManager : MonoBehaviour
     public AudioClip IdleMus;
     public AudioClip DanceMus;
     public AudioClip DistortDanceMus;
+    public AudioClip DistortIdleMus;
 
     void Update()
     {
@@ -185,6 +186,7 @@ public void GenerateNextStep()
             
             musicSource.Stop(); // Kill the old song
             musicSource.clip = IdleMus; // Swap the file
+            
             musicSource.Play();
     }
 

@@ -16,6 +16,9 @@ public class WaterPipeBehavior : MonoBehaviour
 
     public bool isMoving;
 
+    // From: Danny
+    public AudioSource rotationSound;
+
     private void Start()
     {
         currentRotation = transform.rotation.eulerAngles.z;
@@ -49,6 +52,16 @@ public class WaterPipeBehavior : MonoBehaviour
         {
             StartCoroutine(AnimatePipeToggle());
         }
+        if (isMoving)
+        {
+            rotationSound.Play();
+        }
+        else if (rotationSound.isPlaying)
+        {
+            rotationSound.Stop();
+        }
+        else if (rotationSound == null)
+            return;
         Debug.Log("Pipe is now rotating");
 
     }

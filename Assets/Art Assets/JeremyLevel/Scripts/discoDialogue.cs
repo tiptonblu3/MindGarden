@@ -12,10 +12,12 @@ public class discoDialogue : MonoBehaviour, IInteractable
     public TextMeshPro Dialogue;
     public GameObject DialogBackUI;
     public PlatformManager platmanscript;
+     public AudioSource musicSource;
 
 #region things to dissappear
     public GameObject NPCDissappear;
     public GameObject DilogueDissappear;
+    
 
 #endregion
 
@@ -23,6 +25,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
 
 #region Dialogue Arrays
     public string[] firstConvo = { 
+        "",
         "Hey kid, ready to tango?", 
         "The goal is to jump on the right platforms to get to the end",
         "of the dance floor! Whenever your ready talk to me again", 
@@ -32,6 +35,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
         "Lets do this!",   
     };
     public string[] thirdConvo = { 
+        "",
         "Nice Dancing! What were you looking for again?", 
         "The Disc Pieces?.. I think I have some in my studio but...", 
         "Unfortunately a vengeful fan screwed up my setup.",  
@@ -104,6 +108,7 @@ public class discoDialogue : MonoBehaviour, IInteractable
         
         if (subIndex < currentArray.Length)
         {
+            musicSource.Play();
             string textToDisplay = currentArray[subIndex];
             Dialogue.text = textToDisplay;
             return false; // Not finished yet

@@ -12,6 +12,9 @@ public class ValveBehavior : MonoBehaviour
     private bool interactivityCheck; //used to check if the player is in range of the valve
     public float correctPosition;
 
+    // From: Danny
+    public AudioSource rotationSound;
+
     public void Start()
     {
         if (valveActive == true)
@@ -37,6 +40,17 @@ public class ValveBehavior : MonoBehaviour
     public void ToggleValve() // Toggle the valve state
     {
         valveActive = !valveActive;
+        if (!rotationSound.isPlaying)
+        {
+            rotationSound.Play();
+        }
+        else
+        {
+            if (rotationSound.isPlaying)
+            {
+                rotationSound.Stop();
+            }
+        }
         StartCoroutine(AnimateValveToggle ());
         Debug.Log("Valve is now " + (valveActive ? "active" : "inactive"));
     }

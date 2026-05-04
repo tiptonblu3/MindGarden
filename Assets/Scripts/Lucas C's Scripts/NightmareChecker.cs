@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class NightmareChecker : MonoBehaviour
 {
@@ -8,9 +9,14 @@ public class NightmareChecker : MonoBehaviour
     public bool nightmareActive;
     public CheckPoints checkpointScript;
 
+    public AudioSource waterWallAudio;
+
     private void Start()
     {
-        if (nightmareActive == true)
+        if (waterWallAudio != null && !nightmareActive)
+            waterWallAudio.Stop();
+
+        if (nightmareActive)
         {
             ToggleNightmare();
         }
@@ -32,6 +38,10 @@ public class NightmareChecker : MonoBehaviour
         Debug.Log("Nightmare layout activated");
         StartCoroutine(SwitchStatesDream());
         StartCoroutine(SwitchStatesNightmare());
+        if (waterWallAudio != null && !waterWallAudio.isPlaying)
+        {
+            waterWallAudio.Play();
+        }
     }
     private IEnumerator SwitchStatesDream()
     {

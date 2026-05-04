@@ -75,6 +75,11 @@ public class Player_Movement : MonoBehaviour
     public float externalLockTimer;
     public bool isInFan;
 
+    [Header("Audio")]
+    public AudioSource PlayerAS;
+    public AudioClip Jump;
+
+
     #region Update, FixedUpdate, LateUpdate, and start
     private void Start()
 {
@@ -161,6 +166,7 @@ public void OnSprint(InputValue value)
 
     public void OnJump(InputValue Value)
     {
+        
         isHoldingJump = Value.isPressed;        // Only jump when the button is first pressed AND the player is grounded
         if (isHoldingJump && CanJump && IsGrounded){
                     isjumping = true;// Calculates the upward velocity needed to reach the desired jump height
@@ -168,6 +174,7 @@ public void OnSprint(InputValue value)
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
                         lastGroundedTime = 0;
+                        AudioSource.PlayClipAtPoint(Jump, transform.position);
               
         }
         else
