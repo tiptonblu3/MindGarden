@@ -105,7 +105,7 @@ public class Level3Events : MonoBehaviour
         {
             Point2();
             playerGlide.IsGlideUnlocked = true;
-            birdWaypoints.currentWaypointIndex = 3; // Set the bird's target waypoint to the first one
+            birdWaypoints.currentWaypointIndex = 4; // Set the bird's target waypoint to the first one
             birdWaypoints.isMoving = true;
             Invoke("StartEyeChase", 2f); // Invoke the StartEyeChase method after a delay of 2 seconds
             EndLevelTrigger.SetActive(true);
