@@ -58826,8 +58826,8 @@ MonoBehaviour:
   externalVelocityLock: 0
   externalLockTimer: 0
   isInFan: 0
-  PlayerAS: {fileID: 0}
-  Jump: {fileID: 0}
+  PlayerAS: {fileID: 7872762328261407559}
+  Jump: {fileID: 8300000, guid: b6ec7cf109dec9d41b843e0ee9aeb798, type: 3}
 --- !u!82 &7872762328261407559
 AudioSource:
   m_ObjectHideFlags: 0
