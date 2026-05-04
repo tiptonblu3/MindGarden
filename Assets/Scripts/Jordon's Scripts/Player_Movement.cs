@@ -174,8 +174,8 @@ public void OnSprint(InputValue value)
                         float jumpVelocity = Mathf.Sqrt(JumpHeight * -2 * Physics.gravity.y);
                         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpVelocity, rb.linearVelocity.z);
                         lastGroundedTime = 0;
-                        AudioSource.PlayClipAtPoint(Jump, transform.position);
-              
+                        PlayerAS.PlayOneShot(Jump);
+
         }
         else
             {
