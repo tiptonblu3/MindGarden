@@ -55,8 +55,8 @@ public class Player_Movement : MonoBehaviour
     private bool isSprinting;
     private bool isExhausted;
     private float currentSpeedMultiplier;
-    private float rayRadius = 0.3f; // Roughly the width of your player
-    private float rayDistance = 1.3f; // Adjust based on your player height
+    private float rayRadius = 0.25f; // Roughly the width of your player
+    private float rayDistance = 1.1f; // Adjust based on your player height
 
 
     [Header("Jump Variables")]
@@ -127,7 +127,7 @@ public class Player_Movement : MonoBehaviour
         ManageMovement();
         HandleMaxJump();
         FallingGravity();
-        if (IsGrounded && !isjumping)
+        if (IsGrounded && !isjumping && MoveInputVector.magnitude < 0.01f)
             {
                 // High force (e.g., 40-50) effectively "glues" you to steep ramps
                 rb.AddForce(Vector3.down * 50f, ForceMode.Force);
@@ -410,10 +410,11 @@ private void HandleStamina()
         if (playerCollider == null) return;
 
         // If grounded and not moving
-        if (IsGrounded && MoveInputVector.magnitude < 0.01f)
+        if (IsGrounded && MoveInputVector.sqrMagnitude < 0.01f)
         {
             // Apply high friction so we don't slide down bridges
             playerCollider.material = NormalMat;
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0); // Stop horizontal movement immediately when grounded and not moving
             
         }
         else
