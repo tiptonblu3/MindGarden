@@ -10,9 +10,13 @@ public class NPCTalk : MonoBehaviour, IInteractable
     public List<GameObject> dialogueLines;
     public GameObject player;
     public Rigidbody playerRb;
+    public AudioSource Bunni;
+    public AudioClip Squee;
 
     public void Interact()
     {
+        AudioSource.PlayClipAtPoint(Squee, transform.position);
+
        // if the Dialogue box is not  active, activate it and show the first line of dialogue
         if (!dialogueBox.activeInHierarchy)
         {
