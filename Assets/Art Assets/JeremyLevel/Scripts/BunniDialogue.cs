@@ -10,6 +10,8 @@ public class BunniDialogue : MonoBehaviour, IInteractable
 
     public TextMeshPro Dialogue;
     public GameObject DialogBackUI;
+    public AudioSource musicSource;
+
 
 
 
@@ -62,6 +64,7 @@ public class BunniDialogue : MonoBehaviour, IInteractable
         
         if (BunSubIndex < currentArray.Length)
         {
+            musicSource.Play();
             string textToDisplay = currentArray[BunSubIndex];
             Dialogue.text = textToDisplay;
             return false; // Not finished yet
