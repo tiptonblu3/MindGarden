@@ -29,18 +29,33 @@ public class BirdWaypoints : MonoBehaviour
         if (isMoving == true)
         {
             anim.SetBool("isMovingBird", true);
+
             Vector3 targetPosition = waypoints[currentWaypointIndex].position;
-            Bird.transform.position = Vector3.MoveTowards(Bird.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector3 direction = (targetPosition - Bird.transform.position).normalized;
+            Vector3 flatDirection = new Vector3(direction.x, 0f, direction.z);
+
+            if (flatDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+
+                Bird.transform.rotation = Quaternion.Slerp(
+                    Bird.transform.rotation,
+                    targetRotation,
+                    5f * Time.deltaTime
+                );
+            }
+
+            Bird.transform.position = Vector3.MoveTowards(
+                Bird.transform.position,
+                targetPosition,
+                moveSpeed * Time.deltaTime
+            );
 
             if (Vector3.Distance(Bird.transform.position, targetPosition) < 0.1f)
             {
-                //currentWaypointIndex++;
                 isMoving = false;
                 anim.SetBool("isMovingBird", false);
             }
         }
     }
-
-    
-
 }
