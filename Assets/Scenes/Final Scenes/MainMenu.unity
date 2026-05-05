@@ -266,7 +266,7 @@ AudioSource:
   m_GameObject: {fileID: 46873082}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2931129412639266218, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c4e683a6de4320f4a8507fec580f2929, type: 3}
   m_PlayOnAwake: 1
@@ -2986,7 +2986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &983005868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3252,7 +3252,7 @@ AudioSource:
   m_GameObject: {fileID: 1093330161}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5863479027428426284, guid: e54d11df5b21b1a4f93c7b9aa8555419, type: 2}
+  OutputAudioMixerGroup: {fileID: 5863479027428426284, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -4767,7 +4767,7 @@ AudioSource:
   m_GameObject: {fileID: 1937509512}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2931129412639266218, guid: e54d11df5b21b1a4f93c7b9aa8555419, type: 2}
+  OutputAudioMixerGroup: {fileID: -2931129412639266218, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -5172,7 +5172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05491a9c0d798794eb7932f997559453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSettings
-  audioMixer: {fileID: 24100000, guid: e54d11df5b21b1a4f93c7b9aa8555419, type: 2}
+  audioMixer: {fileID: 24100000, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
 --- !u!4 &2073873669
 Transform:
   m_ObjectHideFlags: 0
@@ -5205,7 +5205,7 @@ MonoBehaviour:
   MasterVolumeSlider: {fileID: 1484868017}
   BGMVolumeSlider: {fileID: 1724881231}
   soundEffectsSlider: {fileID: 346673847}
-  audioMixer: {fileID: 24100000, guid: e54d11df5b21b1a4f93c7b9aa8555419, type: 2}
+  audioMixer: {fileID: 24100000, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
 --- !u!1 &2111752900
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,12 @@ using System.IO;
 public class SaveState : MonoBehaviour
 {
     public static SaveState Instance; // Singleton reference
+    public bool Tutorial;
+    public bool L1;
+    public bool L2;
+    public bool L3;
+    public bool Complete;
+
 
     public CheckPoints checkPointsScript;
     
@@ -74,6 +80,10 @@ public class SaveState : MonoBehaviour
             LoadProgress();
             load = false;
         }
+        if (L1 == true && L2 == true && L3 == true)
+        {
+            Complete = true;
+        }
     }
 
     public void SaveProgress()
@@ -120,4 +130,45 @@ public class SaveState : MonoBehaviour
     {
         return Path.Combine(Application.persistentDataPath, "Save_" + SceneManager.GetActiveScene().name + ".json");
     }
+
+    #region GlobalSave
+    // Data for global level completion
+    [System.Serializable]
+    public class GlobalProgressData
+    {
+        public bool TutorialDone;
+        public bool L1Done;
+        public bool L2Done;
+        public bool L3Done;
+    }
+    public void SaveGlobalProgress()
+    {
+        GlobalProgressData data = new GlobalProgressData
+        {
+            TutorialDone = this.Tutorial,
+            L1Done = this.L1,
+            L2Done = this.L2,
+            L3Done = this.L3
+        };
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, "GlobalProgress.json"), json);
+        Debug.Log("Global Progress Saved");
+    }
+
+    public void LoadGlobalProgress()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "GlobalProgress.json");
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            GlobalProgressData data = JsonUtility.FromJson<GlobalProgressData>(json);
+            
+            this.Tutorial = data.TutorialDone;
+            this.L1 = data.L1Done;
+            this.L2 = data.L2Done;
+            this.L3 = data.L3Done;
+        }
+    }
+    #endregion
 }

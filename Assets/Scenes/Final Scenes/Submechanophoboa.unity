@@ -20009,6 +20009,10 @@ MonoBehaviour:
   saveStateScript: {fileID: 0}
   sceneToLoad: HUB
   DelayTime: 1
+  Tutorial: 0
+  L1: 1
+  L2: 0
+  L3: 0
 --- !u!1 &1308760279
 GameObject:
   m_ObjectHideFlags: 0
