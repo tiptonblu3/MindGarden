@@ -4,23 +4,26 @@ public class CompleteCheck : MonoBehaviour
 {
     public SaveState saveStateScript;
     public bool Tutorial;
+    public GameObject TutorialCheck;
     public bool L1;
+    public GameObject L1Check;
     public bool L2;
+    public GameObject L2Check;
     public bool L3;
-    public GameObject Check;
-    
+    public GameObject L3Check;
 
     void Start()
     {
-        if (saveStateScript != null)
-        {
-            saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
-        }
+        
     }
 
     void Update()
     {
         Checker();
+        if (saveStateScript != null)
+        {
+            saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
+        }
     }
 
 
@@ -28,24 +31,20 @@ public class CompleteCheck : MonoBehaviour
     {
         if (saveStateScript.Tutorial == true && Tutorial == true)
         {
-            Check.SetActive(true);
+            TutorialCheck.SetActive(true);
         }
         if (saveStateScript.L1 == true && L1 == true)
         {
-            Check.SetActive(true);
+            L1Check.SetActive(true);
         }
         if (saveStateScript.L2 == true && L2 == true)
         {
-            Check.SetActive(true);
+            L2Check.SetActive(true);
         }
         if (saveStateScript.L3 == true && L3 == true)
         {
-            Check.SetActive(true);
+            L3Check.SetActive(true);
         }
     }
-
-
-
-
 
 }
