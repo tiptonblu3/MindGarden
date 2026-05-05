@@ -20,10 +20,9 @@ public class CompleteCheck : MonoBehaviour
     void Update()
     {
         Checker();
-        if (saveStateScript != null)
-        {
-            saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
-        }
+        
+        saveStateScript = GameObject.FindGameObjectWithTag("SaveState").GetComponent<SaveState>();
+        
     }
 
 
