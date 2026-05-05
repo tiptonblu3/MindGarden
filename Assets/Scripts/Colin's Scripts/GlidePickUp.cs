@@ -14,6 +14,7 @@ public class GlidePickUp : MonoBehaviour, IInteractable
     private Collider objectCollider;
     private Renderer objectRenderer;
     public AudioSource musicSource;
+    public GameObject Notify;
 
 
     #endregion
@@ -58,6 +59,7 @@ public class GlidePickUp : MonoBehaviour, IInteractable
     {
         canBePickedUp = false;
         IsGlideUnlocked = true;
+        Notify.SetActive(false);
         
         if (objectRenderer != null)
             objectRenderer.enabled = false;

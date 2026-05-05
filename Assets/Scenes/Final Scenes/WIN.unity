@@ -147,11 +147,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2931129412639266218, guid: c1ce81efe4ee34f4ba8d3c10d5e12360, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: c4e683a6de4320f4a8507fec580f2929, type: 3}
+  m_Resource: {fileID: 8300000, guid: daf9a8aca62642f49ad603979b848f4f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -959,6 +959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d28599423bcac439e3d339688a8c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadMain
+  saveStateScript: {fileID: 0}
 --- !u!114 &2124442958
 MonoBehaviour:
   m_ObjectHideFlags: 0

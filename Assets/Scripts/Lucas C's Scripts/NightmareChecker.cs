@@ -10,6 +10,8 @@ public class NightmareChecker : MonoBehaviour
     public CheckPoints checkpointScript;
 
     public AudioSource waterWallAudio;
+    public GameObject DayNotify;
+    public GameObject NightNotify;
 
     private void Start()
     {
@@ -45,6 +47,8 @@ public class NightmareChecker : MonoBehaviour
     }
     private IEnumerator SwitchStatesDream()
     {
+        NightNotify.SetActive(false);
+        DayNotify.SetActive(true);
         Vector3 startPosition = dreamObjects.transform.position;
         Vector3 endPosition = new Vector3(0, -20, 0);
         for (float t = 0; t < 1; t += Time.deltaTime * 1f)
@@ -56,6 +60,8 @@ public class NightmareChecker : MonoBehaviour
     }
     private IEnumerator SwitchStatesNightmare()
     {
+        DayNotify.SetActive(false);
+        NightNotify.SetActive(true);
         Vector3 startPosition = nightmareObjects.transform.position;
         float y = -1.38f;
         Vector3 endPosition = new Vector3(0, y, 0);
